@@ -33,6 +33,7 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
+  - pop (1.0.9)
   - ProtocolBuffers (1.9.11)
   - Reachability (3.2)
   - SAMKeychain (1.5.2)
@@ -51,6 +52,7 @@ PODS:
   - SQLCipher/common (3.4.1)
   - SQLCipher/fts (3.4.1):
     - SQLCipher/common
+  - SSignalKit (0.0.2)
   - TwistedOakCollapsingFutures (1.0.0):
     - UnionFind (~> 1.0)
   - UnionFind (1.0.1)
@@ -106,8 +108,10 @@ PODS:
 
 DEPENDENCIES:
   - AxolotlKit (from `https://github.com/WhisperSystems/SignalProtocolKit.git`)
+  - pop
   - SignalServiceKit (from `https://github.com/tokenbrowser/SignalServiceKit.git`)
   - SocketRocket (from `https://github.com/facebook/SocketRocket.git`)
+  - SSignalKit
 
 EXTERNAL SOURCES:
   AxolotlKit:
@@ -136,16 +140,18 @@ SPEC CHECKSUMS:
   HKDFKit: c058305d6f64b84f28c50bd7aa89574625bcb62a
   libPhoneNumber-iOS: f721ae4d5854bce60934f9fb9b0b28e8e68913cb
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   SignalServiceKit: ea91cd63d38dc0c114193bef4cbb9185391e5887
   SocketRocket: dbb1554b8fc288ef8ef370d6285aeca7361be31e
   SQLCipher: 43d12c0eb9c57fb438749618fc3ce0065509a559
+  SSignalKit: d65a4f89cdf037c787d630c7d6d6359b80f290f4
   TwistedOakCollapsingFutures: f359b90f203e9ab13dfb92c9ff41842a7fe1cd0c
   UnionFind: c33be5adb12983981d6e827ea94fc7f9e370f52d
   YapDatabase: b1e43555a34a5298e23a045be96817a5ef0da58f
 
-PODFILE CHECKSUM: 781a76b8bf613df5243ed1ad1c5d3503f1521150
+PODFILE CHECKSUM: 643fe5528aa0e44f53df6b64e60a2b9effe7981b
 
 COCOAPODS: 1.2.1
