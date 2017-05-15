@@ -815,8 +815,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         carouselItem.sendPressed = { [unowned self] currentItem, asFiles in
             let selectedItems = carouselItem.selectionContext.selectedItems
-            print("\(selectedItems)")
-            
             let intent: MediaAssetsControllerIntent = asFiles ? .sendFile : .sendMedia
             
             if let signals = MediaAssetsController.resultSignals(for: carouselItem.selectionContext, editingContext: carouselItem.editingContext, intent: intent, currentItem: currentItem, storeAssets: false, useMediaCache: false, descriptionGenerator: { result, caption, hash in
@@ -989,7 +987,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         showMediaPickerBlock(nil)
-        
     }
 }
 

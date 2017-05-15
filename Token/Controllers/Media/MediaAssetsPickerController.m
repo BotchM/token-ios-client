@@ -122,9 +122,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setRightBarButtonItem:[(MediaAssetsController *)self.navigationController rightBarButtonItem]];
-    
+   
     SSignal *groupSignal = nil;
     if (_assetGroup != nil)
         groupSignal = [SSignal single:_assetGroup];

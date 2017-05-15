@@ -26,12 +26,10 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 
 @property (nonatomic, copy) NSDictionary *(^descriptionGenerator)(id, NSString *, NSString *);
 @property (nonatomic, copy) void (^avatarCompletionBlock)(UIImage *image);
-@property (nonatomic, copy) void (^completionBlock)(NSArray *signals);
+@property (nonatomic, copy) void (^completionBlock)();
 @property (nonatomic, copy) void (^dismissalBlock)(void);
 
 @property (nonatomic, readonly) MediaAssetsPickerController *pickerController;
-
-- (UIBarButtonItem *)rightBarButtonItem;
 
 + (NSMutableArray <UIImage *> *)selectedItemmsss;
 
