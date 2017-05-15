@@ -18,6 +18,7 @@ import SweetUIKit
 import NoChat
 import MobileCoreServices
 import ImagePicker
+//import SSignalKit
 
 class ChatController: MessagesCollectionViewController {
 
@@ -36,6 +37,22 @@ class ChatController: MessagesCollectionViewController {
     fileprivate var ethereumAPIClient: EthereumAPIClient {
         return EthereumAPIClient.shared
     }
+    
+    lazy var disposable: SMetaDisposable = {
+        let disposable = SMetaDisposable()
+        return disposable
+    }()
+    
+    lazy var processMediaDisposable: SMetaDisposable = {
+        let disposable = SMetaDisposable()
+        return disposable
+    }()
+    
+    let transition = PopAnimator()
+    var fromView: UIView?
+//    
+//    var saveEditedMessageDisposable: SMetaDisposable
+//    var editingContextDisposable: SMetaDisposable
 
     var textLayoutQueue = DispatchQueue(label: "com.tokenbrowser.token.layout", qos: DispatchQoS(qosClass: .default, relativePriority: 0))
 
@@ -112,6 +129,11 @@ class ChatController: MessagesCollectionViewController {
 
         return view
     }()
+    
+    deinit {
+        disposable.dispose()
+        processMediaDisposable.dispose()
+    }
 
     // MARK: - Class overrides
 
@@ -183,6 +205,12 @@ class ChatController: MessagesCollectionViewController {
             textInputViewBottom,
             textInputViewHeight,
         ])
+        
+        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
+        
+        self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 51.0).isActive = true
+        self.view.setNeedsLayout()
+        self.collectionView.setNeedsLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -437,7 +465,10 @@ class ChatController: MessagesCollectionViewController {
                 }
                 if scrollToBottom {
                     self.scrollToBottom(animated: true)
+                    
                 }
+                
+                self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
             }
         }
     }
@@ -672,17 +703,567 @@ extension ChatController: ChatInputTextPanelDelegate {
         let wrapper = SofaMessage(content: ["body": text])
         sendMessage(sofaWrapper: wrapper)
     }
-
-    func inputTextPanelrequestSendAttachment(_: ChatInputTextPanel) {
-        let picker = ImagePickerController()
-        picker.delegate = self
-        picker.configuration.allowVideoSelection = true
-
-        self.present(picker, animated: true)
+    
+//    carouselItem.sendPressed = ^(MediaAsset *currentItem, bool asFiles)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return;
+//    
+//    __strong MenuSheetController *strongController = weakController;
+//    if (strongController == nil)
+//    return;
+//    
+//    __strong AttachmentCarouselItemView *strongCarouselItem = weakCarouselItem;
+//    if (strongController == nil)
+//    return;
+//    
+//    [strongController dismissAnimated:true];
+//    
+//    MediaAssetsControllerIntent intent = asFiles ? MediaAssetsControllerSendFileIntent : MediaAssetsControllerSendMediaIntent;
+//    [strongSelf _asyncProcessMediaAssetSignals:[MediaAssetsController resultSignalsForSelectionContext:strongCarouselItem.selectionContext editingContext:strongCarouselItem.editingContext intent:intent currentItem:currentItem storeAssets:[strongSelf->_companion controllerShouldStoreCapturedAssets] useMediaCache:[strongSelf->_companion controllerShouldCacheServerAssets] descriptionGenerator:^id(id result, NSString *caption, NSString *hash)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return nil;
+//    
+//    return [strongSelf _descriptionForItem:result caption:caption hash:hash];
+//    }]];
+//    };
+    
+    private func asyncProcess(signals: [SSignal]) {
+        let queue = SQueue()
+        var combinedSignal: SSignal?
+        
+        for signal in signals {
+            if combinedSignal == nil {
+                combinedSignal = signal.start(on: queue)
+            } else {
+                combinedSignal = combinedSignal?.then(signal).start(on: queue)
+            }
+        }
+        
+        let mediaDescriptors = [[String: Any]]()
+        var array = [Any]()
+        let signal = combinedSignal?.reduceLeft(array, with: { itemDescriptions, item in
+            if item is [String: Any] {
+            //itemDescriptions.app
+               
+            }
+            
+             return itemDescriptions
+        }).deliver(on: SQueue.main()).start(next: { itemDescriptions in
+            
+            var mediaDescriptions = [[String: Any]]()
+            var filesDescriptions = [[String: Any]]()
+            
+            if let itemDescriptions = itemDescriptions as? [Dictionary<String, Any>] {
+                itemDescriptions.forEach{
+                    if $0["localImage"] != nil ||  $0["remoteImage"] != nil ||  $0["downloadImage"] != nil ||  $0["downloadDocument"] != nil ||  $0["downloadExternalGif"] != nil ||  $0["downloadExternalImage"] != nil || $0["remoteDocument"] != nil || $0["remoteCachedDocument"] != nil || $0["assetImage"] != nil || $0["assetVideo"] != nil {
+                        mediaDescriptions.append($0)
+                    } else {
+                        filesDescriptions.append($0)
+                    }
+                }
+            }
+            
+            
+            print("Result images descriptions: \(itemDescriptions)")
+        })
+        
+        if let signal = signal as SDisposable? {
+            self.processMediaDisposable.setDisposable(signal)
+        }
+       
+//        __weak ModernConversationController *weakSelf = self;
+//        [_processMediaDisposable setDisposable:[[[combinedSignal reduceLeft:[[NSMutableArray alloc] init] with:^NSMutableArray *(NSMutableArray *itemDescriptions, id item)
+//        {
+//        if ([item isKindOfClass:[NSDictionary class]])
+//        [itemDescriptions addObject:item];
+//        
+//        return itemDescriptions;
+//        }] deliverOn:[SQueue mainQueue]] startWithNext:^(NSArray *itemDescriptions)
+//        {
+//        __strong ModernConversationController *strongSelf = weakSelf;
+//        
+//        NSMutableArray *mediaDescriptions = [[NSMutableArray alloc] init];
+//        NSMutableArray *fileDescriptions = [[NSMutableArray alloc] init];
+//        
+//        for (NSDictionary *description in itemDescriptions)
+//        {
+//        if (description[@"localImage"] || description[@"remoteImage"] || description[@"downloadImage"]
+//        || description[@"downloadDocument"] || description[@"downloadExternalGif"]
+//        || description[@"downloadExternalImage"] || description[@"remoteDocument"]
+//        || description[@"remoteCachedDocument"] || description[@"assetImage"] || description[@"assetVideo"])
+//        {
+//        [mediaDescriptions addObject:description];
+//        }
+//        else
+//        {
+//        [fileDescriptions addObject:description];
+//        }
+//        }
+//        
+//        if (mediaDescriptions.count > 0)
+//        [strongSelf.companion controllerWantsToSendImagesWithDescriptions:mediaDescriptions asReplyToMessageId:[strongSelf currentReplyMessageId] botReplyMarkup:nil];
+//        
+//        if (fileDescriptions.count > 0)
+//        [strongSelf.companion controllerWantsToSendDocumentsWithDescriptions:fileDescriptions asReplyToMessageId:[strongSelf currentReplyMessageId]];
+//        }]];
     }
-
+    
+    func displayLegacyCamera() {
+        let legacyCameraController = LegacyCameraController()
+        legacyCameraController.sourceType = .camera
+        legacyCameraController.videoMaximumDuration = 100 * 60 * 60
+        legacyCameraController.videoQuality = .typeMedium
+        
+        var mediaTYpes = [kUTTypeImage as String]
+        
+        if AccessChecker.checkMicrophoneAuthorizationStatus(for: MicrophoneAccessIntentVideo,alertDismissCompletion:nil) == true {
+            mediaTYpes.append(kUTTypeVideo as String)
+        }
+         legacyCameraController.mediaTypes = mediaTYpes
+        
+        legacyCameraController.completionDelegate = self
+       // legacyCameraController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        
+        present(legacyCameraController, animated: true, completion: nil)
+    }
+    
+//    - (void)_displayLegacyCamera
+//    {
+//    __autoreleasing fNSString *disabledMessage = nil;
+//    if (![TGApplicationFeatures isPhotoUploadEnabledForPeerType:[_companion applicationFeaturePeerType] disabledMessage:&disabledMessage])
+//    {
+//    [[[TGAlertView alloc] initWithTitle:TGLocalized(@"FeatureDisabled.Oops") message:disabledMessage cancelButtonTitle:TGLocalized(@"OK") okButtonTitle:nil completionBlock:nil] show];
+//    return;
+//    }
+//    
+//    LegacyCameraController *legacyCameraController = [[LegacyCameraController alloc] init];
+//    legacyCameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    legacyCameraController.mediaTypes = [[NSArray alloc] initWithObjects:(__bridge NSString *)kUTTypeImage, (__bridge NSString *)kUTTypeMovie, nil];
+//    
+//    legacyCameraController.storeCapturedAssets = [_companion controllerShouldStoreCapturedAssets];
+//    legacyCameraController.completionDelegate = self;
+//    
+//    legacyCameraController.videoMaximumDuration = 100 * 60 * 60;
+//    [legacyCameraController :UIImagePickerControllerQualityTypeMedium];
+//    legacyCameraController.completionDelegate = self;
+//    
+//    [self presentViewController:legacyCameraController animated:true completion:nil];
+//    }
+    //=====================================================================================================
+    
+    func inputTextPanelrequestSendAttachment(_: ChatInputTextPanel) {
+        //let picker = TGImagePickerController()
+        //picker.delegate = self
+        //picker.configuration.allowVideoSelection = true
+        
+        let controller = MenuSheetController()
+        controller.dismissesByOutsideTap = true
+        controller.hasSwipeGesture = true
+        controller.maxHeight = 445 - MenuSheetButtonItemViewHeight
+        var itemViews = [UIView]()
+        
+        
+        let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
+        carouselItem.condensed = false
+        carouselItem.parentController = self
+        carouselItem.allowCaptions = true
+        carouselItem.inhibitDocumentCaptions = true
+        carouselItem.suggestionContext = SuggestionContext()
+        carouselItem.cameraPressed = { cameraView in
+            
+            guard AccessChecker.checkCameraAuthorizationStatus(alertDismissComlpetion: nil) == true else { return }
+            
+            if CameraController.useLegacyCamera() == true {
+                self.displayLegacyCamera()
+            } else {
+                self.displayCamera(from: cameraView, menu: controller)
+            }
+            
+          // controller.dismiss(animated: true)
+        }
+        
+        carouselItem.didSelectImage = { image, asset, fromView in
+            print("\(image))")
+            
+            //
+            //
+            //        __weak PhotoEditorController *weakController = controller;
+            //        controller.didFinishEditing = ^(__unused id<MediaEditAdjustments> adjustments, UIImage *resultImage, __unused UIImage *thumbnailImage, __unused bool hasChanges)
+            //        {
+            //            if (!hasChanges)
+            //                return;
+            //
+            //            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
+            //            if (strongSelf == nil)
+            //                return;
+            //
+            //            __strong PhotoEditorController *strongController = weakController;
+            //            if (strongController == nil)
+            //                return;
+            //
+            //            if (strongSelf.avatarCompletionBlock != nil)
+            //                strongSelf.avatarCompletionBlock(resultImage);
+            //
+            //            [strongController dismissAnimated:true];
+            //        };
+           // controller.didFinishRenderingFullSizeImage = ^(UIImage *resultImage)
+            //        {
+            //            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
+            ////            if (strongSelf == nil || !TGAppDelegateInstance.saveEditedPhotos)
+            ////                return;
+            //
+            //            [[strongSelf->_assetsLibrary saveAssetWithImage:resultImage] startWithNext:nil];
+            //        };
+            //
+            
+            if let fromView = fromView as UIView? {
+                let rect = self.view.convert(fromView.frame, from: fromView.superview)
+                self.fromView = fromView
+                self.fromView?.frame = rect
+            }
+            
+            let editorController = PhotoEditorController(item:asset as! MediaEditableItem, intent:PhotoEditorControllerAvatarIntent, adjustments:nil, caption:nil, screenImage:image, availbaleTabs:PhotoEditorController.defaultTabsForAvatarIntent(), selectedTab:PhotoEditorCropTab)!
+            
+            editorController.requestOriginalFullSizeImage = { editableItem, position in
+                return editableItem?.originalImageSignal?(position)
+            }
+            
+            editorController.didFinishRenderingFullSizeImage = { image in
+                carouselItem.updateVisibleItems()
+            }
+            
+            editorController.requestOriginalScreenSizeImage = { editableItem, position in
+                return editableItem?.screenImageSignal?(position)
+            }
+            
+            editorController.requestThumbnailImage = { editableItem in
+                return editableItem?.thumbnailImageSignal?()
+            }
+            
+            editorController.transitioningDelegate = self
+            
+            self.present(editorController, animated: true, completion: nil)
+        }
+        
+        carouselItem.sendPressed = { [unowned self] currentItem, asFiles in
+            let selectedItems = carouselItem.selectionContext.selectedItems
+            print("\(selectedItems)")
+            
+            let intent: MediaAssetsControllerIntent = asFiles ? .sendFile : .sendMedia
+            
+            if let signals = MediaAssetsController.resultSignals(for: carouselItem.selectionContext, editingContext: carouselItem.editingContext, intent: intent, currentItem: currentItem, storeAssets: false, useMediaCache: false, descriptionGenerator: { result, caption, hash in
+                
+                controller.dismiss(animated: true, manual: false) {
+                    self.sendSelectedImages()
+                }
+                
+                return self.description(for: result, caption: caption, hash: hash)
+            }) as? [SSignal] {
+                self.asyncProcess(signals: signals)
+            }
+        }
+        
+        itemViews.append(carouselItem)
+        
+        let galleryItem = MenuSheetButtonItemView.init(title:"Photo or Video", type:MenuSheetButtonTypeDefault, action:{ [unowned self] in
+        
+            controller.dismiss(animated: true)
+            self.displayMediaPicker(forFile: false, fromFileMenu: false)
+        })!
+        
+        itemViews.append(galleryItem)
+        let fileItem = MenuSheetButtonItemView.init(title:"File", type:MenuSheetButtonTypeDefault, action:nil)!
+        itemViews.append(fileItem)
+        
+        let locationItem = MenuSheetButtonItemView.init(title:"Location", type:MenuSheetButtonTypeDefault, action:nil)!
+        itemViews.append(locationItem)
+        
+        carouselItem.underlyingViews = [galleryItem, fileItem]
+       // unowned let weakController = controller
+        let cancelItem = MenuSheetButtonItemView.init(title:"Cancel", type:MenuSheetButtonTypeCancel, action:{
+            [unowned controller] in
+            controller.dismiss(animated: true)
+        })!
+        
+        itemViews.append(cancelItem)
+        controller.setItemViews(itemViews)
+        carouselItem.remainingHeight = MenuSheetButtonItemViewHeight * CGFloat(itemViews.count - 1)
+        
+        controller.present(in: self, sourceView:self.view, animated:true)
+    }
+    
+    func sendSelectedImages() {
+        let images = MediaAssetsController.selectedItemmsss()
+        
+        for image in images! {
+            if let image = image as? UIImage {
+                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
+                
+                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
+                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
+                
+                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
+                    print("Success")
+                }, failure: { error in
+                    print("Failure: \(error)")
+                })
+            }
+        }
+    }
+    
+    func displayCamera(from cameraView: AttachmentCameraView?, menu: MenuSheetController) {
+        var controller: CameraController?
+        let screenSize = TGScreenSize()
+        
+        if let previewView = cameraView?.previewView() as CameraPreviewView? {
+            controller = CameraController(camera:previewView.camera, previewView: previewView, intent: CameraControllerGenericIntent)
+        } else {
+            controller = CameraController()
+        }
+        
+        controller?.isImportant = true
+        controller?.shouldStoreCapturedAssets = true // ADJUSTABLE
+        controller?.allowCaptions = true // ADJUSTABLE
+        
+        var standalone = true
+        var startFrame = CGRect(x: 0.0, y: screenSize.height, width: screenSize.width, height: screenSize.height)
+        
+        if let cameraView = cameraView as AttachmentCameraView? {
+            standalone = false
+            if TGIsPad() == true {
+                startFrame = CGRect.zero
+            } else if let convertedRect = controller?.view.convert(cameraView.previewView().frame, from: cameraView) as CGRect? {
+                startFrame = convertedRect
+            }
+        }
+        
+        cameraView?.detachPreviewView()
+        controller?.beginTransition(from: startFrame)
+        
+        controller?.beginTransitionOut = { () -> CGRect in
+        
+            guard controller != nil, let cameraView = cameraView as AttachmentCameraView?,
+            TGIsPad() == false else { return CGRect.zero }
+           
+            cameraView.willAttachPreviewView()
+            
+            return controller?.view.convert(cameraView.frame, from: cameraView.superview) ?? CGRect.zero
+        }
+        
+        controller?.finishedTransitionOut = {
+            cameraView?.attachPreviewView(animated: true)
+        }
+        
+        controller?.finishedWithPhoto = { resultImage, caption, stickers in
+            print("do what needed with added images")
+            menu.dismiss(animated: false)
+        }
+        
+        controller?.finishedWithVideo = { videoURL, previewImage, duration, dimensions, adjustments, caption, stickers in
+            print("do what needed with recorded video")
+            menu.dismiss(animated: false)
+        }
+        
+        let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
+        controllerWindow?.isHidden = false
+        
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            controllerWindow?.frame = CGRect(x: 0.0, y: 0.0, width: screenSize.width, height: screenSize.height)
+        }
+    }
+    
+    func description(for item: Any?, caption: String?, hash: String?) -> [String: Any] {
+        let description = [String: Any]()
+        
+        
+        if item is UIImage {
+        
+        } else if item is Dictionary<String, Any> {
+            let dict = item as! Dictionary<String, Any>
+            let type = dict["type"]
+            
+        }
+        
+        return description
+    }
+    
+    //-------------------------------------------------------------------------------------------
     func inputTextPanelDidChangeHeight(_ height: CGFloat) {
         self.textInputHeight = height
+        
+    }
+//
+//    - (SuggestionContext *)_suggestionContext
+//    {
+//    __weak ModernConversationController *weakSelf = self;
+//    
+//    SuggestionContext *suggestionContext = [[SuggestionContext alloc] init];
+//    suggestionContext.userListSignal = ^SSignal *(NSString *mention)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return nil;
+//    
+//    return [[strongSelf->_companion userListForMention:mention canBeContextBot:false] map:^id(NSArray *users) {
+//    NSMutableArray *filteredUsers = [[NSMutableArray alloc] init];
+//    for (TGUser *user in users) {
+//    if (user.userName.length != 0) {
+//    [filteredUsers addObject:user];
+//    }
+//    }
+//    return filteredUsers;
+//    }];
+//    };
+//    
+//    suggestionContext.hashtagListSignal = ^SSignal *(NSString *hashtag)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return nil;
+//    
+//    return [strongSelf->_companion hashtagListForHashtag:hashtag];
+//    };
+//    
+//    return suggestionContext;
+//    }
+    
+    private func displayMediaPicker(forFile: Bool, fromFileMenu:Bool) {
+    
+        guard AccessChecker.checkPhotoAuthorizationStatus(intent: PhotoAccessIntentRead, alertDismissCompletion: nil) else { return }
+        let dismissBlock = { [unowned self] in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let showMediaPickerBlock: ((MediaAssetGroup?) -> ()) = { [unowned self] group in
+            let intent: MediaAssetsControllerIntent = .sendMedia //forFile ? MediaAssetsControllerIntentSendMedia : MediaAssetsControllerIntentSendMedia
+            let assetsController = MediaAssetsController(assetGroup: group, intent:intent)!
+            assetsController.captionsEnabled = true
+            assetsController.inhibitDocumentCaptions = true
+            assetsController.suggestionContext = SuggestionContext()
+            assetsController.dismissalBlock = dismissBlock
+            assetsController.localMediaCacheEnabled = false
+            assetsController.shouldStoreAssets = false
+            assetsController.shouldShowFileTipIfNeeded = false
+            assetsController.completionBlock = { signals in
+                
+                assetsController.dismiss(animated: true, completion: {
+                    self.sendSelectedImages()
+                })
+            }
+            
+            self.present(assetsController, animated: true, completion: nil)
+            
+        }
+        
+        if MediaAssetsLibrary.authorizationStatus() == MediaLibraryAuthorizationStatusNotDetermined {
+            MediaAssetsLibrary.requestAuthorization(for: MediaAssetAnyType) { (status, cameraRollGroup) -> Void in
+                
+                if AccessChecker.checkPhotoAuthorizationStatus(intent:PhotoAccessIntentRead, alertDismissCompletion:nil) {
+                    return;
+                }
+                
+                showMediaPickerBlock(cameraRollGroup);
+            }
+        }
+        
+        showMediaPickerBlock(nil)
+        
+    }
+//        - (void)_displayMediaPicker:(bool)file fromFileMenu:(bool)fromFileMenu
+//{
+//    if (![AccessChecker checkPhotoAuthorizationStatusForIntent:PhotoAccessIntentRead alertDismissCompletion:nil])
+//    return;
+//    
+//    __weak ModernConversationController *weakSelf = self;
+//    void (^dismissalBlock)(void) = ^
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return;
+//    
+//    [strongSelf dismissViewControllerAnimated:true completion:nil];
+//    [strongSelf _dismissBannersForCurrentConversation];
+//    };
+//    
+//    void (^showMediaPicker)(MediaAssetGroup *) = ^(MediaAssetGroup *group)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return;
+//    
+//    MediaAssetsControllerIntent intent = file ? MediaAssetsControllerIntentSendFile : MediaAssetsControllerIntentSendMedia;
+//    MediaAssetsController *assetsController = [MediaAssetsController controllerWithAssetGroup:group intent:intent];
+//    assetsController.captionsEnabled = [strongSelf->_companion allowCaptionedMedia];
+//    assetsController.inhibitDocumentCaptions = [strongSelf->_companion encryptUploads];
+//    assetsController.suggestionContext = [strongSelf _suggestionContext];
+//    assetsController.dismissalBlock = dismissalBlock;
+//    assetsController.localMediaCacheEnabled = [strongSelf->_companion controllerShouldCacheServerAssets];
+//    assetsController.shouldStoreAssets = [strongSelf->_companion controllerShouldStoreCapturedAssets];
+//    assetsController.shouldShowFileTipIfNeeded = (file && !fromFileMenu);
+//    assetsController.descriptionGenerator = ^NSDictionary *(id result, NSString *caption, NSString *hash)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return nil;
+//    
+//    return [strongSelf _descriptionForItem:result caption:caption hash:hash];
+//    };
+//    assetsController.completionBlock = ^(NSArray *signals)
+//    {
+//    __strong ModernConversationController *strongSelf = weakSelf;
+//    if (strongSelf == nil)
+//    return;
+//    
+//    dismissalBlock();
+//    [strongSelf _asyncProcessMediaAssetSignals:signals];
+//    };
+//    
+//    if (TGIsPad())
+//    {
+//    assetsController.presentationStyle = TGNavigationControllerPresentationStyleInFormSheet;
+//    assetsController.modalPresentationStyle = UIModalPresentationFormSheet;
+//    }
+//    [strongSelf presentViewController:assetsController animated:true completion:nil];
+//    };
+//    
+//    if ([MediaAssetsLibrary authorizationStatus] == MediaLibraryAuthorizationStatusNotDetermined)
+//    {
+//    [MediaAssetsLibrary requestAuthorizationForAssetType:MediaAssetAnyType completion:^(__unused MediaLibraryAuthorizationStatus status, MediaAssetGroup *cameraRollGroup)
+//    {
+//    if (![AccessChecker checkPhotoAuthorizationStatusForIntent:PhotoAccessIntentRead alertDismissCompletion:nil])
+//    return;
+//    
+//    showMediaPicker(cameraRollGroup);
+//    }];
+//    }
+//    else
+//    {
+//    showMediaPicker(nil);
+//    }
+//    }
+
+}
+
+extension ChatController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let fromView = self.fromView as UIView? {
+            transition.originFrame = fromView.frame //selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
+            
+            transition.presenting = true
+        }
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }
 
@@ -696,17 +1277,18 @@ extension ChatController: RateUserControllerDelegate {
 }
 
 extension ChatController: ImagePickerDelegate {
-    func wrapperDidPress(_: ImagePickerController, images _: [UIImage]) {
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        self.dismiss(animated: true)
     }
 
-    func doneButtonDidPress(_: ImagePickerController, images: [UIImage]) {
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         self.dismiss(animated: true) {
             for image in images {
                 guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
-
+                
                 let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
                 let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
-
+                
                 self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
                     print("Success")
                 }, failure: { error in
@@ -716,8 +1298,8 @@ extension ChatController: ImagePickerDelegate {
         }
     }
 
-    func cancelButtonDidPress(_: ImagePickerController) {
-        self.dismiss(animated: true)
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        
     }
 }
 
@@ -779,24 +1361,66 @@ extension ChatController: PaymentSendControllerDelegate {
 }
 
 extension ChatController: PaymentRequestControllerDelegate {
-
+    
     func paymentRequestControllerDidFinish(valueInWei: NSDecimalNumber?) {
         defer {
             self.dismiss(animated: true)
         }
-
+        
         guard let valueInWei = valueInWei else {
             return
         }
-
+        
         let request: [String: Any] = [
             "body": "Payment request: \(EthereumConverter.balanceAttributedString(forWei: valueInWei).string).",
             "value": valueInWei.toHexString,
             "destinationAddress": Cereal.shared.paymentAddress,
-        ]
-
+            ]
+        
         let paymentRequest = SofaPaymentRequest(content: request)
-
+        
         sendMessage(sofaWrapper: paymentRequest)
+    }
+}
+
+extension ChatController: LegacyCameraControllerDelegate, TGImagePickerControllerDelegate {
+    private func legacyCameraControllerCapturedVideo(path: String, fileSize: CGSize, image: UIImage, duration: TimeInterval, dimensions: TimeInterval, assetUrl: String) {
+    
+         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func legacyCameraControllerCompleted(media: Any) {
+        self.dismiss(animated: true, completion: nil)
+        
+        if media is VideoMediaAttachment {
+            //controllerWantsToSendRemoteVideoWithMedia:media asReplyToMessageId:[self currentReplyMessageId] text:nil botContextResult:nil botReplyMarkup:nil];
+        }
+    }
+    
+    func legacyCameraControllerCompletedWithNoResult() {
+        self.dismiss(animated: true, completion:  nil)
+    }
+    
+    func legacyCameraControllerCompletedWithDocument(fileUrl :URL, fileName: String, mimeType: String) {
+    
+    }
+    
+    func imagePickerControllerDidFinishPickingWithAssets(imagePicker: TGImagePickerController!, assets: [Any]!) {
+         self.dismiss(animated: true, completion: nil)
+        
+        for asset in assets! {
+            if let image = asset as? UIImage {
+                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
+                
+                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
+                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
+                
+                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
+                    print("Success")
+                }, failure: { error in
+                    print("Failure: \(error)")
+                })
+            }
+        }
     }
 }

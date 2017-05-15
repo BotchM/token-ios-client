@@ -29,7 +29,7 @@ class ImageMessageCell: MessageCell {
     }()
 
     override class func reuseIdentifier() -> String {
-        return "TGImageMessageCell"
+        return "ImageMessageCell"
     }
 
     override init(frame: CGRect) {

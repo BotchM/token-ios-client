@@ -19,6 +19,7 @@
 #import <SignalServiceKit/OWSDispatch.h>
 
 #import <AxolotlKit/SessionCipher.h>
+#import "Common.h"
 
 @import WebRTC;
 
@@ -68,6 +69,35 @@
     }
 
     return YES;
+}
+
++ (NSString *)documentsPath
+{
+    static NSString *path = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^
+                  {
+                      if (iosMajorVersion() >= 8)
+                      {
+                          NSString *groupName = [@"group." stringByAppendingString:[[NSBundle mainBundle] bundleIdentifier]];
+                          
+                          NSURL *groupURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupName];
+                          if (groupURL != nil)
+                          {
+                              NSString *documentsPath = [[groupURL path] stringByAppendingPathComponent:@"Documents"];
+                              
+                              [[NSFileManager defaultManager] createDirectoryAtPath:documentsPath withIntermediateDirectories:true attributes:nil error:NULL];
+                              
+                              path = documentsPath;
+                          }
+                          else
+                              path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0];
+                      }
+                      else
+                          path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0];
+                  });
+    
+    return path;
 }
 
 - (void)configureAndPresentWindow {

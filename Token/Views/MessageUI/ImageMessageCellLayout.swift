@@ -21,7 +21,7 @@ class ImageMessageCellLayout: MessageCellLayout {
     required init(chatItem: NOCChatItem, cellWidth width: CGFloat) {
         super.init(chatItem: chatItem, cellWidth: width)
 
-        self.reuseIdentifier = "TGImageMessageCell"
+        self.reuseIdentifier = "ImageMessageCell"
 
         self.setupAttributedTime()
         self.setupBubbleImage()
