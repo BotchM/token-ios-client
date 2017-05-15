@@ -1451,8 +1451,6 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
             __strong CameraController *strongSelf = weakSelf;
             if (strongSelf == nil)
                 return;
-            
-            [strongSelf dismiss];
         }];
         return;
     }
@@ -1574,7 +1572,7 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
     
     if (animated)
     {
-        [UIView animateWithDuration:0.3 animations:^
+        [UIView animateWithDuration:0.5 animations:^
         {
             _backgroundView.alpha = alpha;
         }];

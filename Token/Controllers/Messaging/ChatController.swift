@@ -814,18 +814,11 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         carouselItem.sendPressed = { [unowned self] currentItem, asFiles in
-            let selectedItems = carouselItem.selectionContext.selectedItems
-            let intent: MediaAssetsControllerIntent = asFiles ? .sendFile : .sendMedia
-            
-            if let signals = MediaAssetsController.resultSignals(for: carouselItem.selectionContext, editingContext: carouselItem.editingContext, intent: intent, currentItem: currentItem, storeAssets: false, useMediaCache: false, descriptionGenerator: { result, caption, hash in
+            controller.dismiss(animated: true, manual: false) {
                 
-                controller.dismiss(animated: true, manual: false) {
-                    self.sendSelectedImages()
-                }
                 
-                return self.description(for: result, caption: caption, hash: hash)
-            }) as? [SSignal] {
-                self.asyncProcess(signals: signals)
+                
+                self.sendSelectedImages()
             }
         }
         
@@ -903,6 +896,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         self.present(controller, animated: true, completion: nil)
         controller.beginTransitionOut = {
             
+            carouselItem.updateCameraView()
             carouselItem.updateVisibleItems()
      }
         

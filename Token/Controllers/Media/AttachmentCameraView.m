@@ -140,6 +140,8 @@
     if (animated)
     {
         _iconView.alpha = 0.0f;
+        _cornersView.alpha = 1.0f;
+        
         [UIView animateWithDuration:0.2 animations:^
         {
             _iconView.alpha = 1.0f;

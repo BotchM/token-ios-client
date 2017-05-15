@@ -180,13 +180,6 @@
     return nil;
 }
 
-#pragma mark - 
-
-- (NSArray *)resultSignals:(id (^)(id, NSString *, NSString *))__unused descriptionGenerator
-{
-    return nil;
-}
-
 #pragma mark - Collection View Data Source & Delegate
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)__unused collectionView

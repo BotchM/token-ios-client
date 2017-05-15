@@ -18,7 +18,7 @@ typedef enum {
     PhotoEditorControllerVideoIntent = (1 << 3)
 } PhotoEditorControllerIntent;
 
-@interface PhotoEditorController : OverlayController
+@interface PhotoEditorController : UIViewController
 
 @property (nonatomic, strong) SuggestionContext *suggestionContext;
 @property (nonatomic, strong) MediaEditingContext *editingContext;

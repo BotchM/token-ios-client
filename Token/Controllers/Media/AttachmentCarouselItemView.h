@@ -39,5 +39,6 @@
 NS_SWIFT_NAME(init(camera:selfPortrait:forProfilePhoto:assetType:));
 
 - (void)updateVisibleItems;
+- (void)updateCameraView;
 
 @end

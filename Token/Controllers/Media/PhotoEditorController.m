@@ -42,18 +42,15 @@
 #import "PhotoAvatarCropController.h"
 #import "PhotoToolsController.h"
 #import "PhotoPaintController.h"
-#import "PhotoDummyController.h" //
-#import "PhotoQualityController.h" //
-#import "PhotoEditorItemController.h" //
+#import "PhotoDummyController.h"
+#import "PhotoQualityController.h"
+#import "PhotoEditorItemController.h"
 
-#import "MessageImageViewOverlayView.h" //
+#import "MessageImageViewOverlayView.h"
 
-#import "MenuSheetController.h" //
+#import "MenuSheetController.h"
 
-#import "AVURLAsset+MediaItem.h" //
-
-
-// --------------
+#import "AVURLAsset+MediaItem.h"
 
 @interface PhotoEditorController () <ASWatcher,ViewControllerNavigationBarAppearance, UIDocumentInteractionControllerDelegate>
 {
@@ -110,10 +107,6 @@
     {
         _actionHandle = [[ASHandle alloc] initWithDelegate:self releaseOnMainThread:true];
         
-        self.automaticallyManageScrollViewInsets = false;
-        self.autoManageStatusBarBackground = false;
-        self.isImportant = true;
-        
         _availableTabs = availableTabs;
         
         _item = item;
@@ -123,18 +116,19 @@
         _caption = caption;
         _initialAdjustments = adjustments;
         _screenImage = screenImage;
+        self.fullSizeImage = screenImage;
         
         _queue = [[SQueue alloc] init];
-        _photoEditor = [[ PhotoEditor alloc] initWithOriginalSize:_item.originalSize adjustments:adjustments forVideo:(intent ==  PhotoEditorControllerVideoIntent)];
+        _photoEditor = [[PhotoEditor alloc] initWithOriginalSize:_item.originalSize adjustments:adjustments forVideo:(intent ==  PhotoEditorControllerVideoIntent)];
         if ([self presentedForAvatarCreation])
         {
             CGFloat shortSide = MIN(_item.originalSize.width, _item.originalSize.height);
             _photoEditor.cropRect = CGRectMake((_item.originalSize.width - shortSide) / 2, (_item.originalSize.height - shortSide) / 2, shortSide, shortSide);
         }
         
-        if ([adjustments isKindOfClass:[ VideoEditAdjustments class]])
+        if ([adjustments isKindOfClass:[VideoEditAdjustments class]])
         {
-            VideoEditAdjustments *videoAdjustments = ( VideoEditAdjustments *)adjustments;
+            VideoEditAdjustments *videoAdjustments = (VideoEditAdjustments *)adjustments;
             _photoEditor.trimStartValue = videoAdjustments.trimStartValue;
             _photoEditor.trimEndValue = videoAdjustments.trimEndValue;
         }
@@ -163,7 +157,7 @@
     _backgroundView = [[UIView alloc] initWithFrame:_wrapperView.bounds];
     _backgroundView.alpha = 0.0f;
     _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _backgroundView.backgroundColor = [ PhotoEditorInterfaceAssets toolbarBackgroundColor];
+    _backgroundView.backgroundColor = [PhotoEditorInterfaceAssets toolbarBackgroundColor];
     [_wrapperView addSubview:_backgroundView];
     
     _transitionWrapperView = [[UIView alloc] initWithFrame:_wrapperView.bounds];
@@ -247,7 +241,7 @@
     
     NSString *doneButtonTitle = [self presentedForAvatarCreation] ?  TGLocalized(@"Choose") :  TGLocalized(@"Done");
     
-    _portraitToolbarView = [[ PhotoToolbarView alloc] initWithBackButtonTitle:backButtonTitle doneButtonTitle:doneButtonTitle accentedDone:![self presentedForAvatarCreation] solidBackground:true];
+    _portraitToolbarView = [[PhotoToolbarView alloc] initWithBackButtonTitle:backButtonTitle doneButtonTitle:doneButtonTitle accentedDone:![self presentedForAvatarCreation] solidBackground:true];
     [_portraitToolbarView setToolbarTabs:_availableTabs animated:false];
     [_portraitToolbarView setActiveTab:_currentTab];
     _portraitToolbarView.cancelPressed = toolbarCancelPressed;
@@ -267,7 +261,7 @@
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad)
         [_wrapperView addSubview:_landscapeToolbarView];
     
-    if (_intent &  PhotoEditorControllerWebIntent)
+    if (_intent & PhotoEditorControllerWebIntent)
         [self updateDoneButtonEnabled:false animated:false];
     
     UIInterfaceOrientation orientation = self.interfaceOrientation;
@@ -280,6 +274,9 @@
     _previewView = [[ PhotoEditorPreviewView alloc] initWithFrame:CGRectMake(0, 0, fittedSize.width, fittedSize.height)];
     _previewView.clipsToBounds = true;
     [_previewView setSnapshotImage:_screenImage];
+    
+    _previewView.backgroundColor = [UIColor yellowColor];
+    
     [_photoEditor setPreviewOutput:_previewView];
     [self updatePreviewView];
     
@@ -333,19 +330,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-//    if (_forceStatusBarVisible)
-//        return false;
-//    
-//    if ([self inFormSheet])
-//        return false;
-//    
-//    if (self.navigationController != nil)
-//        return _viewFillingWholeScreen;
-//    
-//    if (self.dontHideStatusBar)
-//        return false;
-    
-    return false;// true;
+    return false;
 }
 
 - (UIBarStyle)requiredNavigationBarStyle
@@ -436,11 +421,6 @@
             [ Hacks setApplicationStatusBarAlpha:0.0f];
         }
     }
-    else if (!self.dontHideStatusBar)
-    {
-//        if (iosMajorVersion() < 7)
-//            [(TGApplication *)[UIApplication sharedApplication] forceSetStatusBarHidden:true withAnimation:UIStatusBarAnimationNone];
-    }
     
     [super viewWillAppear:animated];
     
@@ -468,8 +448,6 @@
         
         if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
             [self setNeedsStatusBarAppearanceUpdate];
-//        else
-//            [( Application *)[UIApplication sharedApplication] forceSetStatusBarHidden:[self prefersStatusBarHidden] withAnimation:UIStatusBarAnimationNone];
         
         if (animated)
         {
@@ -487,20 +465,6 @@
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    //strange ios6 crashfix
-    if (iosMajorVersion() < 7 && !self.dontHideStatusBar)
-    {
-        DispatchAfter(0.5f, dispatch_get_main_queue(), ^
-                      {
-//                          [( Application *)[UIApplication sharedApplication] forceSetStatusBarHidden:false withAnimation:UIStatusBarAnimationNone];
-                      });
-    }
-}
-
 - (void)updateDoneButtonEnabled:(bool)enabled animated:(bool)animated
 {
     [_portraitToolbarView setEditButtonsEnabled:enabled animated:animated];
@@ -515,8 +479,6 @@
     _forceStatusBarVisible = true;
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
         [self setNeedsStatusBarAppearanceUpdate];
-//    else
-//        [( Application *)[UIApplication sharedApplication] forceSetStatusBarHidden:[self prefersStatusBarHidden] withAnimation:UIStatusBarAnimationNone];
 }
 
 - (BOOL)shouldAutorotate
@@ -526,7 +488,7 @@
 
 #pragma mark -
 
-- (void)createEditedImageWithEditorValues:( PhotoEditorValues *)editorValues createThumbnail:(bool)createThumbnail saveOnly:(bool)saveOnly completion:(void (^)(UIImage *))completion
+- (void)createEditedImageWithEditorValues:(PhotoEditorValues *)editorValues createThumbnail:(bool)createThumbnail saveOnly:(bool)saveOnly completion:(void (^)(UIImage *))completion
 {
     if (!saveOnly)
     {
@@ -787,7 +749,7 @@
             _backgroundView.alpha = 1.0f;
             [UIView animateWithDuration:0.3f animations:^
              {
-                 _backgroundView.alpha = 0.0f;
+                // _backgroundView.alpha = 0.0f;
              } completion:nil];
         }
         
@@ -1002,46 +964,11 @@
                     [strongSelf->_currentTabController _finishedTransitionInWithView:nil];
                 };
                 
-                [[[[self.requestOriginalFullSizeImage(_item, 0) reduceLeftWithPassthrough:nil with:^id(__unused id current, __unused id next, void (^emit)(id))
-                    {
-                        if ([next isKindOfClass:[UIImage class]])
-                        {
-                            if ([next degraded])
-                            {
-                                emit(next);
-                                return current;
-                            }
-                            return next;
-                        }
-                        else
-                        {
-                            return current;
-                        }
-                    }] filter:^bool(id result)
-                   {
-                       return (result != nil);
-                   }] deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *image)
-                 {
-                     if (cropController.dismissing && !cropController.switching)
-                         return;
-                     
-                     [self updateDoneButtonEnabled:!image.degraded animated:true];
-                     if (image.degraded)
-                     {
-                         return;
-                     }
-                     else
-                     {
-                         self.fullSizeImage = image;
-                         [cropController setImage:image];
-                     }
-                 }];
-                
                 controller = cropController;
             }
             else
             {
-                PhotoCropController *cropController = [[ PhotoCropController alloc] initWithPhotoEditor:_photoEditor
+                PhotoCropController *cropController = [[PhotoCropController alloc] initWithPhotoEditor:_photoEditor
                                                                                             previewView:_previewView
                                                                                                metadata:self.metadata
                                                                                                forVideo:(_intent ==  PhotoEditorControllerVideoIntent)];
@@ -1907,15 +1834,7 @@
 
 - (void)dismiss
 {
-    if (self.overlayWindow != nil)
-    {
-        [super dismiss];
-    }
-    else
-    {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Layout
@@ -1936,14 +1855,11 @@
 
 - (bool)inFormSheet
 {
-    if (iosMajorVersion() < 9)
-        return [super inFormSheet];
-    
     UIUserInterfaceSizeClass sizeClass = [UIApplication sharedApplication].delegate.window.rootViewController.traitCollection.horizontalSizeClass;
     if (sizeClass == UIUserInterfaceSizeClassCompact)
         return false;
     
-    return [super inFormSheet];
+    return NO;
 }
 
 - (CGSize)referenceViewSize

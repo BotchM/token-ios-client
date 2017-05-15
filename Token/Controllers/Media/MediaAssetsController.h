@@ -24,7 +24,6 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 @property (nonatomic, assign) bool liveVideoUploadEnabled;
 @property (nonatomic, assign) bool shouldShowFileTipIfNeeded;
 
-@property (nonatomic, copy) NSDictionary *(^descriptionGenerator)(id, NSString *, NSString *);
 @property (nonatomic, copy) void (^avatarCompletionBlock)(UIImage *image);
 @property (nonatomic, copy) void (^completionBlock)();
 @property (nonatomic, copy) void (^dismissalBlock)(void);
@@ -32,8 +31,6 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 @property (nonatomic, readonly) MediaAssetsPickerController *pickerController;
 
 + (NSMutableArray <UIImage *> *)selectedItemmsss;
-
-- (NSArray *)resultSignalsWithCurrentItem:(MediaAsset *)currentItem descriptionGenerator:(id (^)(id, NSString *, NSString *))descriptionGenerator;
 
 - (void)completeWithAvatarImage:(UIImage *)image;
 - (void)completeWithCurrentItem:(MediaAsset *)currentItem;
@@ -44,7 +41,5 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 NS_SWIFT_NAME(init(assetGroup:intent:));
 
 + (MediaAssetType)assetTypeForIntent:(MediaAssetsControllerIntent)intent;
-
-+ (NSArray *)resultSignalsForSelectionContext:(MediaSelectionContext *)selectionContext editingContext:(MediaEditingContext *)editingContext intent:(MediaAssetsControllerIntent)intent currentItem:(MediaAsset *)currentItem storeAssets:(bool)storeAssets useMediaCache:(bool)useMediaCache descriptionGenerator:(id (^)(id, NSString *, NSString *))descriptionGenerator;
 
 @end

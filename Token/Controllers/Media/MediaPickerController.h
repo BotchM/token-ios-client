@@ -27,7 +27,6 @@
 @property (nonatomic, copy) void (^catchToolbarView)(bool enabled);
 
 - (instancetype)initWithSelectionContext:(MediaSelectionContext *)selectionContext editingContext:(MediaEditingContext *)editingContext;
-- (NSArray *)resultSignals:(id (^)(id, NSString *, NSString *))descriptionGenerator;
 
 - (NSUInteger)_numberOfItems;
 - (id)_itemAtIndexPath:(NSIndexPath *)indexPath;

@@ -29,7 +29,6 @@
 
 #import "OverlayControllerWindow.h"
 
-#import "MediaAvatarEditorTransition.h"
 #import "PhotoEditorController.h"
 #import "VideoEditAdjustments.h"
 #import "MediaAsset+MediaEditableItem.h"
@@ -616,11 +615,15 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
 
 - (void)updateVisibleItems
 {
-    [self __setupCameraView];
     [self _updateVisibleItems];
     
     [self setNeedsLayout];
     [self layoutIfNeeded];
+}
+
+- (void)updateCameraView
+{
+    [self __setupCameraView];
 }
 
 - (void)_updateVisibleItems
@@ -679,7 +682,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         if (strongSelf == nil)
             return;
         
-        //strongSelf->_hiddenItem = item.asset;
+        strongSelf->_hiddenItem = item.asset;
         [strongSelf updateHiddenCellAnimated:false];
     };
     
@@ -708,7 +711,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         if (strongSelf == nil)
             return;
         
-        //strongSelf->_hiddenItem = nil;
+        strongSelf->_hiddenItem = nil;
         [strongSelf updateHiddenCellAnimated:true];
         
         strongSelf->_galleryMixin = nil;
@@ -786,17 +789,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
             thumbnailImage = next;
         }];
     }
-    
-//    __weak AttachmentCarouselItemView *weakSelf = self;
-//    UIView *(^referenceViewForAsset)(MediaAsset *) = ^UIView *(MediaAsset *asset)
-//    {
-//        __strong AttachmentCarouselItemView *strongSelf = weakSelf;
-//        if (strongSelf != nil)
-//            return [strongSelf referenceViewForAsset:asset];
-//        
-//        return nil;
-//    };
-//    
+       
     self.openEditor = true;
     
     if (self.openEditor)
@@ -807,98 +800,6 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
                 self.didSelectImage(next, asset, cell);
             }
         }];
-//        PhotoEditorController *controller = [[PhotoEditorController alloc] initWithItem:asset intent:PhotoEditorControllerAvatarIntent adjustments:nil caption:nil screenImage:thumbnailImage availableTabs:[PhotoEditorController defaultTabsForAvatarIntent] selectedTab:PhotoEditorCropTab];
-//        controller.editingContext = _editingContext;
-//        controller.dontHideStatusBar = true;
-//        
-//        MediaAvatarEditorTransition *transition = [[MediaAvatarEditorTransition alloc] initWithController:controller fromView:referenceViewForAsset(asset)];
-//        
-//        controller.didFinishRenderingFullSizeImage = ^(UIImage *resultImage)
-//        {
-//            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
-////            if (strongSelf == nil || !TGAppDelegateInstance.saveEditedPhotos)
-////                return;
-//            
-//            [[strongSelf->_assetsLibrary saveAssetWithImage:resultImage] startWithNext:nil];
-//        };
-//        
-//        __weak PhotoEditorController *weakController = controller;
-//        controller.didFinishEditing = ^(__unused id<MediaEditAdjustments> adjustments, UIImage *resultImage, __unused UIImage *thumbnailImage, __unused bool hasChanges)
-//        {
-//            if (!hasChanges)
-//                return;
-//            
-//            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
-//            if (strongSelf == nil)
-//                return;
-//            
-//            __strong PhotoEditorController *strongController = weakController;
-//            if (strongController == nil)
-//                return;
-//            
-//            if (strongSelf.avatarCompletionBlock != nil)
-//                strongSelf.avatarCompletionBlock(resultImage);
-//            
-//            [strongController dismissAnimated:true];
-//        };
-//        
-//        controller.requestThumbnailImage = ^(id<MediaEditableItem> editableItem)
-//        {
-//            return [editableItem thumbnailImageSignal];
-//        };
-//        
-//        controller.requestOriginalScreenSizeImage = ^(id<MediaEditableItem> editableItem, NSTimeInterval position)
-//        {
-//            return [editableItem screenImageSignal:position];
-//        };
-//        
-//        controller.requestOriginalFullSizeImage = ^(id<MediaEditableItem> editableItem, NSTimeInterval position)
-//        {
-//            return [editableItem originalImageSignal:position];
-//        };
-//        
-//        OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:_parentController contentController:controller];
-//        controllerWindow.hidden = false;
-//        controller.view.clipsToBounds = true;
-//        
-//        transition.referenceFrame = ^CGRect
-//        {
-//            UIView *referenceView = referenceViewForAsset(asset);
-//            return [referenceView.superview convertRect:referenceView.frame toView:nil];
-//        };
-//        transition.referenceImageSize = ^CGSize
-//        {
-//            return asset.dimensions;
-//        };
-//        transition.referenceScreenImageSignal = ^SSignal *
-//        {
-//            return [MediaAssetImageSignals imageForAsset:asset imageType:MediaAssetImageTypeFastScreen size:CGSizeMake(640, 640)];
-//        };
-//        [transition presentAnimated:true];
-//        
-//        controller.beginCustomTransitionOut = ^(CGRect outReferenceFrame, UIView *repView, void (^completion)(void))
-//        {
-//            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
-//            if (strongSelf == nil)
-//                return;
-//            
-//            transition.outReferenceFrame = outReferenceFrame;
-//            transition.repView = repView;
-//            [transition dismissAnimated:true completion:^
-//            {
-//                strongSelf->_hiddenItem = nil;
-//                [strongSelf updateHiddenCellAnimated:false];
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^
-//                {
-//                    if (completion != nil)
-//                        completion();
-//                });
-//            }];
-//        };
-//        
-//        _hiddenItem = asset;
-//        [self updateHiddenCellAnimated:false];
     }
     else
     {
