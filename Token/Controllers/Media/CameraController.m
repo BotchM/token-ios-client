@@ -708,6 +708,24 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
         [Hacks setApplicationStatusBarAlpha:0.0f];
     }];
     
+    [_autorotationCorrectionView insertSubview:_previewView aboveSubview:_backgroundView];
+    
+    _backgroundView.alpha = 0.0f;
+    _interfaceView.alpha = 0.0f;
+    
+    [UIView animateWithDuration:0.3f animations:^
+     {
+         _backgroundView.alpha = 1.0f;
+         _interfaceView.alpha = 1.0f;
+     }];
+    
+    CGRect toFrame = [CameraController _cameraPreviewFrameForScreenSize:TGScreenSize() mode:_camera.cameraMode];
+    
+    _previewView.frame = toFrame;
+    
+    _interfaceView.previewViewFrame = toFrame;
+    [_interfaceView layoutPreviewRelativeViews];
+    
     [[UIApplication sharedApplication] setIdleTimerDisabled:true];
     
     if (!_camera.isCapturing)
@@ -1402,42 +1420,6 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
 
 #pragma mark - Transition
 
-- (void)beginTransitionInFromRect:(CGRect)rect
-{
-    [_autorotationCorrectionView insertSubview:_previewView aboveSubview:_backgroundView];
-    
-    _previewView.frame = rect;
-    
-    _backgroundView.alpha = 0.0f;
-    _interfaceView.alpha = 0.0f;
-    
-    [UIView animateWithDuration:0.3f animations:^
-     {
-         _backgroundView.alpha = 1.0f;
-         _interfaceView.alpha = 1.0f;
-     }];
-    
-    CGRect fromFrame = rect;
-    CGRect toFrame = [CameraController _cameraPreviewFrameForScreenSize:TGScreenSize() mode:_camera.cameraMode];
-    
-    if (!CGRectEqualToRect(fromFrame, CGRectZero))
-    {
-        POPSpringAnimation *frameAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
-        frameAnimation.fromValue = [NSValue valueWithCGRect:fromFrame];
-        frameAnimation.toValue = [NSValue valueWithCGRect:toFrame];
-        frameAnimation.springSpeed = 20;
-        frameAnimation.springBounciness = 1;
-        [_previewView pop_addAnimation:frameAnimation forKey:@"frame"];
-    }
-    else
-    {
-        _previewView.frame = toFrame;
-    }
-    
-    _interfaceView.previewViewFrame = toFrame;
-    [_interfaceView layoutPreviewRelativeViews];
-}
-
 - (void)beginTransitionOutWithVelocity:(CGFloat)velocity
 {
     _dismissing = true;
@@ -1459,7 +1441,7 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
     
     CGRect referenceFrame = CGRectZero;
     if (self.beginTransitionOut != nil)
-        referenceFrame = self.beginTransitionOut();
+         self.beginTransitionOut();
     
     __weak CameraController *weakSelf = self;
     if (_standalone)
@@ -1506,7 +1488,7 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
             if (strongSelf.finishedTransitionOut != nil)
                 strongSelf.finishedTransitionOut();
 
-            [strongSelf dismiss];
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
         };
         [_previewView pop_addAnimation:frameAnimation forKey:@"frame"];
     }
@@ -1515,7 +1497,7 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
         if (self.finishedTransitionOut != nil)
             self.finishedTransitionOut();
         
-        [self dismiss];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

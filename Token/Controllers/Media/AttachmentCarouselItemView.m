@@ -97,6 +97,10 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     
     CGFloat _carouselCorrection;
 }
+
+@property (nonatomic, assign) BOOL hasCamera;
+@property (nonatomic, assign) BOOL selfPortrait;
+
 @end
 
 @implementation AttachmentCarouselItemView
@@ -106,6 +110,9 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     self = [super initWithType:MenuSheetItemTypeDefault];
     if (self != nil)
     {
+        self.hasCamera = hasCamera;
+        self.selfPortrait = selfPortrait;
+        
         __weak AttachmentCarouselItemView *weakSelf = self;
         _forProfilePhoto = forProfilePhoto;
         
@@ -176,25 +183,6 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         _largeLayout.scrollDirection = _smallLayout.scrollDirection;
         _largeLayout.minimumLineSpacing = _smallLayout.minimumLineSpacing;
         
-        if (hasCamera)
-        {
-            _cameraView = [[AttachmentCameraView alloc] initForSelfPortrait:selfPortrait];
-            _cameraView.frame = CGRectMake(_smallLayout.minimumLineSpacing, 0, AttachmentCellSize.width, AttachmentCellSize.height);
-            [_cameraView startPreview];
-            
-            _cameraView.pressed = ^
-            {
-                __strong AttachmentCarouselItemView *strongSelf = weakSelf;
-                if (strongSelf == nil)
-                return;
-                
-                [strongSelf.superview bringSubviewToFront:strongSelf];
-                
-                if (strongSelf.cameraPressed != nil)
-                strongSelf.cameraPressed(strongSelf->_cameraView);
-            };
-        }
-        
         _collectionView = [[AttachmentCarouselCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, AttachmentZoomedPhotoHeight + AttachmentEdgeInset * 2) collectionViewLayout:_smallLayout];
         _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.dataSource = self;
@@ -206,8 +194,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         [_collectionView registerClass:[AttachmentGifCell class] forCellWithReuseIdentifier:AttachmentGifCellIdentifier];
         [self addSubview:_collectionView];
         
-        if (_cameraView)
-            [_collectionView addSubview:_cameraView];
+        [self __setupCameraView];
     
         _sendMediaItemView = [[MenuSheetButtonItemView alloc] initWithTitle:nil type:MenuSheetButtonTypeSend action:^
         {
@@ -283,6 +270,37 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     [_assetsDisposable dispose];
     [_selectionChangedDisposable dispose];
     [_itemsSizeChangedDisposable dispose];
+}
+
+- (void)__setupCameraView
+{
+    if (self.hasCamera)
+    {
+        if (!_cameraView) {
+            _cameraView = [[AttachmentCameraView alloc] initForSelfPortrait:self.selfPortrait];
+            
+            [_collectionView addSubview:_cameraView];
+            [_cameraView startPreview];
+        } else {
+            [_cameraView attachPreviewViewAnimated:false];
+            [_cameraView resumePreview];
+        }
+        
+        _cameraView.frame = CGRectMake(_smallLayout.minimumLineSpacing, 0, AttachmentCellSize.width, AttachmentCellSize.height);
+        
+        __weak typeof(self)weakSelf = self;
+        _cameraView.pressed = ^
+        {
+            __strong AttachmentCarouselItemView *strongSelf = weakSelf;
+            if (strongSelf == nil)
+                return;
+            
+            [strongSelf.superview bringSubviewToFront:strongSelf];
+            
+            if (strongSelf.cameraPressed != nil)
+                strongSelf.cameraPressed(strongSelf->_cameraView);
+        };
+    }
 }
 
 - (void)setRemainingHeight:(CGFloat)remainingHeight
@@ -598,7 +616,11 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
 
 - (void)updateVisibleItems
 {
+    [self __setupCameraView];
     [self _updateVisibleItems];
+    
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)_updateVisibleItems

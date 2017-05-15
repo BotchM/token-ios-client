@@ -2,12 +2,6 @@
 #import "MediaSelectionContext.h"
 #import "Common.h"
 
-@interface AttachmentAssetCell ()
-{
-    SMetaDisposable *_itemSelectedDisposable;
-}
-@end
-
 @implementation AttachmentAssetCell
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -74,11 +68,6 @@
     }
 }
 
-- (void)dealloc
-{
-    [_itemSelectedDisposable dispose];
-}
-
 - (void)setAsset:(MediaAsset *)asset signal:(SSignal *)signal
 {
     _asset = asset;
@@ -92,25 +81,11 @@
             [self addSubview:_checkButton];
         }
         
-        if (_itemSelectedDisposable == nil)
-            _itemSelectedDisposable = [[SMetaDisposable alloc] init];
-        
         [self setChecked:[self.selectionContext isItemSelected:(id<MediaSelectableItem>)asset] animated:false];
-        __weak AttachmentAssetCell *weakSelf = self;
-        [_itemSelectedDisposable setDisposable:[[self.selectionContext itemInformativeSelectedSignal:(id<MediaSelectableItem>)asset] startWithNext:^(MediaSelectionChange *next)
-        {
-            __strong AttachmentAssetCell *strongSelf = weakSelf;
-            if (strongSelf == nil)
-                return;
-            
-            if (next.sender != strongSelf->_checkButton)
-                [strongSelf setChecked:next.selected animated:next.animated];
-        }]];
     }
     
     if (_asset == nil)
     {
-        //[_imageView reset];
         self.imageView.image = nil;
         return;
     }
@@ -125,18 +100,12 @@
     {
         [signal startWithNext:^(id next)
          {
-             bool synchronous = [NSThread isMainThread];
+             __weak typeof(self)weakSelf = self;
              DispatchOnMainThread(^
                                   {
-                                      self.imageView.image = next;
-                                     // __strong ImageView *strongSelf = weakSelf;
-//                                      if (strongSelf != nil && strongSelf->_version == version)
-//                                      {
-//                                          if ([next isKindOfClass:[UIImage class]])
-//                                              [strongSelf _commitImage:next partial:[next degraded] && ![next edited] loadTime:synchronous ? 0.0 : 1.0];
-//                                          else if ([next respondsToSelector:@selector(floatValue)])
-//                                              [strongSelf _updateProgress:[next floatValue]];
-                                     // }
+                                      if ([next isKindOfClass:[UIImage class]]) {
+                                          weakSelf.imageView.image = next;
+                                      }
                                   });
          } error:^(id error)
          {
@@ -145,9 +114,7 @@
          {
          }];
     }
-      //  [_imageView setSignal:signal];
     else
-       // [_imageView reset];
         self.imageView.image = nil;
 }
 
@@ -166,8 +133,6 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    //[_imageView reset];
-    //_asset = nil;
 }
 
 - (void)setHidden:(bool)hidden animated:(bool)animated
