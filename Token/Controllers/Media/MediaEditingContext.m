@@ -3,14 +3,14 @@
 #import "UIImage+TG.h"
 #import "StringUtils.h"
 #import "PhotoEditorUtils.h"
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "VideoEditAdjustments.h"
 
 #import "ModernCache.h"
 #import "MemoryImageCache.h"
 #import "MediaAsset.h"
 #import "Common.h"
-//#import "TGAppDelegate.h"
+#import "AppDelegate.h"
 
 @interface MediaImageUpdate : NSObject
 
@@ -112,20 +112,20 @@
         _originalThumbnailImageCache = [[MemoryImageCache alloc] initWithSoftMemoryLimit:[[self class] thumbnailImageSoftMemoryLimit]
                                                                            hardMemoryLimit:[[self class] thumbnailImageHardMemoryLimit]];
         
-//        NSString *diskCachePath = [[TGAppDelegate documentsPath] stringByAppendingPathComponent:[[self class] diskCachePath]];
-//        _diskCache = [[ModernCache alloc] initWithPath:diskCachePath size:[[self class] diskMemoryLimit]];
-//        
-//        _fullSizeResultsUrl = [NSURL fileURLWithPath:[[TGAppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"photoeditorresults/%@", _contextId]]];
-//        [[NSFileManager defaultManager] createDirectoryAtPath:_fullSizeResultsUrl.path withIntermediateDirectories:true attributes:nil error:nil];
-//        
-//        _paintingImagesUrl = [NSURL fileURLWithPath:[[TGAppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"paintingimages/%@", _contextId]]];
-//        [[NSFileManager defaultManager] createDirectoryAtPath:_paintingImagesUrl.path withIntermediateDirectories:true attributes:nil error:nil];
-//        
-//        _videoPaintingImagesUrl = [NSURL fileURLWithPath:[[TGAppDelegate documentsPath] stringByAppendingPathComponent:@"videopaintingimages"]];
-//        [[NSFileManager defaultManager] createDirectoryAtPath:_videoPaintingImagesUrl.path withIntermediateDirectories:true attributes:nil error:nil];
-//        
-//        _paintingDatasUrl = [NSURL fileURLWithPath:[[TGAppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"paintingdatas/%@", _contextId]]];
-//        [[NSFileManager defaultManager] createDirectoryAtPath:_paintingDatasUrl.path withIntermediateDirectories:true attributes:nil error:nil];
+        NSString *diskCachePath = [[AppDelegate documentsPath] stringByAppendingPathComponent:[[self class] diskCachePath]];
+        _diskCache = [[ModernCache alloc] initWithPath:diskCachePath size:[[self class] diskMemoryLimit]];
+        
+        _fullSizeResultsUrl = [NSURL fileURLWithPath:[[AppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"photoeditorresults/%@", _contextId]]];
+        [[NSFileManager defaultManager] createDirectoryAtPath:_fullSizeResultsUrl.path withIntermediateDirectories:true attributes:nil error:nil];
+        
+        _paintingImagesUrl = [NSURL fileURLWithPath:[[AppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"paintingimages/%@", _contextId]]];
+        [[NSFileManager defaultManager] createDirectoryAtPath:_paintingImagesUrl.path withIntermediateDirectories:true attributes:nil error:nil];
+       
+        _videoPaintingImagesUrl = [NSURL fileURLWithPath:[[AppDelegate documentsPath] stringByAppendingPathComponent:@"videopaintingimages"]];
+        [[NSFileManager defaultManager] createDirectoryAtPath:_videoPaintingImagesUrl.path withIntermediateDirectories:true attributes:nil error:nil];
+        
+        _paintingDatasUrl = [NSURL fileURLWithPath:[[AppDelegate documentsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"paintingdatas/%@", _contextId]]];
+        [[NSFileManager defaultManager] createDirectoryAtPath:_paintingDatasUrl.path withIntermediateDirectories:true attributes:nil error:nil];
         
         _storeVideoPaintingImages = [[NSMutableArray alloc] init];
         
@@ -468,6 +468,10 @@
     NSURL *dataUrl = [_paintingDatasUrl URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.dat", [StringUtils md5:itemId]]];
     
     [_paintingImageCache setImage:image forKey:itemId attributes:NULL];
+    
+    if (!imageUrl) {
+        return false;
+    }
     
     NSData *imageData = UIImagePNGRepresentation(image);
     bool imageSuccess = [imageData writeToURL:imageUrl options:NSDataWritingAtomic error:nil];

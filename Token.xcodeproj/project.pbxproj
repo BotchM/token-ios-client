@@ -206,6 +206,7 @@
 		2B5A7F631EBCA92200F561C4 /* CameraFlashActiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F621EBCA92200F561C4 /* CameraFlashActiveView.m */; };
 		2B5A7F6B1EBCAABB00F561C4 /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F681EBCAABB00F561C4 /* DraggableCollectionViewFlowLayout.m */; };
 		2B5A7F6F1EBCAB8D00F561C4 /* MediaPickerGalleryPhotoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F6E1EBCAB8D00F561C4 /* MediaPickerGalleryPhotoItemView.m */; };
+		2B6AFC551ECAD79700940ABA /* GifConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AFC541ECAD79700940ABA /* GifConverter.m */; };
 		2B78255D1EBBDCBB002C32D2 /* ASHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7823131EBBDCB8002C32D2 /* ASHandle.m */; };
 		2B78255E1EBBDCBB002C32D2 /* ASQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7823151EBBDCB8002C32D2 /* ASQueue.m */; };
 		2B78255F1EBBDCBB002C32D2 /* ATQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7823181EBBDCB8002C32D2 /* ATQueue.m */; };
@@ -958,6 +959,8 @@
 		2B5A7F6A1EBCAABB00F561C4 /* MenuSheetCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuSheetCollectionView.m; path = Media/MenuSheetCollectionView.m; sourceTree = "<group>"; };
 		2B5A7F6D1EBCAB8D00F561C4 /* MediaPickerGalleryPhotoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPickerGalleryPhotoItemView.h; path = Media/MediaPickerGalleryPhotoItemView.h; sourceTree = "<group>"; };
 		2B5A7F6E1EBCAB8D00F561C4 /* MediaPickerGalleryPhotoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaPickerGalleryPhotoItemView.m; path = Media/MediaPickerGalleryPhotoItemView.m; sourceTree = "<group>"; };
+		2B6AFC531ECAD79700940ABA /* GifConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GifConverter.h; path = Media/GifConverter.h; sourceTree = "<group>"; };
+		2B6AFC541ECAD79700940ABA /* GifConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GifConverter.m; path = Media/GifConverter.m; sourceTree = "<group>"; };
 		2B7823121EBBDCB8002C32D2 /* ASHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASHandle.h; path = Media/ASHandle.h; sourceTree = "<group>"; };
 		2B7823131EBBDCB8002C32D2 /* ASHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASHandle.m; path = Media/ASHandle.m; sourceTree = "<group>"; };
 		2B7823141EBBDCB8002C32D2 /* ASQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASQueue.h; path = Media/ASQueue.h; sourceTree = "<group>"; };
@@ -1026,7 +1029,7 @@
 		2B7823531EBBDCB8002C32D2 /* PhotoEditorRawDataInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoEditorRawDataInput.m; path = Media/PhotoEditorRawDataInput.m; sourceTree = "<group>"; };
 		2B7823541EBBDCB8002C32D2 /* PhotoEditorRawDataOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoEditorRawDataOutput.h; path = Media/PhotoEditorRawDataOutput.h; sourceTree = "<group>"; };
 		2B7823551EBBDCB8002C32D2 /* PhotoEditorRawDataOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoEditorRawDataOutput.m; path = Media/PhotoEditorRawDataOutput.m; sourceTree = "<group>"; };
-		2B7823561EBBDCB8002C32D2 /* PGPhotoEditorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PGPhotoEditorValues.h; path = Media/PGPhotoEditorValues.h; sourceTree = "<group>"; };
+		2B7823561EBBDCB8002C32D2 /* PhotoEditorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoEditorValues.h; path = Media/PhotoEditorValues.h; sourceTree = "<group>"; };
 		2B7823571EBBDCB8002C32D2 /* PhotoEditorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoEditorValues.m; path = Media/PhotoEditorValues.m; sourceTree = "<group>"; };
 		2B7823581EBBDCB8002C32D2 /* PhotoEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoEditorView.h; path = Media/PhotoEditorView.h; sourceTree = "<group>"; };
 		2B7823591EBBDCB8002C32D2 /* PhotoEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoEditorView.m; path = Media/PhotoEditorView.m; sourceTree = "<group>"; };
@@ -2200,7 +2203,7 @@
 				2B7823531EBBDCB8002C32D2 /* PhotoEditorRawDataInput.m */,
 				2B7823541EBBDCB8002C32D2 /* PhotoEditorRawDataOutput.h */,
 				2B7823551EBBDCB8002C32D2 /* PhotoEditorRawDataOutput.m */,
-				2B7823561EBBDCB8002C32D2 /* PGPhotoEditorValues.h */,
+				2B7823561EBBDCB8002C32D2 /* PhotoEditorValues.h */,
 				2B7823571EBBDCB8002C32D2 /* PhotoEditorValues.m */,
 				2B7823581EBBDCB8002C32D2 /* PhotoEditorView.h */,
 				2B7823591EBBDCB8002C32D2 /* PhotoEditorView.m */,
@@ -2242,6 +2245,8 @@
 				2B78237D1EBBDCB8002C32D2 /* SharpenTool.m */,
 				2B78237E1EBBDCB8002C32D2 /* TintTool.h */,
 				2B78237F1EBBDCB8002C32D2 /* TintTool.m */,
+				2B6AFC531ECAD79700940ABA /* GifConverter.h */,
+				2B6AFC541ECAD79700940ABA /* GifConverter.m */,
 				2B7823801EBBDCB8002C32D2 /* VignetteTool.h */,
 				2B7823811EBBDCB8002C32D2 /* VignetteTool.m */,
 				2B7823821EBBDCB8002C32D2 /* WarmthTool.h */,
@@ -3989,6 +3994,7 @@
 				2B78265F1EBBDCBB002C32D2 /* ScaleImage.m in Sources */,
 				9FC72A441E252CFA00EF1141 /* ContactsManager.m in Sources */,
 				2B5A7F571EBCA7EB00F561C4 /* CameraSegmentsView.m in Sources */,
+				2B6AFC551ECAD79700940ABA /* GifConverter.m in Sources */,
 				2B7826091EBBDCBB002C32D2 /* PaintEllipticalBrush.m in Sources */,
 				2B7825ED1EBBDCBB002C32D2 /* ModernButtonViewModel.m in Sources */,
 				2B7825F81EBBDCBB002C32D2 /* ModernGalleryVideoPlayerState.m in Sources */,

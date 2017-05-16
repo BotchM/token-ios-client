@@ -102,3 +102,4 @@
 #import "VideoEditAdjustments.h"
 #import "PhotoEditorController.h"
 #import "MediaEditingContext.h"
+#import "DocumentAttributeFilename.h"

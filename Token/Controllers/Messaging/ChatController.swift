@@ -18,6 +18,7 @@ import SweetUIKit
 import NoChat
 import MobileCoreServices
 import ImagePicker
+import AVFoundation
 
 class ChatController: MessagesCollectionViewController {
 
@@ -209,6 +210,16 @@ class ChatController: MessagesCollectionViewController {
         self.collectionView.setNeedsLayout()
     }
 
+    
+    func checkMicrophoneAccess() {
+        if AVAudioSession.sharedInstance().recordPermission().contains(.undetermined) {
+            
+            AVAudioSession.sharedInstance().requestRecordPermission({ granted in
+                
+            })
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadDraft()
@@ -766,6 +777,8 @@ extension ChatController: ChatInputTextPanelDelegate {
         controller.hasSwipeGesture = true
         controller.maxHeight = 445 - MenuSheetButtonItemViewHeight
         var itemViews = [UIView]()
+        
+        checkMicrophoneAccess()
         
         let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
         carouselItem.condensed = false

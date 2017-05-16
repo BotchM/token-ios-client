@@ -59,14 +59,20 @@ const CGFloat CameraModeControlVerticalInteritemSpace = 29.0f;
         _wrapperView.hitTestEdgeInsets = UIEdgeInsetsMake(-10, -10, -10, -10);
         _wrapperView.opaque = false;
         [_maskView addSubview:_wrapperView];
+       
+        NSMutableArray *buttons = [NSMutableArray new];
         
-        _buttons = @
-        [
-         [self _createButtonForMode:PGCameraModeVideo title:TGLocalized(@"VideoMode")],
-         [self _createButtonForMode:PGCameraModePhoto title:TGLocalized(@"PhotoMode")],
-         [self _createButtonForMode:PGCameraModeSquare title:TGLocalized(@"SquareMode")],
-        // [self _createButtonForMode:PGCameraModeClip title:TGLocalized(@"MomentMode")]
-        ];
+        if ([[AVAudioSession sharedInstance] recordPermission] == AVAudioSessionRecordPermissionGranted) {
+            [buttons addObject: [self _createButtonForMode:PGCameraModeVideo title:TGLocalized(@"VideoMode")]];
+        }
+        
+        [buttons addObjectsFromArray:@[
+                                       [self _createButtonForMode:PGCameraModePhoto title:TGLocalized(@"PhotoMode")],
+                                       [self _createButtonForMode:PGCameraModeSquare title:TGLocalized(@"SquareMode")],
+                                       // [self _createButtonForMode:PGCameraModeClip title:TGLocalized(@"MomentMode")]
+                                       ]];
+        
+        _buttons = [buttons copy];
         
         for (UIButton *button in _buttons)
             [_wrapperView addSubview:button];
