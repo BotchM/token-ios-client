@@ -18,7 +18,7 @@
 
 //#import "MediaAsset+MediaEditableItem.h"
 #import "PhotoEditorController.h"
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 
 #import "Common.h"
 

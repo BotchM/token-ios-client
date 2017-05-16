@@ -4,7 +4,7 @@
 
 //#import "TGAppDelegate.h"
 #import "CameraShotMetadata.h"
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "PhotoEditorUtils.h"
 #import "ImageUtils.h"
 #import "Hacks.h"
@@ -205,7 +205,7 @@
         
         [strongSelf transitionOutWithCompletion:^
          {
-             [strongSelf dismiss];
+             [strongSelf dismissViewControllerAnimated:YES completion:nil];
          }];
     };
     
@@ -271,7 +271,9 @@
         NSArray *stickers = [editingContext adjustmentsForItem:strongSelf->_image].paintingData.stickers;
         [[imageSignal deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *result)
          {
-             strongSelf.sendPressed(result, caption, stickers);
+             [strongSelf dismissViewControllerAnimated:NO completion:^{
+                 strongSelf.sendPressed(result, caption, stickers);
+             }];
          }];
     };
     
@@ -370,23 +372,12 @@
 
 - (void)dismiss
 {
-    if (self.overlayWindow != nil)
-    {
-        [super dismiss];
-    }
-    else
-    {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
-    if (self.childViewControllers.count > 0)
-        return [self.childViewControllers.lastObject prefersStatusBarHidden];
-    
-    return [super prefersStatusBarHidden];
+    return YES;
 }
 
 - (UIBarStyle)requiredNavigationBarStyle
@@ -824,9 +815,9 @@
         return [editableItem originalImageSignal:position];
     };
     
-    [self addChildViewController:controller];
-    [self.view addSubview:controller.view];
     controller.view.clipsToBounds = true;
+    
+    [self presentViewController:controller animated:NO completion:nil];
 }
 
 - (void)setToolbarsHidden:(bool)hidden animated:(bool)animated

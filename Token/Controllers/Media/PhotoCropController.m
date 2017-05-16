@@ -13,7 +13,7 @@
 
 #import "PhotoEditor.h"
 
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "CameraShotMetadata.h"
 #import "PaintingData.h"
 

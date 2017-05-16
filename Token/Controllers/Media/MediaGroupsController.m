@@ -32,7 +32,7 @@
         _assetsLibrary = assetsLibrary;
         _intent = intent;
         
-        [self setTitle:TGLocalized(@"SearchImages")];
+        [self setTitle:TGLocalized(@"Images")];
     }
     return self;
 }

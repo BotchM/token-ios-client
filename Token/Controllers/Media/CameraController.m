@@ -44,7 +44,7 @@
 #import "ModernGalleryVideoView.h"
 
 #import "MediaAssetImageSignals.h"
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "VideoEditAdjustments.h"
 #import "PaintingData.h"
 #import "UIImage+MediaEditableItem.h"
@@ -1014,20 +1014,8 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
         {
             PhotoEditorController *controller = [[PhotoEditorController alloc] initWithItem:image intent:(PhotoEditorControllerFromCameraIntent | PhotoEditorControllerAvatarIntent) adjustments:nil caption:nil screenImage:image availableTabs:[PhotoEditorController defaultTabsForAvatarIntent] selectedTab:PhotoEditorCropTab];
             __weak PhotoEditorController *weakController = controller;
-            controller.beginTransitionIn = ^UIView *(CGRect *referenceFrame, __unused UIView **parentView)
-            {
-                __strong CameraController *strongSelf = weakSelf;
-                if (strongSelf == nil)
-                    return nil;
-                
-                strongSelf->_previewView.hidden = true;
-                *referenceFrame = strongSelf->_previewView.frame;
-                
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:strongSelf->_previewView.frame];
-                imageView.image = image;
-                
-                return imageView;
-            };
+            
+            [self presentViewController:controller animated:NO completion:nil];
             
             controller.beginTransitionOut = ^UIView *(CGRect *referenceFrame, __unused UIView **parentView)
             {
@@ -1144,12 +1132,12 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
                 if (strongSelf == nil)
                     return;
                 
-                if (strongSelf.finishedWithPhoto != nil)
-                    strongSelf.finishedWithPhoto(resultImage, caption, stickers);
                 
-                __strong OverlayController *strongController = weakController;
-                if (strongController != nil)
-                    [strongSelf dismissTransitionForResultController:strongController];
+                
+                [strongSelf dismissViewControllerAnimated:NO completion:^{
+                    if (strongSelf.finishedWithPhoto != nil)
+                        strongSelf.finishedWithPhoto(resultImage, caption, stickers);
+                }];
             };
             
             overlayController = controller;
@@ -1157,17 +1145,7 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
             break;
     }
     
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
-    {
-        OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:self contentController:overlayController];
-        controllerWindow.windowLevel = self.view.window.windowLevel + 0.0001f;
-        controllerWindow.hidden = false;
-    }
-    else
-    {
-        [self addChildViewController:overlayController];
-        [self.view addSubview:overlayController.view];
-    }
+    [self presentViewController:overlayController animated:NO completion:nil];
     
     if (completion != nil)
         completion();

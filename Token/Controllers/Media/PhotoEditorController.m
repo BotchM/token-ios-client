@@ -1,14 +1,13 @@
 
 #import "PhotoEditorController.h"
 
-#import "Common.h"
+#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import <objc/runtime.h>
 
 #import "ASWatcher.h"
 
 #import <Photos/Photos.h>
-
-#import "OverlayControllerWindow.h"
 
 #import "PhotoEditorAnimation.h"
 #import "PhotoEditorInterfaceAssets.h"
@@ -24,15 +23,18 @@
 #import "PhotoEditor.h"
 #import "EnhanceTool.h"
 
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "VideoEditAdjustments.h"
 #import "PaintingData.h"
+
 #import "MediaVideoConverter.h"
 
 #import "PhotoToolbarView.h"
 #import "PhotoEditorPreviewView.h"
 
 #import "MenuView.h"
+
+#import "Common.h"
 
 #import "MediaAssetsLibrary.h"
 #import "MediaAssetImageSignals.h"
@@ -42,17 +44,17 @@
 #import "PhotoAvatarCropController.h"
 #import "PhotoToolsController.h"
 #import "PhotoPaintController.h"
-#import "PhotoDummyController.h"
-#import "PhotoQualityController.h"
-#import "PhotoEditorItemController.h"
+#import "PhotoDummyController.h" //
+#import "PhotoQualityController.h" //
+#import "PhotoEditorItemController.h" //
 
-#import "MessageImageViewOverlayView.h"
+#import "MessageImageViewOverlayView.h" //
 
-#import "MenuSheetController.h"
+#import "MenuSheetController.h" //
 
-#import "AVURLAsset+MediaItem.h"
+#import "AVURLAsset+MediaItem.h" //
 
-@interface PhotoEditorController () <ASWatcher,ViewControllerNavigationBarAppearance, UIDocumentInteractionControllerDelegate>
+@interface PhotoEditorController () <ASWatcher, UIDocumentInteractionControllerDelegate>
 {
     bool _switchingTab;
     PhotoEditorTab _availableTabs;
@@ -71,11 +73,11 @@
     
     SQueue *_queue;
     PhotoEditorControllerIntent _intent;
-    id< MediaEditableItem> _item;
+    id<MediaEditableItem> _item;
     UIImage *_screenImage;
     UIImage *_thumbnailImage;
     
-    id< MediaEditAdjustments> _initialAdjustments;
+    id<MediaEditAdjustments> _initialAdjustments;
     NSString *_caption;
     
     bool _viewFillingWholeScreen;
@@ -96,11 +98,11 @@
 
 @end
 
-@implementation  PhotoEditorController
+@implementation PhotoEditorController
 
 @synthesize actionHandle = _actionHandle;
 
-- (instancetype)initWithItem:(id< MediaEditableItem>)item intent:( PhotoEditorControllerIntent)intent adjustments:(id< MediaEditAdjustments>)adjustments caption:(NSString *)caption screenImage:(UIImage *)screenImage availableTabs:( PhotoEditorTab)availableTabs selectedTab:( PhotoEditorTab)selectedTab
+- (instancetype)initWithItem:(id<MediaEditableItem>)item intent:(PhotoEditorControllerIntent)intent adjustments:(id<MediaEditAdjustments>)adjustments caption:(NSString *)caption screenImage:(UIImage *)screenImage availableTabs:(PhotoEditorTab)availableTabs selectedTab:(PhotoEditorTab)selectedTab
 {
     self = [super init];
     if (self != nil)
@@ -116,10 +118,9 @@
         _caption = caption;
         _initialAdjustments = adjustments;
         _screenImage = screenImage;
-        self.fullSizeImage = screenImage;
         
         _queue = [[SQueue alloc] init];
-        _photoEditor = [[PhotoEditor alloc] initWithOriginalSize:_item.originalSize adjustments:adjustments forVideo:(intent ==  PhotoEditorControllerVideoIntent)];
+        _photoEditor = [[PhotoEditor alloc] initWithOriginalSize:_item.originalSize adjustments:adjustments forVideo:(intent == PhotoEditorControllerVideoIntent)];
         if ([self presentedForAvatarCreation])
         {
             CGFloat shortSide = MIN(_item.originalSize.width, _item.originalSize.height);
@@ -166,11 +167,11 @@
     _containerView = [[UIView alloc] initWithFrame:CGRectZero];
     [_wrapperView addSubview:_containerView];
     
-    __weak  PhotoEditorController *weakSelf = self;
+    __weak PhotoEditorController *weakSelf = self;
     
     void(^toolbarCancelPressed)(void) = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -179,7 +180,7 @@
     
     void(^toolbarDonePressed)(void) = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -188,16 +189,16 @@
     
     void(^toolbarDoneLongPressed)(id) = ^(id sender)
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
         [strongSelf doneButtonLongPressed:sender];
     };
     
-    void(^toolbarTabPressed)( PhotoEditorTab) = ^( PhotoEditorTab tab)
+    void(^toolbarTabPressed)(PhotoEditorTab) = ^(PhotoEditorTab tab)
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -207,39 +208,39 @@
                 [strongSelf presentEditorTab:tab];
                 break;
                 
-            case  PhotoEditorPaintTab:
-                if ([strongSelf->_currentTabController isKindOfClass:[ PhotoPaintController class]])
+            case PhotoEditorPaintTab:
+                if ([strongSelf->_currentTabController isKindOfClass:[PhotoPaintController class]])
                     [strongSelf->_currentTabController handleTabAction:tab];
                 else
                     [strongSelf presentEditorTab:tab];
                 break;
                 
-            case  PhotoEditorStickerTab:
-            case  PhotoEditorTextTab:
+            case PhotoEditorStickerTab:
+            case PhotoEditorTextTab:
                 [strongSelf->_currentTabController handleTabAction:tab];
                 break;
                 
-            case  PhotoEditorRotateTab:
+            case PhotoEditorRotateTab:
                 [strongSelf rotateVideoOrReset:false];
                 break;
                 
-            case  PhotoEditorGifTab:
+            case PhotoEditorGifTab:
                 [strongSelf toggleSendAsGif];
                 break;
         }
     };
     
     
-    NSString *backButtonTitle =  TGLocalized(@"Cancel");
+    NSString *backButtonTitle = TGLocalized(@"Cancel");
     if ([self presentedForAvatarCreation])
     {
         if ([self presentedFromCamera])
-            backButtonTitle =  TGLocalized(@"Retake");
+            backButtonTitle = TGLocalized(@"Camera.Retake");
         else
-            backButtonTitle =  TGLocalized(@"Back");
+            backButtonTitle = TGLocalized(@"Back");
     }
     
-    NSString *doneButtonTitle = [self presentedForAvatarCreation] ?  TGLocalized(@"Choose") :  TGLocalized(@"Done");
+    NSString *doneButtonTitle = [self presentedForAvatarCreation] ? TGLocalized(@"Choose") : TGLocalized(@"Done");
     
     _portraitToolbarView = [[PhotoToolbarView alloc] initWithBackButtonTitle:backButtonTitle doneButtonTitle:doneButtonTitle accentedDone:![self presentedForAvatarCreation] solidBackground:true];
     [_portraitToolbarView setToolbarTabs:_availableTabs animated:false];
@@ -250,7 +251,7 @@
     _portraitToolbarView.tabPressed = toolbarTabPressed;
     [_wrapperView addSubview:_portraitToolbarView];
     
-    _landscapeToolbarView = [[ PhotoToolbarView alloc] initWithBackButtonTitle:backButtonTitle doneButtonTitle:doneButtonTitle accentedDone:![self presentedForAvatarCreation] solidBackground:true];
+    _landscapeToolbarView = [[PhotoToolbarView alloc] initWithBackButtonTitle:backButtonTitle doneButtonTitle:doneButtonTitle accentedDone:![self presentedForAvatarCreation] solidBackground:true];
     [_landscapeToolbarView setToolbarTabs:_availableTabs animated:false];
     [_landscapeToolbarView setActiveTab:_currentTab];
     _landscapeToolbarView.cancelPressed = toolbarCancelPressed;
@@ -268,15 +269,12 @@
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
         orientation = UIInterfaceOrientationPortrait;
     
-    CGRect containerFrame = [ PhotoEditorTabController photoContainerFrameForParentViewFrame:self.view.frame toolbarLandscapeSize:[_landscapeToolbarView landscapeSize] orientation:orientation panelSize: PhotoEditorPanelSize];
-    CGSize fittedSize =  ScaleToSize(_photoEditor.rotatedCropSize, containerFrame.size);
+    CGRect containerFrame = [PhotoEditorTabController photoContainerFrameForParentViewFrame:self.view.frame toolbarLandscapeSize:[_landscapeToolbarView landscapeSize] orientation:orientation panelSize:PhotoEditorPanelSize];
+    CGSize fittedSize = ScaleToSize(_photoEditor.rotatedCropSize, containerFrame.size);
     
-    _previewView = [[ PhotoEditorPreviewView alloc] initWithFrame:CGRectMake(0, 0, fittedSize.width, fittedSize.height)];
+    _previewView = [[PhotoEditorPreviewView alloc] initWithFrame:CGRectMake(0, 0, fittedSize.width, fittedSize.height)];
     _previewView.clipsToBounds = true;
     [_previewView setSnapshotImage:_screenImage];
-    
-    _previewView.backgroundColor = [UIColor yellowColor];
-    
     [_photoEditor setPreviewOutput:_previewView];
     [self updatePreviewView];
     
@@ -347,15 +345,15 @@
 {
     [super viewDidLoad];
     
-    if ([_currentTabController isKindOfClass:[ PhotoCropController class]] || [_currentTabController isKindOfClass:[ PhotoCaptionController class]] || [_currentTabController isKindOfClass:[ PhotoAvatarCropController class]])
+    if ([_currentTabController isKindOfClass:[PhotoCropController class]] || [_currentTabController isKindOfClass:[PhotoCaptionController class]] || [_currentTabController isKindOfClass:[PhotoAvatarCropController class]])
         return;
     
     NSTimeInterval position = 0;
     MediaVideoEditAdjustments *adjustments = [_photoEditor exportAdjustments];
-    if ([adjustments isKindOfClass:[ MediaVideoEditAdjustments class]])
+    if ([adjustments isKindOfClass:[MediaVideoEditAdjustments class]])
         position = adjustments.trimStartValue;
     
-    CGSize screenSize =  TGNativeScreenSize();
+    CGSize screenSize = TGNativeScreenSize();
     SSignal *signal = nil;
     if ([_photoEditor hasDefaultCropping] && (NSInteger)screenSize.width == 320)
     {
@@ -371,7 +369,7 @@
                        return [image isKindOfClass:[UIImage class]];
                    }] map:^UIImage *(UIImage *image)
                   {
-                      return  PhotoEditorCrop(image, nil, _photoEditor.cropOrientation, _photoEditor.cropRotation, _photoEditor.cropRect, _photoEditor.cropMirrored,  PhotoEditorScreenImageMaxSize(), _photoEditor.originalSize, true);
+                      return PhotoEditorCrop(image, nil, _photoEditor.cropOrientation, _photoEditor.cropRotation, _photoEditor.cropRect, _photoEditor.cropMirrored, PhotoEditorScreenImageMaxSize(), _photoEditor.originalSize, true);
                   }];
     }
     
@@ -382,24 +380,24 @@
          if (_ignoreDefaultPreviewViewTransitionIn)
          {
              DispatchOnMainThread(^
-                                  {
-                                      if ([_currentTabController isKindOfClass:[ PhotoDummyController class]])
-                                          [_previewView setSnapshotImageOnTransition:next];
-                                      else
-                                          [_previewView setSnapshotImage:next];
-                                  });
+                                    {
+                                        if ([_currentTabController isKindOfClass:[PhotoDummyController class]])
+                                            [_previewView setSnapshotImageOnTransition:next];
+                                        else
+                                            [_previewView setSnapshotImage:next];
+                                    });
          }
          else
          {
              [_photoEditor processAnimated:false completion:^
               {
                   DispatchOnMainThread(^
-                                       {
-                                           [_previewView performTransitionInWithCompletion:^
-                                            {
-                                                [_previewView setSnapshotImage:next];
-                                            }];
-                                       });
+                                         {
+                                             [_previewView performTransitionInWithCompletion:^
+                                              {
+                                                  [_previewView setSnapshotImage:next];
+                                              }];
+                                         });
               }];
          }
      }];
@@ -407,21 +405,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (![self inFormSheet] && (self.navigationController != nil || self.dontHideStatusBar))
-    {
-        if (animated)
-        {
-            [UIView animateWithDuration:0.3 animations:^
-             {
-                 [ Hacks setApplicationStatusBarAlpha:0.0f];
-             }];
-        }
-        else
-        {
-            [ Hacks setApplicationStatusBarAlpha:0.0f];
-        }
-    }
-    
     [super viewWillAppear:animated];
     
     [self transitionIn];
@@ -432,9 +415,6 @@
     if (self.navigationController != nil)
     {
         _viewFillingWholeScreen = true;
-        
-        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-            [self setNeedsStatusBarAppearanceUpdate];
     }
     
     [super viewDidAppear:animated];
@@ -445,21 +425,6 @@
     if (self.navigationController != nil || self.dontHideStatusBar)
     {
         _viewFillingWholeScreen = false;
-        
-        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-            [self setNeedsStatusBarAppearanceUpdate];
-        
-        if (animated)
-        {
-            [UIView animateWithDuration:0.3 animations:^
-             {
-                 [ Hacks setApplicationStatusBarAlpha:1.0f];
-             }];
-        }
-        else
-        {
-            [ Hacks setApplicationStatusBarAlpha:1.0f];
-        }
     }
     
     [super viewWillDisappear:animated];
@@ -476,9 +441,6 @@
 
 - (void)updateStatusBarAppearanceForDismiss
 {
-    _forceStatusBarVisible = true;
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-        [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (BOOL)shouldAutorotate
@@ -515,15 +477,15 @@
         completion(nil);
     
     UIImage *fullSizeImage = self.fullSizeImage;
-     PhotoEditor *photoEditor = _photoEditor;
+    PhotoEditor *photoEditor = _photoEditor;
     
     SSignal *imageSignal = nil;
     if (fullSizeImage == nil)
     {
         imageSignal = [self.requestOriginalFullSizeImage(_item, 0) filter:^bool(id result)
-                        {
-                            return [result isKindOfClass:[UIImage class]];
-                        }];
+                       {
+                           return [result isKindOfClass:[UIImage class]];
+                       }];
     }
     else
     {
@@ -538,7 +500,7 @@
         return [[SSignal alloc] initWithGenerator:^id<SDisposable>(SSubscriber *subscriber)
                 {
                     UIImage *paintingImage = !hasImageAdjustments ? editorValues.paintingData.image : nil;
-                    UIImage *croppedImage =  PhotoEditorCrop(image, paintingImage, photoEditor.cropOrientation, photoEditor.cropRotation, photoEditor.cropRect, photoEditor.cropMirrored,  PhotoEditorResultImageMaxSize, photoEditor.originalSize, resize);
+                    UIImage *croppedImage = PhotoEditorCrop(image, paintingImage, photoEditor.cropOrientation, photoEditor.cropRotation, photoEditor.cropRect, photoEditor.cropMirrored, PhotoEditorResultImageMaxSize, photoEditor.originalSize, resize);
                     [subscriber putNext:croppedImage];
                     [subscriber putCompletion];
                     
@@ -555,8 +517,8 @@
                      {
                          if (hasPainting)
                          {
-                             result =  PaintCombineCroppedImages(result, editorValues.paintingData.image, true, photoEditor.originalSize, photoEditor.cropRect, photoEditor.cropOrientation, photoEditor.cropRotation, photoEditor.cropMirrored);
-                             [ PaintingData facilitatePaintingData:editorValues.paintingData];
+                             result = PaintCombineCroppedImages(result, editorValues.paintingData.image, true, photoEditor.originalSize, photoEditor.cropRect, photoEditor.cropOrientation, photoEditor.cropRotation, photoEditor.cropMirrored);
+                             [PaintingData facilitatePaintingData:editorValues.paintingData];
                          }
                          
                          [subscriber putNext:result];
@@ -602,7 +564,7 @@
                     if (!saveOnly && self.didFinishRenderingFullSizeImage != nil)
                         self.didFinishRenderingFullSizeImage(image);
                     
-                    return  PhotoEditorFitImage(image,  PhotoEditorResultImageMaxSize);
+                    return PhotoEditorFitImage(image, PhotoEditorResultImageMaxSize);
                 }
             }] map:^NSDictionary *(UIImage *image)
            {
@@ -612,11 +574,11 @@
                
                if (createThumbnail)
                {
-                   CGSize fillSize =  PhotoThumbnailSizeForCurrentScreen();
+                   CGSize fillSize = PhotoThumbnailSizeForCurrentScreen();
                    fillSize.width = CGCeil(fillSize.width);
                    fillSize.height = CGCeil(fillSize.height);
                    
-                   CGSize size =  ScaleToFillSize(image.size, fillSize);
+                   CGSize size = ScaleToFillSize(image.size, fillSize);
                    
                    UIGraphicsBeginImageContextWithOptions(size, true, 0.0f);
                    CGContextRef context = UIGraphicsGetCurrentContext();
@@ -650,12 +612,12 @@
 
 - (bool)presentedFromCamera
 {
-    return _intent &  PhotoEditorControllerFromCameraIntent;
+    return _intent & PhotoEditorControllerFromCameraIntent;
 }
 
 - (bool)presentedForAvatarCreation
 {
-    return _intent &  PhotoEditorControllerAvatarIntent;
+    return _intent & PhotoEditorControllerAvatarIntent;
 }
 
 #pragma mark - Transition
@@ -712,7 +674,7 @@
     }
 }
 
-- (void)presentEditorTab:( PhotoEditorTab)tab
+- (void)presentEditorTab:(PhotoEditorTab)tab
 {
     if (_switchingTab || (tab == _currentTab && _currentTabController != nil))
         return;
@@ -735,7 +697,7 @@
         
         transitionReferenceFrame = [currentController transitionOutReferenceFrame];
         transitionReferenceView = [currentController transitionOutReferenceView];
-        transitionNoTransitionView = [currentController isKindOfClass:[ PhotoAvatarCropController class]];
+        transitionNoTransitionView = [currentController isKindOfClass:[PhotoAvatarCropController class]];
         
         currentController.switchingToTab = tab;
         [currentController transitionOutSwitching:true completion:^
@@ -744,12 +706,12 @@
              [currentController.view removeFromSuperview];
          }];
         
-        if ([currentController isKindOfClass:[ PhotoCropController class]])
+        if ([currentController isKindOfClass:[PhotoCropController class]])
         {
             _backgroundView.alpha = 1.0f;
             [UIView animateWithDuration:0.3f animations:^
              {
-                // _backgroundView.alpha = 0.0f;
+                 _backgroundView.alpha = 0.0f;
              } completion:nil];
         }
         
@@ -781,23 +743,23 @@
         snapshotImage = _screenImage;
     }
     
-     PhotoEditorValues *editorValues = [_photoEditor exportAdjustments];
+    PhotoEditorValues *editorValues = [_photoEditor exportAdjustments];
     [self updateEditorButtonsWithAdjustments:editorValues];
     
     _switchingTab = true;
     
-    __weak  PhotoEditorController *weakSelf = self;
+    __weak PhotoEditorController *weakSelf = self;
     PhotoEditorTabController *controller = nil;
     switch (tab)
     {
-        case  PhotoEditorPaintTab:
+        case PhotoEditorPaintTab:
         {
-            PhotoPaintController *paintController = [[ PhotoPaintController alloc] initWithPhotoEditor:_photoEditor previewView:_previewView];
+            PhotoPaintController *paintController = [[PhotoPaintController alloc] initWithPhotoEditor:_photoEditor previewView:_previewView];
             paintController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
             
             paintController.beginTransitionIn = ^UIView *(CGRect *referenceFrame, UIView **parentView, bool *noTransitionView)
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return nil;
                 
@@ -809,7 +771,7 @@
             };
             paintController.finishedTransitionIn = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
@@ -823,11 +785,11 @@
         }
             break;
             
-        case  PhotoEditorCaptionTab:
+        case PhotoEditorCaptionTab:
         {
-            PhotoCaptionController *captionController = [[ PhotoCaptionController alloc] initWithPhotoEditor:_photoEditor
-                                                                                                 previewView:_previewView
-                                                                                                     caption:_caption];
+            PhotoCaptionController *captionController = [[PhotoCaptionController alloc] initWithPhotoEditor:_photoEditor
+                                                                                                    previewView:_previewView
+                                                                                                        caption:_caption];
             captionController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
             captionController.suggestionContext = self.suggestionContext;
             captionController.captionSet = ^(NSString *caption)
@@ -835,7 +797,7 @@
                 if (caption.length == 0)
                     caption = nil;
                 
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
@@ -848,7 +810,7 @@
             
             captionController.beginTransitionIn = ^UIView *(CGRect *referenceFrame, UIView **parentView, bool *noTransitionView)
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return nil;
                 
@@ -863,7 +825,7 @@
             };
             captionController.finishedTransitionIn = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
@@ -879,13 +841,13 @@
         }
             break;
             
-        case  PhotoEditorCropTab:
+        case PhotoEditorCropTab:
         {
             __block UIView *initialBackgroundView = nil;
             
             if ([self presentedForAvatarCreation])
             {
-                PhotoAvatarCropController *cropController = [[ PhotoAvatarCropController alloc] initWithPhotoEditor:_photoEditor previewView:_previewView];
+                PhotoAvatarCropController *cropController = [[PhotoAvatarCropController alloc] initWithPhotoEditor:_photoEditor previewView:_previewView];
                 
                 bool skipInitialTransition = (![self presentedFromCamera] && self.navigationController != nil) || self.skipInitialTransition;
                 cropController.fromCamera = [self presentedFromCamera];
@@ -897,7 +859,7 @@
                 cropController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
                 cropController.beginTransitionIn = ^UIView *(CGRect *referenceFrame, UIView **parentView, bool *noTransitionView)
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     *referenceFrame = transitionReferenceFrame;
                     *noTransitionView = transitionNoTransitionView;
                     *parentView = transitionParentView;
@@ -913,7 +875,7 @@
                             
                             initialBackgroundView = [[UIView alloc] initWithFrame:backgroundSuperview.bounds];
                             initialBackgroundView.alpha = 0.0f;
-                            initialBackgroundView.backgroundColor = [ PhotoEditorInterfaceAssets toolbarBackgroundColor];
+                            initialBackgroundView.backgroundColor = [PhotoEditorInterfaceAssets toolbarBackgroundColor];
                             [backgroundSuperview addSubview:initialBackgroundView];
                             backgroundView = initialBackgroundView;
                         }
@@ -932,7 +894,7 @@
                 };
                 cropController.finishedTransitionIn = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
@@ -951,7 +913,7 @@
                 };
                 cropController.finishedTransitionOut = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
@@ -964,14 +926,49 @@
                     [strongSelf->_currentTabController _finishedTransitionInWithView:nil];
                 };
                 
+                [[[[self.requestOriginalFullSizeImage(_item, 0) reduceLeftWithPassthrough:nil with:^id(__unused id current, __unused id next, void (^emit)(id))
+                    {
+                        if ([next isKindOfClass:[UIImage class]])
+                        {
+                            if ([next degraded])
+                            {
+                                emit(next);
+                                return current;
+                            }
+                            return next;
+                        }
+                        else
+                        {
+                            return current;
+                        }
+                    }] filter:^bool(id result)
+                   {
+                       return (result != nil);
+                   }] deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *image)
+                 {
+                     if (cropController.dismissing && !cropController.switching)
+                         return;
+                     
+                     [self updateDoneButtonEnabled:!image.degraded animated:true];
+                     if (image.degraded)
+                     {
+                         return;
+                     }
+                     else
+                     {
+                         self.fullSizeImage = image;
+                         [cropController setImage:image];
+                     }
+                 }];
+                
                 controller = cropController;
             }
             else
             {
                 PhotoCropController *cropController = [[PhotoCropController alloc] initWithPhotoEditor:_photoEditor
-                                                                                            previewView:_previewView
-                                                                                               metadata:self.metadata
-                                                                                               forVideo:(_intent ==  PhotoEditorControllerVideoIntent)];
+                                                                                               previewView:_previewView
+                                                                                                  metadata:self.metadata
+                                                                                                  forVideo:(_intent == PhotoEditorControllerVideoIntent)];
                 if (snapshotView != nil)
                     [cropController setSnapshotView:snapshotView];
                 else if (snapshotImage != nil)
@@ -983,7 +980,7 @@
                     *noTransitionView = transitionNoTransitionView;
                     *parentView = transitionParentView;
                     
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf != nil)
                     {
                         UIView *backgroundView = nil;
@@ -995,7 +992,7 @@
                             
                             initialBackgroundView = [[UIView alloc] initWithFrame:backgroundSuperview.bounds];
                             initialBackgroundView.alpha = 0.0f;
-                            initialBackgroundView.backgroundColor = [ PhotoEditorInterfaceAssets toolbarBackgroundColor];
+                            initialBackgroundView.backgroundColor = [PhotoEditorInterfaceAssets toolbarBackgroundColor];
                             [backgroundSuperview addSubview:initialBackgroundView];
                             backgroundView = initialBackgroundView;
                         }
@@ -1014,7 +1011,7 @@
                 };
                 cropController.finishedTransitionIn = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
@@ -1033,14 +1030,14 @@
                 };
                 cropController.cropReset = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
                     [strongSelf rotateVideoOrReset:true];
                 };
                 
-                if (_intent !=  PhotoEditorControllerVideoIntent)
+                if (_intent != PhotoEditorControllerVideoIntent)
                 {
                     [[self.requestOriginalFullSizeImage(_item, 0) deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *image)
                      {
@@ -1065,10 +1062,10 @@
         }
             break;
             
-        case  PhotoEditorToolsTab:
+        case PhotoEditorToolsTab:
         {
-            PhotoToolsController *toolsController = [[ PhotoToolsController alloc] initWithPhotoEditor:_photoEditor
-                                                                                           previewView:_previewView];
+            PhotoToolsController *toolsController = [[PhotoToolsController alloc] initWithPhotoEditor:_photoEditor
+                                                                                              previewView:_previewView];
             toolsController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
             
             PhotoEditorItemController *enhanceController = nil;
@@ -1088,12 +1085,12 @@
                 }
                 
                 enhanceController = [[PhotoEditorItemController alloc] initWithEditorItem:enhanceTool
-                                                                               photoEditor:_photoEditor
-                                                                               previewView:nil];
+                                                                                photoEditor:_photoEditor
+                                                                                previewView:nil];
                 enhanceController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
                 enhanceController.initialAppearance = true;
                 
-                if ([_currentTabController isKindOfClass:[ PhotoCropController class]] || [_currentTabController isKindOfClass:[ PhotoAvatarCropController class]])
+                if ([_currentTabController isKindOfClass:[PhotoCropController class]] || [_currentTabController isKindOfClass:[PhotoAvatarCropController class]])
                 {
                     enhanceController.skipProcessingOnCompletion = true;
                     
@@ -1102,23 +1099,23 @@
                         enhanceController.skipProcessingOnCompletion = false;
                     };
                     
-                    if ([_currentTabController isKindOfClass:[ PhotoCropController class]])
-                        (( PhotoCropController *)_currentTabController).finishedPhotoProcessing = block;
-                    else if ([_currentTabController isKindOfClass:[ PhotoAvatarCropController class]])
-                        (( PhotoAvatarCropController *)_currentTabController).finishedPhotoProcessing = block;
+                    if ([_currentTabController isKindOfClass:[PhotoCropController class]])
+                        ((PhotoCropController *)_currentTabController).finishedPhotoProcessing = block;
+                    else if ([_currentTabController isKindOfClass:[PhotoAvatarCropController class]])
+                        ((PhotoAvatarCropController *)_currentTabController).finishedPhotoProcessing = block;
                 }
                 
-                __weak  PhotoToolsController *weakToolsController = toolsController;
+                __weak PhotoToolsController *weakToolsController = toolsController;
                 enhanceController.editorItemUpdated = ^
                 {
-                    __strong  PhotoToolsController *strongToolsController = weakToolsController;
+                    __strong PhotoToolsController *strongToolsController = weakToolsController;
                     if (strongToolsController != nil)
                         [strongToolsController updateValues];
                 };
                 
                 enhanceController.beginTransitionOut = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
@@ -1128,7 +1125,7 @@
                 
                 enhanceController.finishedCombinedTransition = ^
                 {
-                    __strong  PhotoEditorController *strongSelf = weakSelf;
+                    __strong PhotoEditorController *strongSelf = weakSelf;
                     if (strongSelf == nil)
                         return;
                     
@@ -1138,7 +1135,7 @@
                 [self addChildViewController:enhanceController];
             }
             
-            __weak  PhotoEditorItemController *weakEnhanceController = enhanceController;
+            __weak PhotoEditorItemController *weakEnhanceController = enhanceController;
             
             toolsController.beginTransitionIn = ^UIView *(CGRect *referenceFrame, UIView **parentView, bool *noTransitionView)
             {
@@ -1146,10 +1143,10 @@
                 *parentView = transitionParentView;
                 *noTransitionView = transitionNoTransitionView;
                 
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf != nil)
                 {
-                    __strong  PhotoEditorItemController *strongEnhanceController = weakEnhanceController;
+                    __strong PhotoEditorItemController *strongEnhanceController = weakEnhanceController;
                     if (strongEnhanceController != nil)
                     {
                         if (isInitialAppearance)
@@ -1157,7 +1154,7 @@
                             strongSelf->_portraitToolbarView.hidden = true;
                             strongSelf->_landscapeToolbarView.hidden = true;
                         }
-                        [( PhotoToolsController *)strongSelf->_currentTabController prepareForCombinedAppearance];
+                        [(PhotoToolsController *)strongSelf->_currentTabController prepareForCombinedAppearance];
                         [strongSelf.view addSubview:strongEnhanceController.view];
                         
                         [strongEnhanceController prepareForCombinedAppearance];
@@ -1173,21 +1170,21 @@
             };
             toolsController.finishedTransitionIn = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
                 if (isInitialAppearance && strongSelf.finishedTransitionIn != nil)
                     strongSelf.finishedTransitionIn();
                 
-                __strong  PhotoEditorItemController *strongEnhanceController = weakEnhanceController;
+                __strong PhotoEditorItemController *strongEnhanceController = weakEnhanceController;
                 if (strongEnhanceController != nil)
                 {
                     [strongEnhanceController attachPreviewView:strongSelf->_previewView];
                     
                     strongSelf->_portraitToolbarView.hidden = false;
                     strongSelf->_landscapeToolbarView.hidden = false;
-                    [( PhotoToolsController *)strongSelf->_currentTabController finishedCombinedAppearance];
+                    [(PhotoToolsController *)strongSelf->_currentTabController finishedCombinedAppearance];
                     [strongEnhanceController finishedCombinedAppearance];
                 }
                 
@@ -1198,13 +1195,13 @@
         }
             break;
             
-        case  PhotoEditorQualityTab:
+        case PhotoEditorQualityTab:
         {
-            PhotoDummyController *dummyController = [[ PhotoDummyController alloc] initWithPhotoEditor:_photoEditor
-                                                                                           previewView:_previewView];
+            PhotoDummyController *dummyController = [[PhotoDummyController alloc] initWithPhotoEditor:_photoEditor
+                                                                                              previewView:_previewView];
             dummyController.toolbarLandscapeSize = _landscapeToolbarView.landscapeSize;
             
-            PhotoQualityController *qualityController = [[ PhotoQualityController alloc] initWithPhotoEditor:_photoEditor];
+            PhotoQualityController *qualityController = [[PhotoQualityController alloc] initWithPhotoEditor:_photoEditor];
             qualityController.item = _item;
             dummyController.controller = qualityController;
             
@@ -1215,7 +1212,7 @@
             
             qualityController.beginTransitionOut = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
@@ -1225,7 +1222,7 @@
             
             qualityController.finishedCombinedTransition = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
@@ -1234,7 +1231,7 @@
             
             [self addChildViewController:qualityController];
             
-            __weak  PhotoQualityController *weakQualityController = qualityController;
+            __weak PhotoQualityController *weakQualityController = qualityController;
             
             dummyController.beginTransitionIn = ^UIView *(CGRect *referenceFrame, UIView **parentView, bool *noTransitionView)
             {
@@ -1242,10 +1239,10 @@
                 *parentView = transitionParentView;
                 *noTransitionView = transitionNoTransitionView;
                 
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf != nil)
                 {
-                    __strong  PhotoQualityController *strongQualityController = weakQualityController;
+                    __strong PhotoQualityController *strongQualityController = weakQualityController;
                     if (strongQualityController != nil)
                     {
                         if (isInitialAppearance)
@@ -1253,7 +1250,7 @@
                             strongSelf->_portraitToolbarView.hidden = true;
                             strongSelf->_landscapeToolbarView.hidden = true;
                         }
-                        [( PhotoToolsController *)strongSelf->_currentTabController prepareForCombinedAppearance];
+                        [(PhotoToolsController *)strongSelf->_currentTabController prepareForCombinedAppearance];
                         [strongSelf.view addSubview:strongQualityController.view];
                         
                         [strongQualityController prepareForCombinedAppearance];
@@ -1269,21 +1266,21 @@
             };
             dummyController.finishedTransitionIn = ^
             {
-                __strong  PhotoEditorController *strongSelf = weakSelf;
+                __strong PhotoEditorController *strongSelf = weakSelf;
                 if (strongSelf == nil)
                     return;
                 
                 if (isInitialAppearance && strongSelf.finishedTransitionIn != nil)
                     strongSelf.finishedTransitionIn();
                 
-                __strong  PhotoQualityController *strongQualityController = weakQualityController;
+                __strong PhotoQualityController *strongQualityController = weakQualityController;
                 if (strongQualityController != nil)
                 {
                     [strongQualityController attachPreviewView:strongSelf->_previewView];
                     
                     strongSelf->_portraitToolbarView.hidden = false;
                     strongSelf->_landscapeToolbarView.hidden = false;
-                    [( PhotoToolsController *)strongSelf->_currentTabController finishedCombinedAppearance];
+                    [(PhotoToolsController *)strongSelf->_currentTabController finishedCombinedAppearance];
                     [strongQualityController finishedCombinedAppearance];
                 }
                 
@@ -1306,7 +1303,7 @@
     _currentTabController.intent = _intent;
     _currentTabController.initialAppearance = isInitialAppearance;
     
-    if (![_currentTabController isKindOfClass:[ PhotoPaintController class]])
+    if (![_currentTabController isKindOfClass:[PhotoPaintController class]])
         _currentTabController.availableTabs = _availableTabs;
     
     if ([self presentedForAvatarCreation] && self.navigationController == nil)
@@ -1319,7 +1316,7 @@
     
     _currentTabController.beginItemTransitionIn = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -1340,7 +1337,7 @@
     };
     _currentTabController.beginItemTransitionOut = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -1361,7 +1358,7 @@
     };
     _currentTabController.valuesChanged = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -1383,73 +1380,73 @@
     [_previewView setCropRect:_photoEditor.cropRect cropOrientation:_photoEditor.cropOrientation cropRotation:_photoEditor.cropRotation cropMirrored:_photoEditor.cropMirrored originalSize:_photoEditor.originalSize];
 }
 
-- (void)updateEditorButtonsWithAdjustments:(id< MediaEditAdjustments>)adjustments
+- (void)updateEditorButtonsWithAdjustments:(id<MediaEditAdjustments>)adjustments
 {
-    PhotoEditorTab highlightedButtons = [ PhotoEditorTabController highlightedButtonsForEditorValues:adjustments forAvatar:[self presentedForAvatarCreation]];
+    PhotoEditorTab highlightedButtons = [PhotoEditorTabController highlightedButtonsForEditorValues:adjustments forAvatar:[self presentedForAvatarCreation]];
     [_portraitToolbarView setEditButtonsHighlighted:highlightedButtons];
     [_landscapeToolbarView setEditButtonsHighlighted:highlightedButtons];
     
     
-    PhotoEditorButton *qualityButton = [_portraitToolbarView buttonForTab: PhotoEditorQualityTab];
+    PhotoEditorButton *qualityButton = [_portraitToolbarView buttonForTab:PhotoEditorQualityTab];
     if (qualityButton != nil)
     {
         MediaVideoConversionPreset preset = 0;
-        MediaVideoConversionPreset adjustmentsPreset =  MediaVideoConversionPresetCompressedDefault;
-        if ([adjustments isKindOfClass:[ MediaVideoEditAdjustments class]])
-            adjustmentsPreset = (( MediaVideoEditAdjustments *)adjustments).preset;
+        MediaVideoConversionPreset adjustmentsPreset = MediaVideoConversionPresetCompressedDefault;
+        if ([adjustments isKindOfClass:[MediaVideoEditAdjustments class]])
+            adjustmentsPreset = ((MediaVideoEditAdjustments *)adjustments).preset;
         
-        if (adjustmentsPreset !=  MediaVideoConversionPresetCompressedDefault)
+        if (adjustmentsPreset != MediaVideoConversionPresetCompressedDefault)
         {
             preset = adjustmentsPreset;
         }
         else
         {
-            NSNumber *presetValue = [[NSUserDefaults standardUserDefaults] objectForKey:@" _preferredVideoPreset_v0"];
+            NSNumber *presetValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"TG_preferredVideoPreset_v0"];
             if (presetValue != nil)
-                preset = ( MediaVideoConversionPreset)[presetValue integerValue];
+                preset = (MediaVideoConversionPreset)[presetValue integerValue];
             else
-                preset =  MediaVideoConversionPresetCompressedMedium;
+                preset = MediaVideoConversionPresetCompressedMedium;
         }
         
-        MediaVideoConversionPreset bestPreset = [ MediaVideoConverter bestAvailablePresetForDimensions:_item.originalSize];
+        MediaVideoConversionPreset bestPreset = [MediaVideoConverter bestAvailablePresetForDimensions:_item.originalSize];
         if (preset > bestPreset)
             preset = bestPreset;
         
-        UIImage *icon = [ PhotoEditorInterfaceAssets qualityIconForPreset:preset];
+        UIImage *icon = [PhotoEditorInterfaceAssets qualityIconForPreset:preset];
         qualityButton.iconImage = icon;
         
-        qualityButton = [_landscapeToolbarView buttonForTab: PhotoEditorQualityTab];
+        qualityButton = [_landscapeToolbarView buttonForTab:PhotoEditorQualityTab];
         qualityButton.iconImage = icon;
     }
 }
 
 - (void)rotateVideoOrReset:(bool)reset
 {
-    if (_intent !=  PhotoEditorControllerVideoIntent)
+    if (_intent != PhotoEditorControllerVideoIntent)
         return;
     
-    PhotoCropController *cropController = ( PhotoCropController *)_currentTabController;
-    if (![cropController isKindOfClass:[ PhotoCropController class]])
+    PhotoCropController *cropController = (PhotoCropController *)_currentTabController;
+    if (![cropController isKindOfClass:[PhotoCropController class]])
         return;
     
     if (!reset)
         [cropController rotate];
     
-    VideoEditAdjustments *adjustments = ( VideoEditAdjustments *)self.requestAdjustments(_item);
+    VideoEditAdjustments *adjustments = (VideoEditAdjustments *)self.requestAdjustments(_item);
     
-     PhotoEditor *editor = _photoEditor;
+    PhotoEditor *editor = _photoEditor;
     CGRect cropRect = (adjustments != nil) ? adjustments.cropRect : CGRectMake(0, 0, editor.originalSize.width, editor.originalSize.height);
-    VideoEditAdjustments *updatedAdjustments = [ VideoEditAdjustments editAdjustmentsWithOriginalSize:editor.originalSize cropRect:cropRect cropOrientation:reset ? UIImageOrientationUp : cropController.cropOrientation cropLockedAspectRatio:adjustments.cropLockedAspectRatio cropMirrored:adjustments.cropMirrored trimStartValue:adjustments.trimStartValue trimEndValue:adjustments.trimEndValue paintingData:adjustments.paintingData sendAsGif:adjustments.sendAsGif preset:adjustments.preset];
+    VideoEditAdjustments *updatedAdjustments = [VideoEditAdjustments editAdjustmentsWithOriginalSize:editor.originalSize cropRect:cropRect cropOrientation:reset ? UIImageOrientationUp : cropController.cropOrientation cropLockedAspectRatio:adjustments.cropLockedAspectRatio cropMirrored:adjustments.cropMirrored trimStartValue:adjustments.trimStartValue trimEndValue:adjustments.trimEndValue paintingData:adjustments.paintingData sendAsGif:adjustments.sendAsGif preset:adjustments.preset];
     
     [self updateEditorButtonsWithAdjustments:updatedAdjustments];
 }
 
 - (void)toggleSendAsGif
 {
-    if (_intent !=  PhotoEditorControllerVideoIntent)
+    if (_intent != PhotoEditorControllerVideoIntent)
         return;
     
-     PhotoEditor *editor = _photoEditor;
+    PhotoEditor *editor = _photoEditor;
     
     
     NSTimeInterval trimStartValue = editor.trimStartValue;
@@ -1457,9 +1454,9 @@
     
     if (trimEndValue < DBL_EPSILON)
     {
-        if ([_item isKindOfClass:[ MediaAsset class]])
+        if ([_item isKindOfClass:[MediaAsset class]])
         {
-            MediaAsset *asset = ( MediaAsset *)_item;
+            MediaAsset *asset = (MediaAsset *)_item;
             trimEndValue = asset.videoDuration;
         }
         else if ([_item isKindOfClass:[AVAsset class]])
@@ -1474,11 +1471,11 @@
     bool sendAsGif = !editor.sendAsGif;
     if (sendAsGif)
     {
-        if (trimDuration >  VideoEditMaximumGifDuration)
-            trimEndValue = trimStartValue +  VideoEditMaximumGifDuration;
+        if (trimDuration > VideoEditMaximumGifDuration)
+            trimEndValue = trimStartValue + VideoEditMaximumGifDuration;
     }
     
-    VideoEditAdjustments *updatedAdjustments = [ VideoEditAdjustments editAdjustmentsWithOriginalSize:editor.originalSize cropRect:editor.cropRect cropOrientation:editor.cropOrientation cropLockedAspectRatio:editor.cropLockedAspectRatio cropMirrored:editor.cropMirrored trimStartValue:trimStartValue trimEndValue:trimEndValue paintingData:editor.paintingData sendAsGif:sendAsGif preset:editor.preset];
+    VideoEditAdjustments *updatedAdjustments = [VideoEditAdjustments editAdjustmentsWithOriginalSize:editor.originalSize cropRect:editor.cropRect cropOrientation:editor.cropOrientation cropLockedAspectRatio:editor.cropLockedAspectRatio cropMirrored:editor.cropMirrored trimStartValue:trimStartValue trimEndValue:trimEndValue paintingData:editor.paintingData sendAsGif:sendAsGif preset:editor.preset];
     
     editor.trimStartValue = trimStartValue;
     editor.trimEndValue = trimEndValue;
@@ -1489,35 +1486,12 @@
 
 - (void)dismissAnimated:(bool)animated
 {
-    self.view.userInteractionEnabled = false;
-    
-    if (animated)
-    {
-        const CGFloat velocity = 2000.0f;
-        CGFloat duration = self.view.frame.size.height / velocity;
-        CGRect targetFrame = CGRectOffset(self.view.frame, 0, self.view.frame.size.height);
-        
-        [UIView animateWithDuration:duration animations:^
-         {
-             self.view.frame = targetFrame;
-         } completion:^(__unused BOOL finished)
-         {
-             [self dismiss];
-         }];
-    }
-    else
-    {
-        [self dismiss];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)cancelButtonPressed
 {
-    if (self.didFinishRenderingFullSizeImage) {
-        self.didFinishRenderingFullSizeImage(self.fullSizeImage);
-    }
-    
-    [self dismissViewControllerAnimated:true completion:nil];
+    [self dismissEditor];
 }
 
 - (void)dismissEditor
@@ -1525,10 +1499,10 @@
     if (![_currentTabController isDismissAllowed])
         return;
     
-    __weak  PhotoEditorController *weakSelf = self;
+    __weak PhotoEditorController *weakSelf = self;
     void(^dismiss)(void) = ^
     {
-        __strong  PhotoEditorController *strongSelf = weakSelf;
+        __strong PhotoEditorController *strongSelf = weakSelf;
         if (strongSelf == nil)
             return;
         
@@ -1555,23 +1529,23 @@
     };
     
     PaintingData *paintingData = nil;
-    if ([_currentTabController isKindOfClass:[ PhotoPaintController class]])
-        paintingData = [( PhotoPaintController *)_currentTabController paintingData];
+    if ([_currentTabController isKindOfClass:[PhotoPaintController class]])
+        paintingData = [(PhotoPaintController *)_currentTabController paintingData];
     
-     PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
+    PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
     
     if ((_initialAdjustments == nil && (![editorValues isDefaultValuesForAvatar:[self presentedForAvatarCreation]] || editorValues.cropOrientation != UIImageOrientationUp)) || (_initialAdjustments != nil && ![editorValues isEqual:_initialAdjustments]))
     {
-        MenuSheetController *controller = [[ MenuSheetController alloc] init];
+        MenuSheetController *controller = [[MenuSheetController alloc] init];
         controller.dismissesByOutsideTap = true;
         controller.narrowInLandscape = true;
-        __weak  MenuSheetController *weakController = controller;
+        __weak MenuSheetController *weakController = controller;
         
         NSArray *items = @
         [
-         [[ MenuSheetButtonItemView alloc] initWithTitle: TGLocalized(@"PhotoEditor.DiscardChanges") type: MenuSheetButtonTypeDefault action:^
+         [[MenuSheetButtonItemView alloc] initWithTitle:TGLocalized(@"DiscardChanges") type:MenuSheetButtonTypeDefault action:^
           {
-              __strong  MenuSheetController *strongController = weakController;
+              __strong MenuSheetController *strongController = weakController;
               if (strongController == nil)
                   return;
               
@@ -1580,9 +1554,9 @@
                    dismiss();
                }];
           }],
-         [[ MenuSheetButtonItemView alloc] initWithTitle: TGLocalized(@"Cancel") type: MenuSheetButtonTypeCancel action:^
+         [[MenuSheetButtonItemView alloc] initWithTitle:TGLocalized(@"Cancel") type:MenuSheetButtonTypeCancel action:^
           {
-              __strong  MenuSheetController *strongController = weakController;
+              __strong MenuSheetController *strongController = weakController;
               if (strongController != nil)
                   [strongController dismissAnimated:true];
           }]
@@ -1591,7 +1565,7 @@
         [controller setItemViews:items];
         controller.sourceRect = ^
         {
-            __strong  PhotoEditorController *strongSelf = weakSelf;
+            __strong PhotoEditorController *strongSelf = weakSelf;
             if (strongSelf == nil)
                 return CGRectZero;
             
@@ -1623,31 +1597,31 @@
     
     PaintingData *paintingData = _photoEditor.paintingData;
     bool saving = true;
-    if ([_currentTabController isKindOfClass:[ PhotoPaintController class]])
+    if ([_currentTabController isKindOfClass:[PhotoPaintController class]])
     {
-        PhotoPaintController *paintController = ( PhotoPaintController *)_currentTabController;
+        PhotoPaintController *paintController = (PhotoPaintController *)_currentTabController;
         paintingData = [paintController paintingData];
         
         _photoEditor.paintingData = paintingData;
         
         if (paintingData != nil)
-            [ PaintingData storePaintingData:paintingData inContext:_editingContext forItem:_item forVideo:(_intent ==  PhotoEditorControllerVideoIntent)];
+            [PaintingData storePaintingData:paintingData inContext:_editingContext forItem:_item forVideo:(_intent == PhotoEditorControllerVideoIntent)];
     }
-    else if ([_currentTabController isKindOfClass:[ PhotoDummyController class]])
+    else if ([_currentTabController isKindOfClass:[PhotoDummyController class]])
     {
-        PhotoQualityController *qualityController = (( PhotoDummyController *)_currentTabController).controller;
+        PhotoQualityController *qualityController = ((PhotoDummyController *)_currentTabController).controller;
         _photoEditor.preset = qualityController.preset;
         saving = false;
     }
     
-    if (_intent !=  PhotoEditorControllerVideoIntent)
+    if (_intent != PhotoEditorControllerVideoIntent)
     {
-        ProgressWindow *progressWindow = [[ ProgressWindow alloc] init];
+        ProgressWindow *progressWindow = [[ProgressWindow alloc] init];
         progressWindow.windowLevel = self.view.window.windowLevel + 0.001f;
         [progressWindow performSelector:@selector(showAnimated) withObject:nil afterDelay:0.5];
         
         bool forAvatar = [self presentedForAvatarCreation];
-         PhotoEditorValues *editorValues = [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
+        PhotoEditorValues *editorValues = [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
         [self createEditedImageWithEditorValues:editorValues createThumbnail:!forAvatar saveOnly:false completion:^(__unused UIImage *image)
          {
              [NSObject cancelPreviousPerformRequestsWithTarget:progressWindow selector:@selector(showAnimated) object:nil];
@@ -1671,20 +1645,20 @@
         {
             [[SQueue concurrentDefaultQueue] dispatch:^
              {
-                 id< MediaEditableItem> item = _item;
-                 SSignal *assetSignal = [item isKindOfClass:[ MediaAsset class]] ? [ MediaAssetImageSignals avAssetForVideoAsset:( MediaAsset *)item] : [SSignal single:((AVAsset *)item)];
+                 id<MediaEditableItem> item = _item;
+                 SSignal *assetSignal = [item isKindOfClass:[MediaAsset class]] ? [MediaAssetImageSignals avAssetForVideoAsset:(MediaAsset *)item] : [SSignal single:((AVAsset *)item)];
                  
                  [assetSignal startWithNext:^(AVAsset *asset)
                   {
                       CGSize videoDimensions = CGSizeZero;
-                      if ([item isKindOfClass:[ MediaAsset class]])
-                          videoDimensions = (( MediaAsset *)item).dimensions;
+                      if ([item isKindOfClass:[MediaAsset class]])
+                          videoDimensions = ((MediaAsset *)item).dimensions;
                       else if ([asset isKindOfClass:[AVURLAsset class]])
                           videoDimensions = ((AVURLAsset *)asset).originalSize;
                       
                       AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
                       generator.appliesPreferredTrackTransform = true;
-                      generator.maximumSize =  TGFitSize(videoDimensions, CGSizeMake(1280.0f, 1280.0f));
+                      generator.maximumSize = TGFitSize(videoDimensions, CGSizeMake(1280.0f, 1280.0f));
                       generator.requestedTimeToleranceAfter = kCMTimeZero;
                       generator.requestedTimeToleranceBefore = kCMTimeZero;
                       
@@ -1692,11 +1666,11 @@
                       UIImage *image = [UIImage imageWithCGImage:imageRef];
                       CGImageRelease(imageRef);
                       
-                      CGSize thumbnailSize =  PhotoThumbnailSizeForCurrentScreen();
+                      CGSize thumbnailSize = PhotoThumbnailSizeForCurrentScreen();
                       thumbnailSize.width = CGCeil(thumbnailSize.width);
                       thumbnailSize.height = CGCeil(thumbnailSize.height);
                       
-                      CGSize fillSize =  ScaleToFillSize(videoDimensions, thumbnailSize);
+                      CGSize fillSize = ScaleToFillSize(videoDimensions, thumbnailSize);
                       
                       UIImage *thumbnailImage = nil;
                       
@@ -1738,7 +1712,7 @@
         _menuContainerView = nil;
     }
     
-    _menuContainerView = [[ MenuContainerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    _menuContainerView = [[MenuContainerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:_menuContainerView];
     
     NSMutableArray *actions = [[NSMutableArray alloc] init];
@@ -1770,19 +1744,19 @@
 
 - (void)_saveToCameraRoll
 {
-    ProgressWindow *progressWindow = [[ ProgressWindow alloc] init];
+    ProgressWindow *progressWindow = [[ProgressWindow alloc] init];
     progressWindow.windowLevel = self.view.window.windowLevel + 0.001f;
     [progressWindow performSelector:@selector(showAnimated) withObject:nil afterDelay:0.5];
     
     PaintingData *paintingData = nil;
-    if ([_currentTabController isKindOfClass:[ PhotoPaintController class]])
-        paintingData = [( PhotoPaintController *)_currentTabController paintingData];
+    if ([_currentTabController isKindOfClass:[PhotoPaintController class]])
+        paintingData = [(PhotoPaintController *)_currentTabController paintingData];
     
-     PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
+    PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
     
     [self createEditedImageWithEditorValues:editorValues createThumbnail:false saveOnly:true completion:^(UIImage *resultImage)
      {
-         [[[[ MediaAssetsLibrary sharedLibrary] saveAssetWithImage:resultImage] deliverOn:[SQueue mainQueue]] startWithNext:nil completed:^
+         [[[[MediaAssetsLibrary sharedLibrary] saveAssetWithImage:resultImage] deliverOn:[SQueue mainQueue]] startWithNext:nil completed:^
           {
               [NSObject cancelPreviousPerformRequestsWithTarget:progressWindow selector:@selector(showAnimated) object:nil];
               [progressWindow dismissWithSuccess];
@@ -1792,15 +1766,15 @@
 
 - (void)_openInInstagram
 {
-    ProgressWindow *progressWindow = [[ ProgressWindow alloc] init];
+    ProgressWindow *progressWindow = [[ProgressWindow alloc] init];
     progressWindow.windowLevel = self.view.window.windowLevel + 0.001f;
     [progressWindow performSelector:@selector(showAnimated) withObject:nil afterDelay:0.5];
     
     PaintingData *paintingData = nil;
-    if ([_currentTabController isKindOfClass:[ PhotoPaintController class]])
-        paintingData = [( PhotoPaintController *)_currentTabController paintingData];
+    if ([_currentTabController isKindOfClass:[PhotoPaintController class]])
+        paintingData = [(PhotoPaintController *)_currentTabController paintingData];
     
-     PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
+    PhotoEditorValues *editorValues = paintingData == nil ? [_photoEditor exportAdjustments] : [_photoEditor exportAdjustmentsWithPaintingData:paintingData];
     
     [self createEditedImageWithEditorValues:editorValues createThumbnail:false saveOnly:true completion:^(UIImage *resultImage)
      {
@@ -1855,11 +1829,13 @@
 
 - (bool)inFormSheet
 {
+    BOOL isFormSheet = YES;
+    
     UIUserInterfaceSizeClass sizeClass = [UIApplication sharedApplication].delegate.window.rootViewController.traitCollection.horizontalSizeClass;
     if (sizeClass == UIUserInterfaceSizeClassCompact)
-        return false;
+        isFormSheet = NO;
     
-    return NO;
+    return isFormSheet;
 }
 
 - (CGSize)referenceViewSize
@@ -1872,7 +1848,7 @@
     else if (self.navigationController != nil)
         return self.navigationController.view.frame.size;
     
-    return  [UIScreen mainScreen].bounds.size;
+    return [UIScreen mainScreen].bounds.size;
 }
 
 - (void)updateLayout:(UIInterfaceOrientation)orientation
@@ -1924,21 +1900,21 @@
     CGFloat portraitToolbarViewBottomEdge = screenSide;
     if (isPad)
         portraitToolbarViewBottomEdge = screenEdges.bottom;
-    _portraitToolbarView.frame = CGRectMake(screenEdges.left, portraitToolbarViewBottomEdge -  PhotoEditorToolbarSize, referenceSize.width,  PhotoEditorToolbarSize);
+    _portraitToolbarView.frame = CGRectMake(screenEdges.left, portraitToolbarViewBottomEdge - PhotoEditorToolbarSize, referenceSize.width, PhotoEditorToolbarSize);
 }
 
 - (void)_setScreenImage:(UIImage *)screenImage
 {
     _screenImage = screenImage;
-    if ([_currentTabController isKindOfClass:[ PhotoAvatarCropController class]])
-        [( PhotoAvatarCropController *)_currentTabController setSnapshotImage:screenImage];
+    if ([_currentTabController isKindOfClass:[PhotoAvatarCropController class]])
+        [(PhotoAvatarCropController *)_currentTabController setSnapshotImage:screenImage];
 }
 
 - (void)_finishedTransitionIn
 {
     _switchingTab = false;
-    if ([_currentTabController isKindOfClass:[ PhotoAvatarCropController class]])
-        [( PhotoAvatarCropController *)_currentTabController _finishedTransitionIn];
+    if ([_currentTabController isKindOfClass:[PhotoAvatarCropController class]])
+        [(PhotoAvatarCropController *)_currentTabController _finishedTransitionIn];
 }
 
 - (CGFloat)toolbarLandscapeSize
@@ -1957,7 +1933,7 @@
     
     if (progressVisible && _progressView == nil)
     {
-        _progressView = [[ MessageImageViewOverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
+        _progressView = [[MessageImageViewOverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
         _progressView.userInteractionEnabled = false;
         
         _progressView.frame = (CGRect){{CGFloor((_wrapperView.frame.size.width - _progressView.frame.size.width) / 2.0f), CGFloor((_wrapperView.frame.size.height - _progressView.frame.size.height) / 2.0f)}, _progressView.frame.size};
@@ -1990,17 +1966,16 @@
     [_progressView setProgress:value cancelEnabled:false animated:animated];
 }
 
-+ ( PhotoEditorTab)defaultTabsForAvatarIntent
++ (PhotoEditorTab)defaultTabsForAvatarIntent
 {
     static dispatch_once_t onceToken;
-    static  PhotoEditorTab avatarTabs =  PhotoEditorNoneTab;
+    static PhotoEditorTab avatarTabs = PhotoEditorNoneTab;
     dispatch_once(&onceToken, ^
                   {
                       if (iosMajorVersion() >= 7)
-                          avatarTabs =  PhotoEditorCropTab |  PhotoEditorPaintTab |  PhotoEditorToolsTab;
+                          avatarTabs = PhotoEditorCropTab | PhotoEditorPaintTab | PhotoEditorToolsTab;
                   });
     return avatarTabs;
 }
 
 @end
-

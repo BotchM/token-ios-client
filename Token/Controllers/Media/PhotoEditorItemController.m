@@ -229,7 +229,7 @@
     NSString *cancelButton = TGLocalized(@"Cancel");
     if (self.initialAppearance)
         cancelButton = TGLocalized(@"Skip");
-    NSString *doneButton = TGLocalized(@"PhotoEditor.Set");
+    NSString *doneButton = TGLocalized(@"Set");
     
     _portraitButtonsView = [[PhotoEditorToolButtonsView alloc] initWithCancelButton:cancelButton doneButton:doneButton];
     _portraitButtonsView.cancelPressed = cancelPressed;

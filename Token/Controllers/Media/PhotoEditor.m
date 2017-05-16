@@ -8,7 +8,7 @@
 #import "PhotoEditorView.h" //
 #import "PhotoEditorPicture.h" //
 
-#import "PGPhotoEditorValues.h" //
+#import "PhotoEditorValues.h" //
 #import "VideoEditAdjustments.h" //
 #import "PaintingData.h"  //
 

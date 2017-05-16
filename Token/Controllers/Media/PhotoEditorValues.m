@@ -1,4 +1,4 @@
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "PaintingData.h"
 
 #import "PhotoEditorUtils.h"

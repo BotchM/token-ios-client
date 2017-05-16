@@ -32,7 +32,8 @@
 @property (nonnull, nonatomic) OWSMessageSender *messageSender;
 
 - (void)setupSignalService;
-+ (NSString *)documentsPath;
+
++ (nonnull NSString *)documentsPath;
 
 @end
 

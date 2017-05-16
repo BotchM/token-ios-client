@@ -8,7 +8,7 @@
 #import "PhotoEditorPreviewView.h"
 #import "PhotoToolbarView.h"
 
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "VideoEditAdjustments.h"
 
 #import "PhotoEditorUtils.h"

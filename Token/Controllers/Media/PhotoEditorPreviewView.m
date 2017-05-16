@@ -5,7 +5,7 @@
 #import "PaintUtils.h"
 
 #import "PhotoEditorView.h"
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "PaintingData.h"
 
 #import "Common.h"

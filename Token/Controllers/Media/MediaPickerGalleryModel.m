@@ -13,7 +13,7 @@
 #import "ModernMediaListItem.h"
 #import "ModernMediaListSelectableItem.h"
 
-#import "PGPhotoEditorValues.h"
+#import "PhotoEditorValues.h"
 #import "Common.h"
 
 @interface MediaPickerGalleryModel ()
