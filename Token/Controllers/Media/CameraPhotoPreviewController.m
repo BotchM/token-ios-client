@@ -218,25 +218,25 @@
         strongSelf->_dismissing = true;
         strongSelf.view.userInteractionEnabled = false;
         
-        if (strongSelf.shouldStoreAssets)
+      //  if (strongSelf.shouldStoreAssets)
         {
-//            if (TGAppDelegateInstance.saveCapturedMedia)
-//                [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImage:strongSelf->_image] startWithNext:nil];
+            //if (TGAppDelegateInstance.saveCapturedMedia)
+                [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImage:strongSelf->_image] startWithNext:nil];
             
-//            if (TGAppDelegateInstance.saveEditedPhotos)
-//            {
-//                [[[[[[editingContext fullSizeImageUrlForItem:strongSelf->_image] filter:^bool(id result)
-//                     {
-//                         return [result isKindOfClass:[NSURL class]];
-//                     }] startOn:[SQueue concurrentDefaultQueue]] deliverOn:[SQueue mainQueue]] mapToSignal:^SSignal *(NSURL *url)
-//                  {
-//                      return [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImageAtUrl:url] onCompletion:^
-//                              {
-//                                  __strong MediaEditingContext *strongEditingContext = editingContext;
-//                                  [strongEditingContext description];
-//                              }];
-//                  }] startWithNext:nil];
-//            }
+           // if (TGAppDelegateInstance.saveEditedPhotos)
+            {
+                [[[[[[editingContext fullSizeImageUrlForItem:strongSelf->_image] filter:^bool(id result)
+                     {
+                         return [result isKindOfClass:[NSURL class]];
+                     }] startOn:[SQueue concurrentDefaultQueue]] deliverOn:[SQueue mainQueue]] mapToSignal:^SSignal *(NSURL *url)
+                  {
+                      return [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImageAtUrl:url] onCompletion:^
+                              {
+                                  __strong MediaEditingContext *strongEditingContext = editingContext;
+                                  [strongEditingContext description];
+                              }];
+                  }] startWithNext:nil];
+            }
         }
         
         SSignal *originalSignal = [[[SSignal single:strongSelf->_image] map:^id(UIImage *image)
