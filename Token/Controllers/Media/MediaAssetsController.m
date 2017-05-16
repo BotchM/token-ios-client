@@ -24,6 +24,7 @@
 #import "VideoEditAdjustments.h"
 #import "PaintingData.h"
 #import "Common.h"
+#import "DocumentAttributeFilename.h"
 
 @interface MediaAssetsController () <UINavigationControllerDelegate>
 {
@@ -231,6 +232,7 @@
     };
 }
 
+
 - (void)dismiss
 {
     if (self.dismissalBlock != nil)
@@ -337,7 +339,8 @@
                 }];
     };
     
-    for (MediaAsset *asset in selectedItems)
+    NSArray *items = selectedItems.copy;
+    for (MediaAsset *asset in items)
     {
         switch (asset.type)
         {
@@ -393,7 +396,7 @@
                                                  dict[@"asset"] = asset;
                                                  dict[@"previewImage"] = image;
                                                  
-                                                 id generatedItem = descriptionGenerator(dict, caption, nil);
+                                                 id generatedItem = [self _descriptionForItem:dict caption:caption hash:nil];
                                                  return generatedItem;
                                              }];
                     
@@ -588,6 +591,78 @@
         }
     }
     return signals;
+}
+
++ (NSDictionary *)_descriptionForItem:(id)item caption:(NSString *)caption hash:(NSString *)hash
+{
+    if (item == nil)
+        return nil;
+    
+    NSDictionary *resultDict = [[NSDictionary alloc] init];
+    
+    if ([item isKindOfClass:[UIImage class]])
+    {
+        //return [self.companion imageDescriptionFromImage:(UIImage *)item stickers:nil caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
+    }
+    else if ([item isKindOfClass:[NSDictionary class]])
+    {
+        
+        NSDictionary *dict = (NSDictionary *)item;
+        NSString *type = dict[@"type"];
+        
+        if ([type isEqualToString:@"editedPhoto"]) {
+        }
+        if ([type isEqualToString:@"cloudPhoto"])
+        {
+            resultDict = [self imageDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] caption:caption];
+        }
+        else if ([type isEqualToString:@"video"])
+        {
+           // return [self.companion videoDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] adjustments:dict[@"adjustments"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] stickers:dict[@"stickers"] caption:caption];
+            //return dict;
+        }
+        else if ([type isEqualToString:@"file"])
+        {
+           // return [self.companion documentDescriptionFromFileAtTempUrl:dict[@"tempFileUrl"] fileName:dict[@"fileName"] mimeType:dict[@"mimeType"] isAnimation:dict[@"isAnimation"] caption:caption];
+        }
+        else if ([type isEqualToString:@"webPhoto"])
+        {
+            //return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:nil];
+        }
+    }
+    
+    return resultDict;
+}
+
++ (NSDictionary *)imageDescriptionFromMediaAsset:(MediaAsset *)asset previewImage:(UIImage *)previewImage document:(bool)document fileName:(NSString *)fileName caption:(NSString *)caption
+{
+    if (asset == nil)
+        return nil;
+    
+    NSData *thumbnailData = UIImageJPEGRepresentation(previewImage, 0.54f);
+    CGSize dimensions = asset.dimensions;
+    if (CGSizeEqualToSize(dimensions, CGSizeZero))
+        dimensions = previewImage.size;
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@
+                                 {
+                                     @"assetIdentifier": asset.uniqueIdentifier,
+                                     @"thumbnailData": thumbnailData,
+                                     @"thumbnailSize": [NSValue valueWithCGSize:dimensions],
+                                     @"document": @(document)
+                                 }];
+    
+    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    if (fileName.length > 0)
+        [attributes addObject:[[DocumentAttributeFilename alloc] initWithFilename:fileName]];
+    
+    if (document && attributes.count > 0)
+        dict[@"attributes"] = attributes;
+    
+    if (caption != nil)
+        dict[@"caption"] = caption;
+    
+    return @{@"assetImage": dict};
 }
 
 #pragma mark -

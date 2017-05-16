@@ -209,7 +209,6 @@ class ChatController: MessagesCollectionViewController {
         self.view.setNeedsLayout()
         self.collectionView.setNeedsLayout()
     }
-
     
     func checkMicrophoneAccess() {
         if AVAudioSession.sharedInstance().recordPermission().contains(.undetermined) {
@@ -723,27 +722,53 @@ extension ChatController: ChatInputTextPanelDelegate {
             }
         }
         
-        let mediaDescriptors = [[String: Any]]()
         var array = [Any]()
         let signal = combinedSignal?.reduceLeft(array, with: { itemDescriptions, item in
-            if item is [String: Any] {
-               
+            if var descriptions = itemDescriptions as?  [[String: Any]] {
+                if let description = item as? [String: Any] {
+                    descriptions.append(description)
+                }
+                
+                return descriptions
             }
             
-             return itemDescriptions
+            return nil
+            
         }).deliver(on: SQueue.main()).start(next: { itemDescriptions in
             
             var mediaDescriptions = [[String: Any]]()
             var filesDescriptions = [[String: Any]]()
             
             if let itemDescriptions = itemDescriptions as? [Dictionary<String, Any>] {
-                itemDescriptions.forEach{
+                itemDescriptions.forEach ({
                     if $0["localImage"] != nil ||  $0["remoteImage"] != nil ||  $0["downloadImage"] != nil ||  $0["downloadDocument"] != nil ||  $0["downloadExternalGif"] != nil ||  $0["downloadExternalImage"] != nil || $0["remoteDocument"] != nil || $0["remoteCachedDocument"] != nil || $0["assetImage"] != nil || $0["assetVideo"] != nil {
                         mediaDescriptions.append($0)
                     } else {
                         filesDescriptions.append($0)
                     }
+                })
+            }
+            
+            if mediaDescriptions.count > 0 {
+            
+                for description in mediaDescriptions {
+                    if let assetImage = description["assetImage"] as? [String: Any] {
+                        let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
+                        
+                        if let imageData = assetImage["thumbnailData"] as? Data {
+                            let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
+                            self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "Image.jpeg", in: outgoingMessage, success: {
+                                print("Success")
+                            }, failure: { error in
+                                print("Failure: \(error)")
+                            })
+                        }
+                    }
                 }
+            }
+            
+            if filesDescriptions.count > 0 {
+            //send file
             }
         })
         
@@ -771,6 +796,8 @@ extension ChatController: ChatInputTextPanelDelegate {
     }
     
     func inputTextPanelrequestSendAttachment(_: ChatInputTextPanel) {
+        
+        self.view.endEditing(true)
         
         let controller = MenuSheetController()
         controller.dismissesByOutsideTap = true
@@ -813,6 +840,10 @@ extension ChatController: ChatInputTextPanelDelegate {
                 carouselItem.updateVisibleItems()
             }
             
+            editorController.didFinishEditing = { adjustments, resultImage, thumbnailImage, hasChanges in
+                carouselItem.updateVisibleItems()
+            }
+            
             editorController.requestOriginalScreenSizeImage = { editableItem, position in
                 return editableItem?.screenImageSignal?(position)
             }
@@ -829,9 +860,15 @@ extension ChatController: ChatInputTextPanelDelegate {
         carouselItem.sendPressed = { [unowned self] currentItem, asFiles in
             controller.dismiss(animated: true, manual: false) {
                 
+                let intent: MediaAssetsControllerIntent = asFiles == true ? .sendFile : .sendMedia
+                let descriptionGenerator: ((Any?, String?, String?) -> Any?) = { [unowned self] result, caption, hash -> Any? in
+                    return self.description(for: result, caption: caption, hash: hash)
+                }
                 
                 
-                self.sendSelectedImages()
+                if let signals = MediaAssetsController.resultSignals(selectionContext:carouselItem.selectionContext, editingContext:carouselItem.editingContext, intent:intent, currentItem: currentItem, storeAssets:true, useMediaCache:true, descriptionGenerator: descriptionGenerator) as? [SSignal] {
+                    self.asyncProcess(signals: signals)
+                }
             }
         }
         
@@ -864,25 +901,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         controller.present(in: self, sourceView:self.view, animated:true)
     }
     
-    func sendSelectedImages() {
-        let images = MediaAssetsController.selectedItemmsss()
-        
-        for image in images! {
-            if let image = image as? UIImage {
-                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
-                
-                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
-                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
-                
-                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
-                    print("Success")
-                }, failure: { error in
-                    print("Failure: \(error)")
-                })
-            }
-        }
-    }
-    
     func displayCamera(from cameraView: AttachmentCameraView?, menu: MenuSheetController, carouselItem: AttachmentCarouselItemView) {
         var controller: CameraController
         let screenSize = TGScreenSize()
@@ -911,7 +929,7 @@ extension ChatController: ChatInputTextPanelDelegate {
             
             carouselItem.updateCameraView()
             carouselItem.updateVisibleItems()
-     }
+        }
         
         controller.finishedTransitionOut = {
             cameraView?.attachPreviewView(animated: true)
@@ -919,7 +937,20 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         controller.finishedWithPhoto = { resultImage, caption, stickers in
             print("do what needed with added images")
-            menu.dismiss(animated: false)
+            
+            menu.dismiss(animated: true)
+            if let image = resultImage as UIImage? {
+                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
+                
+                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
+                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
+                
+                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
+                    print("Success")
+                }, failure: { error in
+                    print("Failure: \(error)")
+                })
+            }
         }
         
         controller.finishedWithVideo = { videoURL, previewImage, duration, dimensions, adjustments, caption, stickers in
@@ -937,17 +968,64 @@ extension ChatController: ChatInputTextPanelDelegate {
     }
     
     func description(for item: Any?, caption: String?, hash: String?) -> [String: Any] {
-        let description = [String: Any]()
+        var description = [String: Any]()
         
-        
-        if item is UIImage {
-        
-        } else if item is Dictionary<String, Any> {
-            let dict = item as! Dictionary<String, Any>
-            let type = dict["type"]
+        if let _ = item as? UIImage? {
+            print("IMAGE !!!")
+            //[self.companion imageDescriptionFromImage:(UIImage *)item stickers:nil caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
+        } else if let dict = item as? [String: Any], let type = dict["type"] as? String {
+            
+            switch type {
+            case "editedPhoto":
+                //  return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
+                break
+            case "cloudPhoto":
+                description = self.imageDescription(asset: dict["asset"] as? MediaAsset, previewImage: dict["previewImage"] as? UIImage, document: dict["document"], fileName: dict["fileName"] as? String, caption: "Caption")
+                //
+                break
+            case "video":
+                //  return [self.companion videoDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] adjustments:dict[@"adjustments"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] stickers:dict[@"stickers"] caption:caption];
+                break
+            case "file":
+                // return [self.companion documentDescriptionFromFileAtTempUrl:dict[@"tempFileUrl"] fileName:dict[@"fileName"] mimeType:dict[@"mimeType"] isAnimation:dict[@"isAnimation"] caption:caption];
+                break
+            case "webPhoto":
+                //   return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:nil];
+                break
+            default:
+                break
+            }
         }
         
         return description
+    }
+    
+    func imageDescription(asset: MediaAsset?, previewImage: UIImage?, document: Any?, fileName: String?, caption: String?) -> [String: Any] {
+        
+        var description = [String: Any]()
+        
+        if let asset = asset as MediaAsset? {
+            let dimensions: CGSize = asset.dimensions
+            
+            description["assetIdentifier"] = asset.uniqueIdentifier
+            
+            if let previewImage = previewImage as UIImage? {
+                description["thumbnailData"] = UIImageJPEGRepresentation(previewImage, 1.0)
+            }
+            description["thumbnailSize"] = NSValue.init(cgSize: dimensions)
+            description["document"] = document != nil
+            
+            if let fileName = fileName as String?, fileName.length > 0 {
+                //description["attributes"] = [DocumentAttributeFilename(fileName: fileName)]
+            }
+            
+            if let caption = caption as String?, caption.length > 0 {
+                description["caption"] = caption
+            }
+            
+        }
+        
+        return ["assetImage": description]
     }
     
     func inputTextPanelDidChangeHeight(_ height: CGFloat) {
@@ -971,21 +1049,29 @@ extension ChatController: ChatInputTextPanelDelegate {
             assetsController.localMediaCacheEnabled = false
             assetsController.shouldStoreAssets = false
             assetsController.shouldShowFileTipIfNeeded = false
+            
             assetsController.completionBlock = { signals in
                 
-                assetsController.dismiss(animated: true, completion: {
-                    self.sendSelectedImages()
-                })
+                assetsController.dismiss(animated: true, completion: nil)
+                
+                if let signals = signals as? [SSignal] {
+                    self.asyncProcess(signals: signals)
+                }
             }
             
             self.present(assetsController, animated: true, completion: nil)
             
         }
         
+        
+        
         if MediaAssetsLibrary.authorizationStatus() == MediaLibraryAuthorizationStatusNotDetermined {
             MediaAssetsLibrary.requestAuthorization(for: MediaAssetAnyType) { (status, cameraRollGroup) -> Void in
                 
-                if AccessChecker.checkPhotoAuthorizationStatus(intent:PhotoAccessIntentRead, alertDismissCompletion:nil) {
+                let photoAllowed = AccessChecker.checkPhotoAuthorizationStatus(intent: PhotoAccessIntentRead, alertDismissCompletion: nil)
+                let microphoneAllowed = AccessChecker.checkMicrophoneAuthorizationStatus(for: MicrophoneAccessIntentVideo, alertDismissCompletion: nil)
+                
+                if photoAllowed == false || microphoneAllowed == false {
                     return;
                 }
                 

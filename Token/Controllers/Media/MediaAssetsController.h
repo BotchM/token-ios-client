@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 @property (nonatomic, assign) bool shouldShowFileTipIfNeeded;
 
 @property (nonatomic, copy) void (^avatarCompletionBlock)(UIImage *image);
-@property (nonatomic, copy) void (^completionBlock)();
+@property (nonatomic, copy) void (^completionBlock)(NSArray *signals);
 @property (nonatomic, copy) void (^dismissalBlock)(void);
 
 @property (nonatomic, readonly) MediaAssetsPickerController *pickerController;

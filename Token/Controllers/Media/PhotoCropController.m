@@ -101,6 +101,7 @@ NSString * const PhotoCropOriginalAspectRatio = @"original";
             [ViewController attemptAutorotation];
     };
     
+    self.view.backgroundColor = [UIColor blackColor];
     _wrapperView = [[UIView alloc] initWithFrame:self.view.bounds];
     _wrapperView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_wrapperView];
