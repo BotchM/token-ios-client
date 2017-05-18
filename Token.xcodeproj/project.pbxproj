@@ -196,6 +196,12 @@
 		2B2F85521ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F854F1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png */; };
 		2B2F85531ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F85501ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png */; };
 		2B355BDA1EAE356C0093FA8F /* TokenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B355BD91EAE356C0093FA8F /* TokenUser.swift */; };
+		2B4330BC1ECD09450073C389 /* PSLMDBKeyValueCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330B51ECD09450073C389 /* PSLMDBKeyValueCursor.m */; };
+		2B4330BD1ECD09450073C389 /* PSLMDBKeyValueReaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330B71ECD09450073C389 /* PSLMDBKeyValueReaderWriter.m */; };
+		2B4330BE1ECD09450073C389 /* PSLMDBKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330B91ECD09450073C389 /* PSLMDBKeyValueStore.m */; };
+		2B4330BF1ECD09450073C389 /* PSLMDBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330BB1ECD09450073C389 /* PSLMDBTable.m */; };
+		2B4330C41ECD09A30073C389 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330C11ECD09A30073C389 /* mdb.c */; };
+		2B4330C51ECD09A30073C389 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B4330C21ECD09A30073C389 /* midl.c */; };
 		2B5A7F561EBCA7EB00F561C4 /* CameraModeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F4D1EBCA7EB00F561C4 /* CameraModeControl.m */; };
 		2B5A7F571EBCA7EB00F561C4 /* CameraSegmentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F4F1EBCA7EB00F561C4 /* CameraSegmentsView.m */; };
 		2B5A7F581EBCA7EB00F561C4 /* CameraShutterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5A7F511EBCA7EB00F561C4 /* CameraShutterButton.m */; };
@@ -957,6 +963,22 @@
 		2B2F854F1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AttachmentMenuInteractiveCameraIcon@2x.png"; path = "Icons/AttachmentMenuInteractiveCameraIcon@2x.png"; sourceTree = "<group>"; };
 		2B2F85501ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AttachmentMenuInteractiveCameraIcon@3x.png"; path = "Icons/AttachmentMenuInteractiveCameraIcon@3x.png"; sourceTree = "<group>"; };
 		2B355BD91EAE356C0093FA8F /* TokenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenUser.swift; sourceTree = "<group>"; };
+		2B4330B01ECD09450073C389 /* PSData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSData.h; path = Media/KeyValueStore/PSData.h; sourceTree = "<group>"; };
+		2B4330B11ECD09450073C389 /* PSKeyValueReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSKeyValueReader.h; path = Media/KeyValueStore/PSKeyValueReader.h; sourceTree = "<group>"; };
+		2B4330B21ECD09450073C389 /* PSKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSKeyValueStore.h; path = Media/KeyValueStore/PSKeyValueStore.h; sourceTree = "<group>"; };
+		2B4330B31ECD09450073C389 /* PSKeyValueWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSKeyValueWriter.h; path = Media/KeyValueStore/PSKeyValueWriter.h; sourceTree = "<group>"; };
+		2B4330B41ECD09450073C389 /* PSLMDBKeyValueCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSLMDBKeyValueCursor.h; path = Media/KeyValueStore/PSLMDBKeyValueCursor.h; sourceTree = "<group>"; };
+		2B4330B51ECD09450073C389 /* PSLMDBKeyValueCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSLMDBKeyValueCursor.m; path = Media/KeyValueStore/PSLMDBKeyValueCursor.m; sourceTree = "<group>"; };
+		2B4330B61ECD09450073C389 /* PSLMDBKeyValueReaderWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSLMDBKeyValueReaderWriter.h; path = Media/KeyValueStore/PSLMDBKeyValueReaderWriter.h; sourceTree = "<group>"; };
+		2B4330B71ECD09450073C389 /* PSLMDBKeyValueReaderWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSLMDBKeyValueReaderWriter.m; path = Media/KeyValueStore/PSLMDBKeyValueReaderWriter.m; sourceTree = "<group>"; };
+		2B4330B81ECD09450073C389 /* PSLMDBKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSLMDBKeyValueStore.h; path = Media/KeyValueStore/PSLMDBKeyValueStore.h; sourceTree = "<group>"; };
+		2B4330B91ECD09450073C389 /* PSLMDBKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSLMDBKeyValueStore.m; path = Media/KeyValueStore/PSLMDBKeyValueStore.m; sourceTree = "<group>"; };
+		2B4330BA1ECD09450073C389 /* PSLMDBTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSLMDBTable.h; path = Media/KeyValueStore/PSLMDBTable.h; sourceTree = "<group>"; };
+		2B4330BB1ECD09450073C389 /* PSLMDBTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSLMDBTable.m; path = Media/KeyValueStore/PSLMDBTable.m; sourceTree = "<group>"; };
+		2B4330C01ECD09A30073C389 /* lmdb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lmdb.h; path = Media/KeyValueStore/lmdb.h; sourceTree = "<group>"; };
+		2B4330C11ECD09A30073C389 /* mdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mdb.c; path = Media/KeyValueStore/mdb.c; sourceTree = "<group>"; };
+		2B4330C21ECD09A30073C389 /* midl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = midl.c; path = Media/KeyValueStore/midl.c; sourceTree = "<group>"; };
+		2B4330C31ECD09A30073C389 /* midl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = midl.h; path = Media/KeyValueStore/midl.h; sourceTree = "<group>"; };
 		2B5A7F4C1EBCA7EB00F561C4 /* CameraModeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraModeControl.h; path = Media/CameraModeControl.h; sourceTree = "<group>"; };
 		2B5A7F4D1EBCA7EB00F561C4 /* CameraModeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraModeControl.m; path = Media/CameraModeControl.m; sourceTree = "<group>"; };
 		2B5A7F4E1EBCA7EB00F561C4 /* CameraSegmentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraSegmentsView.h; path = Media/CameraSegmentsView.h; sourceTree = "<group>"; };
@@ -2191,9 +2213,33 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		2B4330AF1ECD092C0073C389 /* KeyValueStore */ = {
+			isa = PBXGroup;
+			children = (
+				2B4330B01ECD09450073C389 /* PSData.h */,
+				2B4330B11ECD09450073C389 /* PSKeyValueReader.h */,
+				2B4330B21ECD09450073C389 /* PSKeyValueStore.h */,
+				2B4330B31ECD09450073C389 /* PSKeyValueWriter.h */,
+				2B4330B41ECD09450073C389 /* PSLMDBKeyValueCursor.h */,
+				2B4330B51ECD09450073C389 /* PSLMDBKeyValueCursor.m */,
+				2B4330B61ECD09450073C389 /* PSLMDBKeyValueReaderWriter.h */,
+				2B4330B71ECD09450073C389 /* PSLMDBKeyValueReaderWriter.m */,
+				2B4330B81ECD09450073C389 /* PSLMDBKeyValueStore.h */,
+				2B4330B91ECD09450073C389 /* PSLMDBKeyValueStore.m */,
+				2B4330BA1ECD09450073C389 /* PSLMDBTable.h */,
+				2B4330BB1ECD09450073C389 /* PSLMDBTable.m */,
+				2B4330C01ECD09A30073C389 /* lmdb.h */,
+				2B4330C11ECD09A30073C389 /* mdb.c */,
+				2B4330C21ECD09A30073C389 /* midl.c */,
+				2B4330C31ECD09A30073C389 /* midl.h */,
+			);
+			name = KeyValueStore;
+			sourceTree = "<group>";
+		};
 		2B7823111EBBDB37002C32D2 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				2B4330AF1ECD092C0073C389 /* KeyValueStore */,
 				2B7823121EBBDCB8002C32D2 /* ASHandle.h */,
 				2B7823131EBBDCB8002C32D2 /* ASHandle.m */,
 				2B7823141EBBDCB8002C32D2 /* ASQueue.h */,
@@ -4089,6 +4135,7 @@
 				2B78256B1EBBDCBB002C32D2 /* Camera.m in Sources */,
 				2BEE61971ECB964F00EAB62A /* SharedMediaSectionHeader.m in Sources */,
 				A921D3631E7C145E00EE3221 /* Collection+Additions.swift in Sources */,
+				2B4330BD1ECD09450073C389 /* PSLMDBKeyValueReaderWriter.m in Sources */,
 				2B78272D1EBC7AFC002C32D2 /* MediaAssetsGifCell.m in Sources */,
 				1426D2421E7054AB0045EF09 /* AppController.swift in Sources */,
 				9FCDBAE31E28E71900A70E07 /* FavoritesController.swift in Sources */,
@@ -4100,6 +4147,7 @@
 				9F54A7231E951F1500FEB67B /* RatingsClient.swift in Sources */,
 				2BEE618F1ECB8DCC00EAB62A /* TimerTarget.m in Sources */,
 				2B7826491EBBDCBB002C32D2 /* PhotoPaintSettingsView.m in Sources */,
+				2B4330C41ECD09A30073C389 /* mdb.c in Sources */,
 				A9F61F7F1E72E22900D892E5 /* SettingsSectionHeader.swift in Sources */,
 				2B7825D61EBBDCBB002C32D2 /* MediaAssetsLibrary.m in Sources */,
 				2B78275C1EBC8567002C32D2 /* MediaPickerPhotoCounterButton.m in Sources */,
@@ -4237,6 +4285,7 @@
 				2B7825AA1EBBDCBB002C32D2 /* BlurEffect.m in Sources */,
 				2B7825701EBBDCBB002C32D2 /* CameraVolumeButtonHandler.m in Sources */,
 				2B7825A21EBBDCBB002C32D2 /* AttachmentCarouselItemView.m in Sources */,
+				2B4330C51ECD09A30073C389 /* midl.c in Sources */,
 				2B78256E1EBBDCBB002C32D2 /* CameraMovieWriter.m in Sources */,
 				2B7827661EBC85DB002C32D2 /* MediaPickerGalleryModel.m in Sources */,
 				2B7826151EBBDCBB002C32D2 /* PaintSlice.m in Sources */,
@@ -4251,6 +4300,7 @@
 				2B7825C61EBBDCBB002C32D2 /* InlineVideoModel.m in Sources */,
 				2B78263C1EBBDCBB002C32D2 /* PhotoEditorToolButtonsView.m in Sources */,
 				9FC72A3A1E25145D00EF1141 /* CryptoTools.m in Sources */,
+				2BEE61B81ECB9C2800EAB62A /* MediaPickerGalleryVideoTrimView.m in Sources */,
 				2B7826461EBBDCBB002C32D2 /* PhotoPaintFont.m in Sources */,
 				2B78267F1EBBDCBC002C32D2 /* UIImage+TG.m in Sources */,
 				2B7825CE1EBBDCBB002C32D2 /* MediaAssetGroup.m in Sources */,
@@ -4262,6 +4312,7 @@
 				2B5A7F6F1EBCAB8D00F561C4 /* MediaPickerGalleryPhotoItemView.m in Sources */,
 				9FC72A3D1E251ACC00EF1141 /* ChatAPIClient.swift in Sources */,
 				2B7825CF1EBBDCBB002C32D2 /* MediaAssetImageSignals.m in Sources */,
+				2BEE61B71ECB9C2800EAB62A /* MediaPickerGalleryVideoScrubberThumbnailView.m in Sources */,
 				2BAE631D1EC6356E00255829 /* DocumentAttributeAudio.m in Sources */,
 				2B7826241EBBDCBB002C32D2 /* PhotoCropRotationView.m in Sources */,
 				2B7826BD1EBC607D002C32D2 /* ModernGalleryItemView.m in Sources */,
@@ -4347,11 +4398,13 @@
 				2B7826C61EBC6112002C32D2 /* EMImage.m in Sources */,
 				2B7826311EBBDCBB002C32D2 /* PhotoEditorCurvesToolView.m in Sources */,
 				2B7825C21EBBDCBB002C32D2 /* ImagePickerCellCheckButton.m in Sources */,
+				2B4330BC1ECD09450073C389 /* PSLMDBKeyValueCursor.m in Sources */,
 				2B78270C1EBC780E002C32D2 /* MediaPickerToolbarView.m in Sources */,
 				9F40F3C21E59FE97007A7DE7 /* MessageCell.swift in Sources */,
 				2B7AA3291EC46AD700452544 /* TGImagePickerController.mm in Sources */,
 				2B7826D41EBC620C002C32D2 /* VideoInfo.mm in Sources */,
 				2B7825E11EBBDCBB002C32D2 /* MenuSheetButtonItemView.m in Sources */,
+				2BEE61B61ECB9C2800EAB62A /* MediaPickerGalleryVideoScrubber.m in Sources */,
 				2B7826121EBBDCBB002C32D2 /* PaintRender.m in Sources */,
 				2B7825781EBBDCBB002C32D2 /* PhotoBlurPass.m in Sources */,
 				2B5A7F561EBCA7EB00F561C4 /* CameraModeControl.m in Sources */,
@@ -4370,6 +4423,7 @@
 				2B7825D21EBBDCBB002C32D2 /* MediaAssetMoment.m in Sources */,
 				2B7825E81EBBDCBB002C32D2 /* MessageImageAdditionalDataView.m in Sources */,
 				2B78256C1EBBDCBB002C32D2 /* CameraCaptureSession.m in Sources */,
+				2B4330BE1ECD09450073C389 /* PSLMDBKeyValueStore.m in Sources */,
 				2B7825A81EBBDCBB002C32D2 /* AudioWaveform.m in Sources */,
 				9FCF13281E52FC2A0078FF7F /* TSThread+Additions.m in Sources */,
 				2B7825721EBBDCBB002C32D2 /* CurvesTool.m in Sources */,
@@ -4378,6 +4432,7 @@
 				9F9238B61E24F1D2004BEEE0 /* main.m in Sources */,
 				2B7827331EBC8323002C32D2 /* MediaAsset+MediaEditableItem.m in Sources */,
 				2B7827671EBC85DB002C32D2 /* MediaPickerGallerySelectedItemsModel.m in Sources */,
+				2B4330BF1ECD09450073C389 /* PSLMDBTable.m in Sources */,
 				2B7825E21EBBDCBB002C32D2 /* MenuSheetController.m in Sources */,
 				9F21625F1E5EF39B00292B14 /* EthereumNotificationHandler.swift in Sources */,
 				2B7825DD1EBBDCBB002C32D2 /* MediaSelectionContext.m in Sources */,
