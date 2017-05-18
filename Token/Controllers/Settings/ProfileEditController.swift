@@ -124,11 +124,73 @@ open class ProfileEditController: UIViewController {
     }
 
     func updateAvatar() {
-        let picker = ImagePickerController()
-        picker.delegate = self
-        picker.configuration.allowMultiplePhotoSelection = false
-
-        self.present(picker, animated: true)
+        let controller = MenuSheetController()
+        controller.dismissesByOutsideTap = true
+        controller.hasSwipeGesture = true
+        controller.maxHeight = 445 - MenuSheetButtonItemViewHeight
+        var itemViews = [UIView]()
+        
+        let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
+        carouselItem.condensed = false
+        carouselItem.parentController = self
+        carouselItem.allowCaptions = true
+        carouselItem.inhibitDocumentCaptions = true
+        carouselItem.suggestionContext = SuggestionContext()
+        carouselItem.cameraPressed = { cameraView in
+            guard AccessChecker.checkCameraAuthorizationStatus(alertDismissComlpetion: nil) == true else { return }
+            
+        }
+        
+        carouselItem.didSelectImage = { image, asset, fromView in
+            let editorController = PhotoEditorController(item:asset as! MediaEditableItem, intent:PhotoEditorControllerAvatarIntent, adjustments:nil, caption:nil, screenImage:image, availbaleTabs:PhotoEditorController.defaultTabsForAvatarIntent(), selectedTab:PhotoEditorCropTab)!
+            
+            editorController.requestOriginalFullSizeImage = { editableItem, position in
+                return editableItem?.originalImageSignal?(position)
+            }
+            
+            editorController.didFinishRenderingFullSizeImage = { image in
+                carouselItem.updateVisibleItems()
+            }
+            
+            editorController.didFinishEditing = { adjustments, resultImage, thumbnailImage, hasChanges in
+                carouselItem.updateVisibleItems()
+            }
+            
+            editorController.requestOriginalScreenSizeImage = { editableItem, position in
+                return editableItem?.screenImageSignal?(position)
+            }
+            
+            editorController.requestThumbnailImage = { editableItem in
+                return editableItem?.thumbnailImageSignal?()
+            }
+            
+            self.present(editorController, animated: true, completion: nil)
+        }
+        
+        carouselItem.sendPressed = { currentItem, asFiles in
+            controller.dismiss(animated: true, manual: false) {
+                
+            }
+        }
+        
+        itemViews.append(carouselItem)
+        
+        let galleryItem = MenuSheetButtonItemView.init(title:"Photo or Video", type:MenuSheetButtonTypeDefault, action:{
+            controller.dismiss(animated: true)
+        })!
+        
+        carouselItem.underlyingViews = [galleryItem]
+        
+        let cancelItem = MenuSheetButtonItemView.init(title: "Cancel", type: MenuSheetButtonTypeCancel, action: {
+            [unowned controller] in
+            controller.dismiss(animated: true)
+        })!
+        
+        itemViews.append(cancelItem)
+        controller.setItemViews(itemViews)
+        carouselItem.remainingHeight = MenuSheetButtonItemViewHeight * CGFloat(itemViews.count - 1)
+        
+        controller.present(in: self, sourceView:self.view, animated:true)
     }
 
     func cancelAndDismiss() {

@@ -722,7 +722,7 @@ extension ChatController: ChatInputTextPanelDelegate {
             }
         }
         
-        var array = [Any]()
+        let array = [Any]()
         let signal = combinedSignal?.reduceLeft(array, with: { itemDescriptions, item in
             if var descriptions = itemDescriptions as?  [[String: Any]] {
                 if let description = item as? [String: Any] {
@@ -881,15 +881,10 @@ extension ChatController: ChatInputTextPanelDelegate {
         })!
         
         itemViews.append(galleryItem)
-        let fileItem = MenuSheetButtonItemView.init(title:"File", type:MenuSheetButtonTypeDefault, action:nil)!
-        itemViews.append(fileItem)
         
-        let locationItem = MenuSheetButtonItemView.init(title:"Location", type:MenuSheetButtonTypeDefault, action:nil)!
-        itemViews.append(locationItem)
-        
-        carouselItem.underlyingViews = [galleryItem, fileItem]
+        carouselItem.underlyingViews = [galleryItem]
       
-        let cancelItem = MenuSheetButtonItemView.init(title:"Cancel", type:MenuSheetButtonTypeCancel, action:{
+        let cancelItem = MenuSheetButtonItemView.init(title: "Cancel", type: MenuSheetButtonTypeCancel, action: {
             [unowned controller] in
             controller.dismiss(animated: true)
         })!
