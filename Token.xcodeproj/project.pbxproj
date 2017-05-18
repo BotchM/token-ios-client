@@ -578,6 +578,11 @@
 		2BAE631C1EC6278D00255829 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7826EB1EBC698B002C32D2 /* AudioSessionManager.m */; };
 		2BAE631D1EC6356E00255829 /* DocumentAttributeAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7823C21EBBDCB8002C32D2 /* DocumentAttributeAudio.m */; };
 		2BCF6AAE1EC8C4B600198EC6 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF6AAD1EC8C4B600198EC6 /* TransitionAnimator.swift */; };
+		2BEE618F1ECB8DCC00EAB62A /* TimerTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE618E1ECB8DCC00EAB62A /* TimerTarget.m */; };
+		2BEE61961ECB964F00EAB62A /* SharedMediaCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE61911ECB964E00EAB62A /* SharedMediaCollectionView.m */; };
+		2BEE61971ECB964F00EAB62A /* SharedMediaSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE61931ECB964E00EAB62A /* SharedMediaSectionHeader.m */; };
+		2BEE61981ECB964F00EAB62A /* SharedMediaSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE61951ECB964F00EAB62A /* SharedMediaSectionHeaderView.m */; };
+		2BEE619B1ECB96FF00EAB62A /* SharedMediaCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE619A1ECB96FF00EAB62A /* SharedMediaCollectionLayout.m */; };
 		2BEE61A61ECB9B0F00EAB62A /* Quality240@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */; };
 		2BEE61A71ECB9B0F00EAB62A /* Quality240@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */; };
 		2BEE61A81ECB9B0F00EAB62A /* Quality360@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */; };
@@ -1716,6 +1721,16 @@
 		2BAB90CD1EC13E6F005D98C6 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Color.m; path = Media/Color.m; sourceTree = "<group>"; };
 		2BAE63191EC6227100255829 /* ModernGalleryImageItemContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernGalleryImageItemContainerView.m; path = Media/ModernGalleryImageItemContainerView.m; sourceTree = "<group>"; };
 		2BCF6AAD1EC8C4B600198EC6 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		2BEE618D1ECB8DCC00EAB62A /* TimerTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimerTarget.h; path = Media/TimerTarget.h; sourceTree = "<group>"; };
+		2BEE618E1ECB8DCC00EAB62A /* TimerTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimerTarget.m; path = Media/TimerTarget.m; sourceTree = "<group>"; };
+		2BEE61901ECB964E00EAB62A /* SharedMediaCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedMediaCollectionView.h; path = Media/SharedMediaCollectionView.h; sourceTree = "<group>"; };
+		2BEE61911ECB964E00EAB62A /* SharedMediaCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedMediaCollectionView.m; path = Media/SharedMediaCollectionView.m; sourceTree = "<group>"; };
+		2BEE61921ECB964E00EAB62A /* SharedMediaSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedMediaSectionHeader.h; path = Media/SharedMediaSectionHeader.h; sourceTree = "<group>"; };
+		2BEE61931ECB964E00EAB62A /* SharedMediaSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedMediaSectionHeader.m; path = Media/SharedMediaSectionHeader.m; sourceTree = "<group>"; };
+		2BEE61941ECB964E00EAB62A /* SharedMediaSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedMediaSectionHeaderView.h; path = Media/SharedMediaSectionHeaderView.h; sourceTree = "<group>"; };
+		2BEE61951ECB964F00EAB62A /* SharedMediaSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedMediaSectionHeaderView.m; path = Media/SharedMediaSectionHeaderView.m; sourceTree = "<group>"; };
+		2BEE61991ECB96FF00EAB62A /* SharedMediaCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedMediaCollectionLayout.h; path = Media/SharedMediaCollectionLayout.h; sourceTree = "<group>"; };
+		2BEE619A1ECB96FF00EAB62A /* SharedMediaCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedMediaCollectionLayout.m; path = Media/SharedMediaCollectionLayout.m; sourceTree = "<group>"; };
 		2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@2x.png"; path = "Icons/Quality240@2x.png"; sourceTree = "<group>"; };
 		2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@3x.png"; path = "Icons/Quality240@3x.png"; sourceTree = "<group>"; };
 		2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality360@2x.png"; path = "Icons/Quality360@2x.png"; sourceTree = "<group>"; };
@@ -2373,6 +2388,14 @@
 				2B7827621EBC85DB002C32D2 /* MediaPickerGalleryModel.m */,
 				2B78276C1EBC86FC002C32D2 /* ModernGalleryController.h */,
 				2B78276D1EBC86FC002C32D2 /* ModernGalleryController.m */,
+				2BEE61901ECB964E00EAB62A /* SharedMediaCollectionView.h */,
+				2BEE61911ECB964E00EAB62A /* SharedMediaCollectionView.m */,
+				2BEE61991ECB96FF00EAB62A /* SharedMediaCollectionLayout.h */,
+				2BEE619A1ECB96FF00EAB62A /* SharedMediaCollectionLayout.m */,
+				2BEE61921ECB964E00EAB62A /* SharedMediaSectionHeader.h */,
+				2BEE61931ECB964E00EAB62A /* SharedMediaSectionHeader.m */,
+				2BEE61941ECB964E00EAB62A /* SharedMediaSectionHeaderView.h */,
+				2BEE61951ECB964F00EAB62A /* SharedMediaSectionHeaderView.m */,
 				2B78277B1EBC8850002C32D2 /* ModernGalleryDefaultInterfaceView.h */,
 				2B78277C1EBC8850002C32D2 /* ModernGalleryDefaultInterfaceView.m */,
 				2B7827681EBC8648002C32D2 /* ModernGalleryModel.h */,
@@ -2887,6 +2910,8 @@
 				2B7825441EBBDCBB002C32D2 /* SuggestionContext.m */,
 				2B7825451EBBDCBB002C32D2 /* TGTimer.h */,
 				2B7825461EBBDCBB002C32D2 /* TGTimer.m */,
+				2BEE618D1ECB8DCC00EAB62A /* TimerTarget.h */,
+				2BEE618E1ECB8DCC00EAB62A /* TimerTarget.m */,
 				2B7825471EBBDCBB002C32D2 /* TransitionLayout.h */,
 				2B7825481EBBDCBB002C32D2 /* TransitionLayout.m */,
 				2B78254B1EBBDCBB002C32D2 /* VideoEditAdjustments.h */,
@@ -4047,6 +4072,7 @@
 				2B7825ED1EBBDCBB002C32D2 /* ModernButtonViewModel.m in Sources */,
 				2B7825F81EBBDCBB002C32D2 /* ModernGalleryVideoPlayerState.m in Sources */,
 				2B78256B1EBBDCBB002C32D2 /* Camera.m in Sources */,
+				2BEE61971ECB964F00EAB62A /* SharedMediaSectionHeader.m in Sources */,
 				A921D3631E7C145E00EE3221 /* Collection+Additions.swift in Sources */,
 				2B78272D1EBC7AFC002C32D2 /* MediaAssetsGifCell.m in Sources */,
 				1426D2421E7054AB0045EF09 /* AppController.swift in Sources */,
@@ -4057,6 +4083,7 @@
 				A9BF33B11E76DF67009A51AA /* BackupPhraseVerifyController.swift in Sources */,
 				2B7825D01EBBDCBB002C32D2 /* MediaAssetLegacyImageSignals.m in Sources */,
 				9F54A7231E951F1500FEB67B /* RatingsClient.swift in Sources */,
+				2BEE618F1ECB8DCC00EAB62A /* TimerTarget.m in Sources */,
 				2B7826491EBBDCBB002C32D2 /* PhotoPaintSettingsView.m in Sources */,
 				A9F61F7F1E72E22900D892E5 /* SettingsSectionHeader.swift in Sources */,
 				2B7825D61EBBDCBB002C32D2 /* MediaAssetsLibrary.m in Sources */,
@@ -4142,6 +4169,7 @@
 				2B7826691EBBDCBC002C32D2 /* SpringAnimation.m in Sources */,
 				9F7B896D1E51C6DA009C192E /* TSInteraction+Additions.swift in Sources */,
 				2B5A7F591EBCA7EB00F561C4 /* CameraTimeCodeView.m in Sources */,
+				2BEE61981ECB964F00EAB62A /* SharedMediaSectionHeaderView.m in Sources */,
 				2B78270B1EBC780E002C32D2 /* MediaPickerSelectionGestureRecognizer.m in Sources */,
 				2B7826B01EBC5F66002C32D2 /* ModernGalleryZoomableScrollView.m in Sources */,
 				2B7826661EBBDCBB002C32D2 /* SignalImageView.m in Sources */,
@@ -4171,6 +4199,7 @@
 				143587001E5C4CB4007A268A /* SearchResultsView.swift in Sources */,
 				2B7825CB1EBBDCBB002C32D2 /* MediaAsset.m in Sources */,
 				2B7825D71EBBDCBB002C32D2 /* MediaAssetsModernLibrary.m in Sources */,
+				2BEE619B1ECB96FF00EAB62A /* SharedMediaCollectionLayout.m in Sources */,
 				2B7825AD1EBBDCBB002C32D2 /* CameraMainView.m in Sources */,
 				2B5A7F631EBCA92200F561C4 /* CameraFlashActiveView.m in Sources */,
 				2B7826261EBBDCBB002C32D2 /* PhotoCropView.m in Sources */,
@@ -4346,6 +4375,7 @@
 				2B78259A1EBBDCBB002C32D2 /* AcceleratedVideoView.m in Sources */,
 				2B7825971EBBDCBB002C32D2 /* PSKeyValueEncoder.m in Sources */,
 				2B7827941EBC90F3002C32D2 /* ModernMediaListCell.m in Sources */,
+				2BEE61961ECB964F00EAB62A /* SharedMediaCollectionView.m in Sources */,
 				A9ED6CCD1E82B57E00160637 /* InputField.swift in Sources */,
 				9FAE4A6B1E4CBFC400126217 /* NSDecimalNumber+Additions.swift in Sources */,
 				2B78271A1EBC793A002C32D2 /* MediaAssetsMomentsCollectionView.m in Sources */,
