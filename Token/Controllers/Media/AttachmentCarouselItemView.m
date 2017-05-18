@@ -789,8 +789,6 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
             thumbnailImage = next;
         }];
     }
-       
-    self.openEditor = true;
     
     if (self.openEditor)
     {

@@ -1,7 +1,7 @@
 #import "CameraTimeCodeView.h"
 
 //#import <MTProtoKit/MTTime.h>
-//#import "TGTimerTarget.h"
+#import "TimerTarget.h"
 #import "CameraInterfaceAssets.h"
 #import "Common.h"
 
@@ -66,7 +66,7 @@
 {
     [self reset];
     
-//    _recordingTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:1.0 repeat:false];
+    _recordingTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:1.0 repeat:false];
     
     [self playBlinkAnimation];
 }
@@ -94,18 +94,18 @@
     if (recordingDuration < _recordingDurationSeconds)
         return;
     
-//    CFAbsoluteTime currentTime = MTAbsoluteSystemTime();
-//    NSUInteger currentDurationSeconds = (NSUInteger)recordingDuration;
-//    if (currentDurationSeconds == _recordingDurationSeconds)
-//    {
-//        _recordingTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:MAX(0.01, _recordingDurationSeconds + 1.0 - currentTime) repeat:false];
-//    }
-//    else
-//    {
-//        _recordingDurationSeconds = currentDurationSeconds;
-//        [self _updateRecordingTime];
-//        _recordingTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:1.0 repeat:false];
-//    }
+    CFAbsoluteTime currentTime = MTAbsoluteSystemTime();
+    NSUInteger currentDurationSeconds = (NSUInteger)recordingDuration;
+    if (currentDurationSeconds == _recordingDurationSeconds)
+    {
+        _recordingTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:MAX(0.01, _recordingDurationSeconds + 1.0 - currentTime) repeat:false];
+    }
+    else
+    {
+        _recordingDurationSeconds = currentDurationSeconds;
+        [self _updateRecordingTime];
+        _recordingTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(recordingTimerEvent) interval:1.0 repeat:false];
+    }
 }
 
 - (void)playBlinkAnimation

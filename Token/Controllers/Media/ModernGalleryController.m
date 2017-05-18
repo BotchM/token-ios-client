@@ -15,6 +15,8 @@
 #import "ModernGalleryInterfaceView.h"
 #import "ModernGalleryDefaultInterfaceView.h"
 
+#import "SharedMediaCollectionView.h"
+
 #import "ModernGalleryModel.h"
 
 #import "AnimationBlockDelegate.h"
@@ -26,6 +28,7 @@
 #import "JNWSpringAnimation.h"
 
 #import "ImageUtils.h"
+#import "AppDelegate.h"
 
 #import "AttachmentCarouselItemView.h"
 #import "Common.h"
@@ -389,6 +392,11 @@
     _view = [[ModernGalleryView alloc] initWithFrame:self.view.bounds itemPadding:ModernGalleryItemPadding interfaceView:interfaceView previewMode:_previewMode previewSize:previewSize];
     _view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_view];
+    
+    _view.closePressed = ^{
+        typeof(self)strongSelf = weakSelf;
+        [strongSelf dismissViewControllerAnimated:YES completion:nil];
+    };
     
     _defaultHeaderView = [_model createDefaultHeaderView];
     if (_defaultHeaderView != nil)
@@ -811,8 +819,8 @@ static CGFloat transformRotation(CGAffineTransform transform)
     CGFloat fromRotationZ = 0.0f;
     CGRect fromFrame = [self convertFrameOfView:fromView fromSubframe:(CGRect){CGPointZero, fromView.frame.size} toView:toView.superview toSubframe:[toView.superview convertRect:toViewContentRect fromView:toView] outRotationZ:&fromRotationZ];
     
-//    if (![fromScrollView isKindOfClass:[TGSharedMediaCollectionView class]] && ![fromScrollView isKindOfClass:[AttachmentCarouselCollectionView class]])
-//        fromFrame.origin.y += fromScrollView.frame.origin.y * 2.0f;
+    if (![fromScrollView isKindOfClass:[SharedMediaCollectionView class]] && ![fromScrollView isKindOfClass:[AttachmentCarouselCollectionView class]])
+        fromFrame.origin.y += fromScrollView.frame.origin.y * 2.0f;
     
     fromFrame.origin.x -= toView.superview.frame.origin.x;
     fromFrame.origin.y -= toView.superview.frame.origin.y;

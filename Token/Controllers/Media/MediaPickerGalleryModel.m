@@ -454,8 +454,7 @@
         return image;
     };
     
-    [self.controller addChildViewController:controller];
-    [self.controller.view addSubview:controller.view];
+    [self.controller presentViewController:controller animated:NO completion:nil];
 }
 
 - (void)_replaceItems:(NSArray *)items focusingOnItem:(id<ModernGalleryItem>)item

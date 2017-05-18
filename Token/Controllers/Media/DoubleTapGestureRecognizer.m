@@ -1,6 +1,6 @@
 #import "DoubleTapGestureRecognizer.h"
 
-//#import "TGTimerTarget.h"
+#import "TimerTarget.h"
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
@@ -130,7 +130,7 @@
             [(id<DoubleTapGestureRecognizerDelegate>)self.delegate gestureRecognizer:self didBeginAtPoint:[[touches anyObject] locationInView:self.view]];
         }
         
-       // _longPressTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(longTapEvent) interval:0.4 repeat:false];
+        _longPressTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(longTapEvent) interval:0.4 repeat:false];
     }
     else if (_currentTapCount >= 1)
     {
@@ -172,7 +172,7 @@
         }
         else
         {
-           // _tapTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(tapTimerEvent) interval:0.2 repeat:false];
+            _tapTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(tapTimerEvent) interval:0.2 repeat:false];
         }
     }
     

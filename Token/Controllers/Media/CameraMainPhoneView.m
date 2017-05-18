@@ -6,7 +6,7 @@
 #import "ImageUtils.h"
 #import "PhotoEditorUtils.h"
 #import "CameraInterfaceAssets.h"
-//#import "TGTimerTarget.h"
+#import "TimerTarget.h"
 
 #import "ModernButton.h"
 #import "CameraShutterButton.h"
@@ -293,7 +293,7 @@
     if (_tooltipContainerView != nil)
         return;
     
-    //_tooltipTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(tooltipTimerTick) interval:2.5 repeat:false];
+    _tooltipTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(tooltipTimerTick) interval:2.5 repeat:false];
     
     _tooltipContainerView = [[MenuContainerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height)];
     [self addSubview:_tooltipContainerView];

@@ -130,6 +130,15 @@ void DispatchAfter(double delay, dispatch_queue_t queue, dispatch_block_t block)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((delay) * NSEC_PER_SEC)), queue, block);
 }
 
+CFAbsoluteTime MTAbsoluteSystemTime()
+{
+    static mach_timebase_info_data_t s_timebase_info;
+    if (s_timebase_info.denom == 0)
+        mach_timebase_info(&s_timebase_info);
+    
+    return ((CFAbsoluteTime)(mach_absolute_time() * s_timebase_info.numer)) / (s_timebase_info.denom * NSEC_PER_SEC);
+}
+
 UIUserInterfaceSizeClass CurrentSizeClass()
 {
     UIUserInterfaceSizeClass sizeClass = UIUserInterfaceSizeClassUnspecified;

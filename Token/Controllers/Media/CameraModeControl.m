@@ -63,12 +63,12 @@ const CGFloat CameraModeControlVerticalInteritemSpace = 29.0f;
         NSMutableArray *buttons = [NSMutableArray new];
         
         if ([[AVAudioSession sharedInstance] recordPermission] == AVAudioSessionRecordPermissionGranted) {
-            [buttons addObject: [self _createButtonForMode:PGCameraModeVideo title:TGLocalized(@"VideoMode")]];
+            [buttons addObject: [self _createButtonForMode:PGCameraModeVideo title:TGLocalized(@"Video")]];
         }
         
         [buttons addObjectsFromArray:@[
-                                       [self _createButtonForMode:PGCameraModePhoto title:TGLocalized(@"PhotoMode")],
-                                       [self _createButtonForMode:PGCameraModeSquare title:TGLocalized(@"SquareMode")],
+                                       [self _createButtonForMode:PGCameraModePhoto title:TGLocalized(@"Photo")],
+                                       [self _createButtonForMode:PGCameraModeSquare title:TGLocalized(@"Square")],
                                        // [self _createButtonForMode:PGCameraModeClip title:TGLocalized(@"MomentMode")]
                                        ]];
         

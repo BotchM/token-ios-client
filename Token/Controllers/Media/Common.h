@@ -55,6 +55,8 @@ NSString *TGEncodeText(NSString *string, int key);
 void DispatchOnMainThread(dispatch_block_t block);
 void DispatchAfter(double delay, dispatch_queue_t queue, dispatch_block_t block);
     
+    CFAbsoluteTime MTAbsoluteSystemTime();
+    
 #ifdef __cplusplus
 }
 #endif

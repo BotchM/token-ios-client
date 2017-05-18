@@ -203,10 +203,13 @@
     _galleryModel.editorClosed = self.editorClosed;
     
     [_galleryController setPreviewMode:false];
-    
-    OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:_parentController contentController:_galleryController];
-    controllerWindow.hidden = false;
     _galleryController.view.clipsToBounds = true;
+    
+    [_parentController presentViewController:_galleryController animated:YES completion:nil];
+    
+    
+//    OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:_parentController contentController:_galleryController];
+//    controllerWindow.hidden = false
     
     _strongGalleryController = nil;
 }
