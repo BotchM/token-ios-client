@@ -613,143 +613,139 @@ const NSTimeInterval PhotoQualityPreviewDuration = 15.0f;
 
 - (void)generateVideoPreview
 {
-//    if (self.preset == _currentPreset)
-//        return;
-//    
-//    _currentPreset = self.preset;
-//    
-//    SSignal *assetSignal = [self.item isKindOfClass:[MediaAsset class]] ? [MediaAssetImageSignals avAssetForVideoAsset:(MediaAsset *)self.item] : [SSignal single:(AVAsset *)self.item];
-//
-//    if ([self.item isKindOfClass:[MediaAsset class]])
-//        [self _updateVideoDuration:((MediaAsset *)self.item).videoDuration hasAudio:true];
-//    
-//    VideoEditAdjustments *adjustments = [self.photoEditor exportAdjustments];
-//    adjustments = [adjustments editAdjustmentsWithPreset:self.preset maxDuration:PhotoQualityPreviewDuration];
-//    
-//    __block NSTimeInterval delay = 0.0;
-//    __weak PhotoQualityController *weakSelf = self;
-//    SSignal *convertSignal = [[assetSignal onNext:^(AVAsset *next) {
-//        __strong PhotoQualityController *strongSelf = weakSelf;
-//        if (strongSelf != nil)
-//        {
-//            bool hasAudio = [next tracksWithMediaType:AVMediaTypeAudio].count > 0;
-//            [strongSelf _updateVideoDuration:CMTimeGetSeconds(next.duration) hasAudio:hasAudio];
-//        }
-//    }] mapToSignal:^SSignal *(AVAsset *avAsset)
-//    {
-//        return [[[[[SSignal single:avAsset] delay:delay onQueue:[SQueue concurrentDefaultQueue]] mapToSignal:^SSignal *(AVAsset *avAsset)
-//        {
-//            return [MediaVideoConverter convertAVAsset:avAsset adjustments:adjustments watcher:nil inhibitAudio:true];
-//        }] onError:^(__unused id error) {
-//            delay = 1.0;
-//        }] retryIf:^bool(__unused id error)
-//        {
-//            return true;
-//        }];
-//    }];
-//    
-//    SSignal *urlSignal = nil;
-//    
-//    NSURL *fileUrl = [NSURL fileURLWithPath:[[self _previewDirectoryURL].path stringByAppendingPathComponent:[[NSString alloc] initWithFormat:@"%d.mov", self.preset]]];
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:fileUrl.path])
-//    {
-//        urlSignal = [SSignal single:fileUrl];
-//    }
-//    else
-//    {
-//        if (_player != nil)
-//            [_player pause];
-//        
-//        _overlayView.hidden = false;
-//        [_overlayView setProgress:0.03f cancelEnabled:false animated:true];
-//        
-//        if (![[NSFileManager defaultManager] fileExistsAtPath:[self _previewDirectoryURL].path])
-//            [[NSFileManager defaultManager] createDirectoryAtPath:[self _previewDirectoryURL].path withIntermediateDirectories:true attributes:nil error:NULL];
-//        
-//        urlSignal = [convertSignal map:^id(id value)
-//        {
-//            if ([value isKindOfClass:[MediaVideoConversionResult class]])
-//            {
-//                MediaVideoConversionResult *result = (MediaVideoConversionResult *)value;
-//                [[NSFileManager defaultManager] moveItemAtURL:result.fileURL toURL:fileUrl error:NULL];
-//                return fileUrl;
-//            }
-//            return value;
-//        }];
-//    }
-//    
-//    [_disposable setDisposable:[[urlSignal deliverOn:[SQueue mainQueue]] startWithNext:^(id next)
-//    {
-//        __strong PhotoQualityController *strongSelf = weakSelf;
-//        if (strongSelf == nil)
-//            return;
-//        
-//        if (strongSelf->_dismissing)
-//            return;
-//        
-//        if ([next isKindOfClass:[NSURL class]])
-//        {
-//            __block AVPlayer *previousPlayer;
-//            __block id previousPlayerReachedEndObserver;
-//            if (strongSelf->_player != nil)
-//            {
-//                previousPlayer = strongSelf->_player;
-//                previousPlayerReachedEndObserver = strongSelf->_playerReachedEndObserver;
-//                strongSelf->_playerReachedEndObserver = nil;
-//            }
-//            
-//            strongSelf->_player = [AVPlayer playerWithURL:next];
-//            strongSelf->_player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-//            strongSelf->_player.muted = true;
-//            
-//            UIView *previousVideoView = strongSelf->_videoView;
-//            strongSelf->_videoView = [[ModernGalleryVideoView alloc] initWithFrame:strongSelf->_previewView.frame player:strongSelf->_player];
-//            strongSelf->_videoView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-//            strongSelf->_videoView.playerLayer.opaque = false;
-//            strongSelf->_videoView.playerLayer.backgroundColor = nil;
-//            UIView *belowView = strongSelf->_overlayView;
-//            if (previousVideoView != nil)
-//                belowView = previousVideoView;
-//            [strongSelf.view insertSubview:strongSelf->_videoView belowSubview:belowView];
-//            
-//            [strongSelf->_player play];
-//            
-//            [strongSelf updateLayout:strongSelf.interfaceOrientation];
-//            
-//            strongSelf->_overlayView.hidden = true;
-//            [strongSelf->_overlayView setProgress:0.03f cancelEnabled:false animated:true];
-//            
-//            DispatchAfter(0.2, dispatch_get_main_queue(), ^
-//            {
-//                DispatchAfter(0.1, dispatch_get_main_queue(), ^
-//                {
-//                    if (previousVideoView != nil)
-//                        [previousVideoView removeFromSuperview];
-//                });
-//                
-//                if (previousPlayer != nil)
-//                {
-//                    [strongSelf->_player seekToTime:previousPlayer.currentItem.currentTime];
-//                    if (previousPlayerReachedEndObserver != nil)
-//                        [previousPlayer removeTimeObserver:previousPlayerReachedEndObserver];
-//                        
-//                    previousPlayerReachedEndObserver = nil;
-//                    [previousPlayer pause];
-//                    previousPlayer = nil;
-//                }
-//                
-//                [strongSelf _setupPlaybackReachedEndObserver];
-//            });
-//        }
-//        else if ([next isKindOfClass:[NSNumber class]])
-//        {
-//            strongSelf->_overlayView.hidden = false;
-//            CGFloat progress = MAX(0.03, [next doubleValue]);
-//            [strongSelf->_overlayView setProgress:progress cancelEnabled:false animated:true];
-//        }
-//    } error:^(id error) {
-//        TGLog(@"Video Quality Preview Error: %@", error);
-//    } completed:nil]];
+    if (self.preset == _currentPreset)
+        return;
+    
+    _currentPreset = self.preset;
+    
+    SSignal *assetSignal = [self.item isKindOfClass:[MediaAsset class]] ? [MediaAssetImageSignals avAssetForVideoAsset:(MediaAsset *)self.item] : [SSignal single:(AVAsset *)self.item];
+
+    if ([self.item isKindOfClass:[MediaAsset class]])
+        [self _updateVideoDuration:((MediaAsset *)self.item).videoDuration hasAudio:true];
+    
+    VideoEditAdjustments *adjustments = [self.photoEditor exportAdjustments];
+    adjustments = [adjustments editAdjustmentsWithPreset:self.preset maxDuration:PhotoQualityPreviewDuration];
+    
+    __block NSTimeInterval delay = 0.0;
+    __weak PhotoQualityController *weakSelf = self;
+    SSignal *convertSignal = [[assetSignal onNext:^(AVAsset *next) {
+        __strong PhotoQualityController *strongSelf = weakSelf;
+        if (strongSelf != nil)
+        {
+            bool hasAudio = [next tracksWithMediaType:AVMediaTypeAudio].count > 0;
+            [strongSelf _updateVideoDuration:CMTimeGetSeconds(next.duration) hasAudio:hasAudio];
+        }
+    }] mapToSignal:^SSignal *(AVAsset *avAsset)
+    {
+        return  [[[[SSignal single:avAsset] delay:delay onQueue:[SQueue concurrentDefaultQueue]] mapToSignal:^SSignal *(AVAsset *avAsset) {
+            return [MediaVideoConverter convertAVAsset:avAsset adjustments:adjustments watcher:nil inhibitAudio:true];
+        }] onError:^(id error) {
+            delay = 1.0;
+        }];
+    }];
+
+    SSignal *urlSignal = nil;
+    
+    NSURL *fileUrl = [NSURL fileURLWithPath:[[self _previewDirectoryURL].path stringByAppendingPathComponent:[[NSString alloc] initWithFormat:@"%d.mov", self.preset]]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fileUrl.path])
+    {
+        urlSignal = [SSignal single:fileUrl];
+    }
+    else
+    {
+        if (_player != nil)
+            [_player pause];
+        
+        _overlayView.hidden = false;
+        [_overlayView setProgress:0.03f cancelEnabled:false animated:true];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[self _previewDirectoryURL].path])
+            [[NSFileManager defaultManager] createDirectoryAtPath:[self _previewDirectoryURL].path withIntermediateDirectories:true attributes:nil error:NULL];
+        
+        urlSignal = [convertSignal map:^id(id value)
+        {
+            if ([value isKindOfClass:[MediaVideoConversionResult class]])
+            {
+                MediaVideoConversionResult *result = (MediaVideoConversionResult *)value;
+                [[NSFileManager defaultManager] moveItemAtURL:result.fileURL toURL:fileUrl error:NULL];
+                return fileUrl;
+            }
+            return value;
+        }];
+    }
+
+    [_disposable setDisposable:[[urlSignal deliverOn:[SQueue mainQueue]] startWithNext:^(id next)
+    {
+        __strong PhotoQualityController *strongSelf = weakSelf;
+        if (strongSelf == nil)
+            return;
+        
+        if (strongSelf->_dismissing)
+            return;
+        
+        if ([next isKindOfClass:[NSURL class]])
+        {
+            __block AVPlayer *previousPlayer;
+            __block id previousPlayerReachedEndObserver;
+            if (strongSelf->_player != nil)
+            {
+                previousPlayer = strongSelf->_player;
+                previousPlayerReachedEndObserver = strongSelf->_playerReachedEndObserver;
+                strongSelf->_playerReachedEndObserver = nil;
+            }
+            
+            strongSelf->_player = [AVPlayer playerWithURL:next];
+            strongSelf->_player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+            strongSelf->_player.muted = true;
+            
+            UIView *previousVideoView = strongSelf->_videoView;
+            strongSelf->_videoView = [[ModernGalleryVideoView alloc] initWithFrame:strongSelf->_previewView.frame player:strongSelf->_player];
+            strongSelf->_videoView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            strongSelf->_videoView.playerLayer.opaque = false;
+            strongSelf->_videoView.playerLayer.backgroundColor = nil;
+            UIView *belowView = strongSelf->_overlayView;
+            if (previousVideoView != nil)
+                belowView = previousVideoView;
+            [strongSelf.view insertSubview:strongSelf->_videoView belowSubview:belowView];
+            
+            [strongSelf->_player play];
+            
+            [strongSelf updateLayout:strongSelf.interfaceOrientation];
+            
+            strongSelf->_overlayView.hidden = true;
+            [strongSelf->_overlayView setProgress:0.03f cancelEnabled:false animated:true];
+            
+            DispatchAfter(0.2, dispatch_get_main_queue(), ^
+            {
+                DispatchAfter(0.1, dispatch_get_main_queue(), ^
+                {
+                    if (previousVideoView != nil)
+                        [previousVideoView removeFromSuperview];
+                });
+                
+                if (previousPlayer != nil)
+                {
+                    [strongSelf->_player seekToTime:previousPlayer.currentItem.currentTime];
+                    if (previousPlayerReachedEndObserver != nil)
+                        [previousPlayer removeTimeObserver:previousPlayerReachedEndObserver];
+                        
+                    previousPlayerReachedEndObserver = nil;
+                    [previousPlayer pause];
+                    previousPlayer = nil;
+                }
+                
+                [strongSelf _setupPlaybackReachedEndObserver];
+            });
+        }
+        else if ([next isKindOfClass:[NSNumber class]])
+        {
+            strongSelf->_overlayView.hidden = false;
+            CGFloat progress = MAX(0.03, [next doubleValue]);
+            [strongSelf->_overlayView setProgress:progress cancelEnabled:false animated:true];
+        }
+    } error:^(id error) {
+        TGLog(@"Video Quality Preview Error: %@", error);
+    } completed:nil]];
 }
 
 - (void)_setupPlaybackReachedEndObserver

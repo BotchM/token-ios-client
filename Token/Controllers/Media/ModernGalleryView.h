@@ -11,6 +11,8 @@
 @property (nonatomic, strong, readonly) UIView<ModernGalleryInterfaceView> *interfaceView;
 @property (nonatomic, strong, readonly) ModernGalleryScrollView *scrollView;
 
+@property (nonatomic, copy) void (^closePressed)();
+
 - (instancetype)initWithFrame:(CGRect)frame itemPadding:(CGFloat)itemPadding interfaceView:(UIView<ModernGalleryInterfaceView> *)interfaceView previewMode:(bool)previewMode previewSize:(CGSize)previewSize;
 
 - (bool)shouldAutorotate;

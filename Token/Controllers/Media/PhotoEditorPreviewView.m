@@ -18,6 +18,7 @@
     UIImageView *_originalBackgroundView;
     UILabel *_originalLabel;
     
+    
     UILongPressGestureRecognizer *_pressGestureRecognizer;
     
     bool _needsTransitionIn;
@@ -84,6 +85,9 @@
         _originalLabel.textAlignment = NSTextAlignmentCenter;
         _originalLabel.textColor = [UIColor whiteColor];
         [_originalBackgroundView addSubview:_originalLabel];
+        
+        self.backgroundColor = [UIColor yellowColor];
+        self.tag = 777;
     }
     return self;
 }

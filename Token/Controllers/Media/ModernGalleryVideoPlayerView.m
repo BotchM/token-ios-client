@@ -5,7 +5,7 @@
 
 #import "ImageUtils.h"
 #import "ObserverProxy.h"
-//#import "TGTimerTarget.h"
+#import "TimerTarget.h"
 
 #import "ImageView.h"
 #import "ModernGalleryVideoView.h"
@@ -199,7 +199,7 @@
         [self addSubview:_videoView];
         
         _videoView.alpha = 0.0f;
-       // _videoFlickerTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(videoFlickerTimerEvent) interval:0.1 repeat:false];
+        _videoFlickerTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(videoFlickerTimerEvent) interval:0.1 repeat:false];
         
         [self _setupSystemPIP];
         
@@ -214,7 +214,7 @@
     
     [_player play];
     
-   // _positionTimer = [TGTimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(positionTimerEvent) interval:0.25 repeat:true];
+    _positionTimer = [TimerTarget scheduledMainThreadTimerWithTarget:self action:@selector(positionTimerEvent) interval:0.25 repeat:true];
     [self positionTimerEvent];
 }
 

@@ -46,20 +46,20 @@
     self = [super initWithFrame:CGRectZero];
     if (self != nil)
     {
-        _rgbButton = [self _modeButtonWithTitle:TGLocalized(@"CurvesAll")];
+        _rgbButton = [self _modeButtonWithTitle:TGLocalized(@"All")];
         _rgbButton.selected = true;
         _rgbButton.tag = PGCurvesTypeLuminance;
         [self addSubview:_rgbButton];
         
-        _redButton = [self _modeButtonWithTitle:TGLocalized(@"CurvesRed")];
+        _redButton = [self _modeButtonWithTitle:TGLocalized(@"Red")];
         _redButton.tag = PGCurvesTypeRed;
         [self addSubview:_redButton];
     
-        _greenButton = [self _modeButtonWithTitle:TGLocalized(@"CurvesGreen")];
+        _greenButton = [self _modeButtonWithTitle:TGLocalized(@"Green")];
         _greenButton.tag = PGCurvesTypeGreen;
         [self addSubview:_greenButton];
         
-        _blueButton = [self _modeButtonWithTitle:TGLocalized(@"CurvesBlue")];
+        _blueButton = [self _modeButtonWithTitle:TGLocalized(@"Blue")];
         _blueButton.tag = PGCurvesTypeBlue;
         [self addSubview:_blueButton];
         

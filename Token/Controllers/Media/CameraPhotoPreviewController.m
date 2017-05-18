@@ -271,7 +271,7 @@
         NSArray *stickers = [editingContext adjustmentsForItem:strongSelf->_image].paintingData.stickers;
         [[imageSignal deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *result)
          {
-             [strongSelf dismissViewControllerAnimated:NO completion:^{
+             [strongSelf dismissViewControllerAnimated:YES completion:^{
                  strongSelf.sendPressed(result, caption, stickers);
              }];
          }];

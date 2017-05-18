@@ -143,7 +143,7 @@ const CGFloat PhotoAvatarCropViewOverscreenSize = 1000;
     
     _imageView.image = _image;
     
-    if (_snapshotView != nil && !_scrollView.hidden)
+    //if (_snapshotView != nil && !_scrollView.hidden)
     {
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -414,6 +414,9 @@ const CGFloat PhotoAvatarCropViewOverscreenSize = 1000;
 
 - (void)fadeInImageView
 {
+    self.backgroundColor = [UIColor purpleColor];
+    _imageView.backgroundColor = [UIColor yellowColor];
+    
     [UIView animateWithDuration:0.3f animations:^
     {
         _imageView.alpha = 1.0f;

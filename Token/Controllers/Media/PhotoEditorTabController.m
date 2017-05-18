@@ -57,6 +57,7 @@ const CGFloat PhotoEditorToolbarSize = 44.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
     
     if (self.beginTransitionIn != nil)
     {
@@ -88,6 +89,8 @@ const CGFloat PhotoEditorToolbarSize = 44.0f;
 
 - (void)prepareTransitionInWithReferenceView:(UIView *)referenceView referenceFrame:(CGRect)referenceFrame parentView:(UIView *)parentView noTransitionView:(bool)noTransitionView
 {
+    
+    self.view.backgroundColor = [UIColor blackColor];
     CGRect targetFrame = [self _targetFrameForTransitionInFromFrame:referenceFrame];
     
     if (_CGRectEqualToRectWithEpsilon(targetFrame, referenceFrame, FLT_EPSILON))

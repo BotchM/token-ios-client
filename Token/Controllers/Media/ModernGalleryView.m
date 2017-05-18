@@ -64,6 +64,11 @@ static const CGFloat swipeDistanceThreshold = 128.0f;
         _interfaceView.closePressed = ^
         {
             __strong ModernGalleryView *strongSelf = weakSelf;
+            
+            if (strongSelf.closePressed) {
+                strongSelf.closePressed();
+            }
+            
             if (strongSelf.transitionOut)
                 strongSelf.transitionOut(0.0f);
         };

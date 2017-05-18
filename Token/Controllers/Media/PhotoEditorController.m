@@ -149,7 +149,7 @@
     self.view.frame = (CGRect){ CGPointZero, [self referenceViewSize]};
     self.view.clipsToBounds = true;
     
-    if ([self presentedForAvatarCreation] && ![self presentedFromCamera])
+   // if ([self presentedForAvatarCreation] && ![self presentedFromCamera])
         self.view.backgroundColor = [UIColor blackColor];
     
     _wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -926,6 +926,12 @@
                     [strongSelf->_currentTabController _finishedTransitionInWithView:nil];
                 };
                 
+                [[MediaAssetImageSignals imageForAsset:((MediaAsset *)_item) imageType:MediaAssetImageTypeFullSize size:[UIScreen mainScreen].bounds.size allowNetworkAccess:YES] startWithNext:^(UIImage *next) {
+                    self.fullSizeImage = next;
+                    [cropController setImage:next];
+                }];
+                
+                
                 [[[[self.requestOriginalFullSizeImage(_item, 0) reduceLeftWithPassthrough:nil with:^id(__unused id current, __unused id next, void (^emit)(id))
                     {
                         if ([next isKindOfClass:[UIImage class]])
@@ -1310,9 +1316,15 @@
         _currentTabController.transitionSpeed = 20.0f;
     
     [self addChildViewController:_currentTabController];
+    _currentTabController.view.alpha = 0.0;
+    
     [_containerView addSubview:_currentTabController.view];
     
     _currentTabController.view.frame = _containerView.bounds;
+    
+    [UIView animateWithDuration:2.2 animations:^{
+        _currentTabController.view.alpha = 1.0;
+    } completion:nil];
     
     _currentTabController.beginItemTransitionIn = ^
     {
