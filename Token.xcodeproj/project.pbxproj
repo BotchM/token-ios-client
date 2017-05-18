@@ -578,6 +578,18 @@
 		2BAE631C1EC6278D00255829 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7826EB1EBC698B002C32D2 /* AudioSessionManager.m */; };
 		2BAE631D1EC6356E00255829 /* DocumentAttributeAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7823C21EBBDCB8002C32D2 /* DocumentAttributeAudio.m */; };
 		2BCF6AAE1EC8C4B600198EC6 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF6AAD1EC8C4B600198EC6 /* TransitionAnimator.swift */; };
+		2BEE61A61ECB9B0F00EAB62A /* Quality240@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */; };
+		2BEE61A71ECB9B0F00EAB62A /* Quality240@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */; };
+		2BEE61A81ECB9B0F00EAB62A /* Quality360@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */; };
+		2BEE61A91ECB9B0F00EAB62A /* Quality360@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619F1ECB9B0F00EAB62A /* Quality360@3x.png */; };
+		2BEE61AA1ECB9B0F00EAB62A /* Quality480@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A01ECB9B0F00EAB62A /* Quality480@2x.png */; };
+		2BEE61AB1ECB9B0F00EAB62A /* Quality480@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A11ECB9B0F00EAB62A /* Quality480@3x.png */; };
+		2BEE61AC1ECB9B0F00EAB62A /* Quality720@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A21ECB9B0F00EAB62A /* Quality720@2x.png */; };
+		2BEE61AD1ECB9B0F00EAB62A /* Quality720@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A31ECB9B0F00EAB62A /* Quality720@3x.png */; };
+		2BEE61AE1ECB9B0F00EAB62A /* QualityHD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A41ECB9B0F00EAB62A /* QualityHD@2x.png */; };
+		2BEE61AF1ECB9B0F00EAB62A /* QualityHD@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A51ECB9B0F00EAB62A /* QualityHD@3x.png */; };
+		2BEE61BB1ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61B91ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png */; };
+		2BEE61BC1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61BA1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png */; };
 		3D2E697529A2D52254F37ED4 /* libPods-CocoaPods-Development.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFB40C6579F524BC3F63679 /* libPods-CocoaPods-Development.a */; };
 		443ABD0C3B790D679591152A /* libPods-CocoaPods-Distribution.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 769C834390540D551617A66F /* libPods-CocoaPods-Distribution.a */; };
 		9F04A7231E38D1400043534A /* QRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F04A7221E38D1400043534A /* QRCodeController.swift */; };
@@ -1704,6 +1716,18 @@
 		2BAB90CD1EC13E6F005D98C6 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Color.m; path = Media/Color.m; sourceTree = "<group>"; };
 		2BAE63191EC6227100255829 /* ModernGalleryImageItemContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernGalleryImageItemContainerView.m; path = Media/ModernGalleryImageItemContainerView.m; sourceTree = "<group>"; };
 		2BCF6AAD1EC8C4B600198EC6 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@2x.png"; path = "Icons/Quality240@2x.png"; sourceTree = "<group>"; };
+		2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@3x.png"; path = "Icons/Quality240@3x.png"; sourceTree = "<group>"; };
+		2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality360@2x.png"; path = "Icons/Quality360@2x.png"; sourceTree = "<group>"; };
+		2BEE619F1ECB9B0F00EAB62A /* Quality360@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality360@3x.png"; path = "Icons/Quality360@3x.png"; sourceTree = "<group>"; };
+		2BEE61A01ECB9B0F00EAB62A /* Quality480@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality480@2x.png"; path = "Icons/Quality480@2x.png"; sourceTree = "<group>"; };
+		2BEE61A11ECB9B0F00EAB62A /* Quality480@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality480@3x.png"; path = "Icons/Quality480@3x.png"; sourceTree = "<group>"; };
+		2BEE61A21ECB9B0F00EAB62A /* Quality720@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality720@2x.png"; path = "Icons/Quality720@2x.png"; sourceTree = "<group>"; };
+		2BEE61A31ECB9B0F00EAB62A /* Quality720@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality720@3x.png"; path = "Icons/Quality720@3x.png"; sourceTree = "<group>"; };
+		2BEE61A41ECB9B0F00EAB62A /* QualityHD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "QualityHD@2x.png"; path = "Icons/QualityHD@2x.png"; sourceTree = "<group>"; };
+		2BEE61A51ECB9B0F00EAB62A /* QualityHD@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "QualityHD@3x.png"; path = "Icons/QualityHD@3x.png"; sourceTree = "<group>"; };
+		2BEE61B91ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VolumeControlSliderButton@2x.png"; path = "Icons/VolumeControlSliderButton@2x.png"; sourceTree = "<group>"; };
+		2BEE61BA1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VolumeControlVolumeIcon@2x.png"; path = "Icons/VolumeControlVolumeIcon@2x.png"; sourceTree = "<group>"; };
 		3792EEE42F397342AA67CF7D /* Pods-CocoaPods-Development.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPods-Development.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CocoaPods-Development/Pods-CocoaPods-Development.debug.xcconfig"; sourceTree = "<group>"; };
 		626847A05B6B231F02E4B0A9 /* Pods-CocoaPods-Distribution.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPods-Distribution.release.xcconfig"; path = "Pods/Target Support Files/Pods-CocoaPods-Distribution/Pods-CocoaPods-Distribution.release.xcconfig"; sourceTree = "<group>"; };
 		769C834390540D551617A66F /* libPods-CocoaPods-Distribution.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CocoaPods-Distribution.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2048,6 +2072,18 @@
 		2B2F84B51ECA408D00D6576D /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */,
+				2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */,
+				2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */,
+				2BEE619F1ECB9B0F00EAB62A /* Quality360@3x.png */,
+				2BEE61A01ECB9B0F00EAB62A /* Quality480@2x.png */,
+				2BEE61A11ECB9B0F00EAB62A /* Quality480@3x.png */,
+				2BEE61A21ECB9B0F00EAB62A /* Quality720@2x.png */,
+				2BEE61A31ECB9B0F00EAB62A /* Quality720@3x.png */,
+				2BEE61A41ECB9B0F00EAB62A /* QualityHD@2x.png */,
+				2BEE61A51ECB9B0F00EAB62A /* QualityHD@3x.png */,
+				2BEE61B91ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png */,
+				2BEE61BA1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png */,
 				2B2F84B61ECA40A300D6576D /* CameraAutoFocusCrosshairs.png */,
 				2B2F84B71ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png */,
 				2B2F84B81ECA40A300D6576D /* CameraAutoFocusCrosshairs@3x.png */,
@@ -3493,9 +3529,12 @@
 				9FAACD041E31120600FB871D /* SF-UI-Text-Semibold.otf in Resources */,
 				2B2F852F1ECA40A300D6576D /* PhotoEditorFilters@2x.png in Resources */,
 				2B2F85161ECA40A300D6576D /* PhotoEditorBlurLinear@2x.png in Resources */,
+				2BEE61A81ECB9B0F00EAB62A /* Quality360@2x.png in Resources */,
+				2BEE61AD1ECB9B0F00EAB62A /* Quality720@3x.png in Resources */,
 				2B2F85111ECA40A300D6576D /* ImagePickerPhotoCounter_Close@2x.png in Resources */,
 				2B2F854A1ECA40A300D6576D /* PhotoEditorVignetteTool@3x.png in Resources */,
 				9FAACCF11E31120600FB871D /* SF-UI-Display-Black.otf in Resources */,
+				2BEE61AF1ECB9B0F00EAB62A /* QualityHD@3x.png in Resources */,
 				9FAACD011E31120600FB871D /* SF-UI-Text-MediumItalic.otf in Resources */,
 				9FA12BEC1E65CF73003705F6 /* PN.m4a in Resources */,
 				2B2F85151ECA40A300D6576D /* PhotoEditorBlurLinear.png in Resources */,
@@ -3527,6 +3566,7 @@
 				9F27525E1EB9CA7A00050C08 /* Settings.storyboard in Resources */,
 				2B2F85061ECA40A300D6576D /* CameraExposureIcon@2x.png in Resources */,
 				2B2F85301ECA40A300D6576D /* PhotoEditorGrainTool.png in Resources */,
+				2BEE61AA1ECB9B0F00EAB62A /* Quality480@2x.png in Resources */,
 				2B2F850D1ECA40A300D6576D /* CameraFocusCrosshairs@2x.png in Resources */,
 				2B2F85241ECA40A300D6576D /* PhotoEditorCrop@2x.png in Resources */,
 				2B2F852A1ECA40A300D6576D /* PhotoEditorEnhanceTool@3x.png in Resources */,
@@ -3544,16 +3584,19 @@
 				2B2F851C1ECA40A300D6576D /* PhotoEditorBlurRadial@2x.png in Resources */,
 				9FAACCF21E31120600FB871D /* SF-UI-Display-Bold.otf in Resources */,
 				2B2F85231ECA40A300D6576D /* PhotoEditorContrastTool@3x.png in Resources */,
+				2BEE61AE1ECB9B0F00EAB62A /* QualityHD@2x.png in Resources */,
 				9FAACCFC1E31120600FB871D /* SF-UI-Text-Heavy.otf in Resources */,
 				9FAACD031E31120600FB871D /* SF-UI-Text-RegularItalic.otf in Resources */,
 				2B2F85251ECA40A300D6576D /* PhotoEditorCrop@3x.png in Resources */,
 				2B2F85411ECA40A300D6576D /* PhotoEditorShadowsTool@3x.png in Resources */,
 				9FAACD021E31120600FB871D /* SF-UI-Text-Regular.otf in Resources */,
 				9FEFEF621E66CD6C00948277 /* requestPayment.m4a in Resources */,
+				2BEE61A91ECB9B0F00EAB62A /* Quality360@3x.png in Resources */,
 				2B2F85261ECA40A300D6576D /* PhotoEditorCropCorners@2x.png in Resources */,
 				2B2F85021ECA40A300D6576D /* CameraAutoFocusCrosshairs.png in Resources */,
 				2B2F85491ECA40A300D6576D /* PhotoEditorVignetteTool@2x.png in Resources */,
 				2B2F85331ECA40A300D6576D /* PhotoEditorHighlightsTool.png in Resources */,
+				2BEE61BC1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png in Resources */,
 				2B2F85471ECA40A300D6576D /* PhotoEditorTools@3x.png in Resources */,
 				2B2F852B1ECA40A300D6576D /* PhotoEditorExposureTool.png in Resources */,
 				2B2F850F1ECA40A300D6576D /* CameraLargeFlipButton@3x.png in Resources */,
@@ -3562,6 +3605,7 @@
 				2B2F852E1ECA40A300D6576D /* PhotoEditorFadeTool@2x.png in Resources */,
 				2B2F85221ECA40A300D6576D /* PhotoEditorContrastTool@2x.png in Resources */,
 				2B2F85051ECA40A300D6576D /* CameraDeleteIcon@2x.png in Resources */,
+				2BEE61AB1ECB9B0F00EAB62A /* Quality480@3x.png in Resources */,
 				2B2F853B1ECA40A300D6576D /* PhotoEditorRotationWheelRight@2x.png in Resources */,
 				9FAACCF31E31120600FB871D /* SF-UI-Display-Heavy.otf in Resources */,
 				2B2F85211ECA40A300D6576D /* PhotoEditorContrastTool.png in Resources */,
@@ -3575,6 +3619,7 @@
 				2B2F85091ECA40A300D6576D /* CameraFlashButton@3x.png in Resources */,
 				9FA12BF41E66CA42003705F6 /* messageReceived.m4a in Resources */,
 				2B2F85281ECA40A300D6576D /* PhotoEditorEnhanceTool.png in Resources */,
+				2BEE61AC1ECB9B0F00EAB62A /* Quality720@2x.png in Resources */,
 				2B2F85131ECA40A300D6576D /* PhotoEditorAspectRatioIcon_Applied@2x.png in Resources */,
 				2B2F850B1ECA40A300D6576D /* CameraFlipButton@2x.png in Resources */,
 				2B2F85521ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png in Resources */,
@@ -3585,11 +3630,14 @@
 				2B2F85101ECA40A300D6576D /* CameraSegmentsBack@2x.png in Resources */,
 				2B2F850C1ECA40A300D6576D /* CameraFocusCrosshairs.png in Resources */,
 				2B2F85371ECA40A300D6576D /* PhotoEditorRotateIcon@2x.png in Resources */,
+				2BEE61BB1ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png in Resources */,
+				2BEE61A71ECB9B0F00EAB62A /* Quality240@3x.png in Resources */,
 				2B2F85031ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png in Resources */,
 				9FAACCFE1E31120600FB871D /* SF-UI-Text-Light.otf in Resources */,
 				2B2F853E1ECA40A300D6576D /* PhotoEditorSaturationTool@3x.png in Resources */,
 				9FAACCF71E31120600FB871D /* SF-UI-Display-Semibold.otf in Resources */,
 				9FEFEF641E66CE0000948277 /* scan.m4a in Resources */,
+				2BEE61A61ECB9B0F00EAB62A /* Quality240@2x.png in Resources */,
 				9FA12BF01E65D043003705F6 /* messageSent.m4a in Resources */,
 				9FAACD061E31120600FB871D /* SF-UI-Text-Ultrathin.otf in Resources */,
 				9F8C340D1E71530A005178F9 /* paymentSend.m4a in Resources */,
