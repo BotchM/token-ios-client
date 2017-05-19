@@ -21,19 +21,19 @@ import ImagePicker
 import AVFoundation
 
 class ChatController: MessagesCollectionViewController {
-
+    
     fileprivate var etherAPIClient: EthereumAPIClient {
         return EthereumAPIClient.shared
     }
-
+    
     fileprivate var idAPIClient: IDAPIClient {
         return IDAPIClient.shared
     }
-
+    
     fileprivate var chatAPIClient: ChatAPIClient {
         return ChatAPIClient.shared
     }
-
+    
     fileprivate var ethereumAPIClient: EthereumAPIClient {
         return EthereumAPIClient.shared
     }
@@ -49,16 +49,16 @@ class ChatController: MessagesCollectionViewController {
     }()
     
     let transition = PopAnimator()
-    var fromView: UIView?
-
+    var fromViewRect = CGRect.zero
+    
     var textLayoutQueue = DispatchQueue(label: "com.tokenbrowser.token.layout", qos: DispatchQoS(qosClass: .default, relativePriority: 0))
-
+    
     lazy var rateButton: UIBarButtonItem = {
         let view = UIBarButtonItem(title: "Rate", style: .plain, target: self, action: #selector(didTapRateUser))
-
+        
         return view
     }()
-
+    
     var messages = [Message]() {
         didSet {
             let current = Set(self.messages)
@@ -70,60 +70,60 @@ class ChatController: MessagesCollectionViewController {
                 if message1.date.compare(message2.date) == .orderedSame {
                     return message1.signalMessage.hasAttachments()
                 }
-
+                
                 // otherwise, resume regular date comparison
                 return message1.date.compare(message2.date) == .orderedAscending
             }
-
+            
             let displayables = new.filter { (message) -> Bool in
                 return message.isDisplayable
             }
-
+            
             // Only animate if we're adding one message, for bulk-insert we want them instant.
             // let isAnimated = displayables.count == 1
             self.addMessages(displayables, scrollToBottom: true)
         }
     }
-
+    
     var visibleMessages: [Message] {
         return self.messages.filter { (message) -> Bool in
             message.isDisplayable
         }
     }
-
+    
     lazy var mappings: YapDatabaseViewMappings = {
         let mappings = YapDatabaseViewMappings(groups: [self.thread.uniqueId], view: TSMessageDatabaseViewExtensionName)
         mappings.setIsReversed(true, forGroup: TSInboxGroup)
-
+        
         return mappings
     }()
-
+    
     lazy var uiDatabaseConnection: YapDatabaseConnection = {
         let database = TSStorageManager.shared().database()!
         let dbConnection = database.newConnection()
         dbConnection.beginLongLivedReadTransaction()
-
+        
         return dbConnection
     }()
-
+    
     lazy var editingDatabaseConnection: YapDatabaseConnection = {
         self.storageManager.newDatabaseConnection()
     }()
-
+    
     var thread: TSThread
-
+    
     var messageSender: MessageSender
-
+    
     var contactsManager: ContactsManager
-
+    
     var contactsUpdater: ContactsUpdater
-
+    
     var storageManager: TSStorageManager
-
+    
     lazy var ethereumPromptView: ChatsFloatingHeaderView = {
         let view = ChatsFloatingHeaderView(withAutoLayout: true)
         view.delegate = self
-
+        
         return view
     }()
     
@@ -131,9 +131,9 @@ class ChatController: MessagesCollectionViewController {
         disposable.dispose()
         processMediaDisposable.dispose()
     }
-
+    
     // MARK: - Class overrides
-
+    
     override class func cellLayoutClass(forItemType type: String) -> AnyClass? {
         if type == "Text" {
             return MessageCellLayout.self
@@ -145,63 +145,63 @@ class ChatController: MessagesCollectionViewController {
             return nil
         }
     }
-
+    
     // MARK: - Init
-
+    
     init(thread: TSThread) {
         self.thread = thread
-
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError("Could not retrieve app delegate") }
-
+        
         self.messageSender = appDelegate.messageSender
         self.contactsManager = appDelegate.contactsManager
         self.contactsUpdater = appDelegate.contactsUpdater
         self.storageManager = TSStorageManager.shared()
-
+        
         super.init(nibName: nil, bundle: nil)
-
+        
         self.hidesBottomBarWhenPushed = true
         self.title = thread.cachedContactIdentifier
-
+        
         self.registerNotifications()
-
+        
         self.additionalContentInsets.top = 48
     }
-
+    
     required init?(coder _: NSCoder) {
         fatalError()
     }
-
+    
     // MARK: View life-cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = Theme.messageViewBackgroundColor
         self.containerView?.backgroundColor = nil
-
+        
         self.view.addSubview(self.ethereumPromptView)
         self.ethereumPromptView.heightAnchor.constraint(equalToConstant: ChatsFloatingHeaderView.height).isActive = true
         self.ethereumPromptView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
         self.ethereumPromptView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.ethereumPromptView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-
+        
         self.collectionView.keyboardDismissMode = .interactive
         self.collectionView.backgroundColor = nil
-
+        
         self.navigationItem.rightBarButtonItem = self.rateButton
-
+        
         self.fetchAndUpdateBalance()
         self.loadMessages()
-
+        
         self.view.addSubview(self.textInputView)
-
+        
         NSLayoutConstraint.activate([
             self.textInputView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.textInputView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             textInputViewBottom,
             textInputViewHeight,
-        ])
+            ])
         
         self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
         
@@ -224,23 +224,23 @@ class ChatController: MessagesCollectionViewController {
         self.reloadDraft()
         self.view.layoutIfNeeded()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         self.thread.markAllAsRead()
         SignalNotificationManager.updateApplicationBadgeNumber()
         self.title = self.thread.cachedContactIdentifier
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.saveDraft()
-
+        
         self.thread.markAllAsRead()
         SignalNotificationManager.updateApplicationBadgeNumber()
     }
-
+    
     func fetchAndUpdateBalance() {
         self.ethereumAPIClient.getBalance(address: Cereal.shared.paymentAddress) { balance, error in
             if let error = error {
@@ -251,29 +251,29 @@ class ChatController: MessagesCollectionViewController {
             }
         }
     }
-
+    
     func handleBalanceUpdate(notification: Notification) {
         guard notification.name == .ethereumBalanceUpdateNotification, let balance = notification.object as? NSDecimalNumber else { return }
         self.set(balance: balance)
     }
-
+    
     func set(balance: NSDecimalNumber) {
         self.ethereumPromptView.balance = balance
     }
-
+    
     func saveDraft() {
         let thread = self.thread
         guard let text = self.textInputView.text else { return }
-
+        
         self.editingDatabaseConnection.asyncReadWrite { transaction in
             thread.setDraft(text, transaction: transaction)
         }
     }
-
+    
     func reloadDraft() {
         let thread = self.thread
         var placeholder: String?
-
+        
         self.editingDatabaseConnection.asyncReadWrite({ transaction in
             placeholder = thread.currentDraft(with: transaction)
         }, completionBlock: {
@@ -282,18 +282,18 @@ class ChatController: MessagesCollectionViewController {
             }
         })
     }
-
+    
     override func registerChatItemCells() {
         self.collectionView.register(MessageCell.self, forCellWithReuseIdentifier: MessageCell.reuseIdentifier())
         self.collectionView.register(ActionableMessageCell.self, forCellWithReuseIdentifier: ActionableMessageCell.reuseIdentifier())
         self.collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: ImageMessageCell.reuseIdentifier())
     }
-
+    
     // MARK: Rate users
     func didTapRateUser() {
         let contactId = self.thread.contactIdentifier()!
         let contact = self.contactsManager.tokenContact(forAddress: contactId)
-
+        
         if let contact = contact {
             self.presentUserRatingPrompt(contact: contact)
         } else {
@@ -303,37 +303,37 @@ class ChatController: MessagesCollectionViewController {
             }
         }
     }
-
+    
     func presentUserRatingPrompt(contact: TokenUser) {
         let rateUserController = RateUserController(user: contact)
         rateUserController.delegate = self
-
+        
         self.present(rateUserController, animated: true)
     }
-
+    
     // MARK: Load initial messages
-
+    
     func loadMessages() {
         self.uiDatabaseConnection.asyncRead { transaction in
             self.mappings.update(with: transaction)
-
+            
             var messages = [Message]()
-
+            
             for i in 0 ..< self.mappings.numberOfItems(inSection: 0) {
                 let indexPath = IndexPath(row: Int(i), section: 0)
                 guard let dbExtension = transaction.ext(TSMessageDatabaseViewExtensionName) as? YapDatabaseViewTransaction else { fatalError() }
                 guard let interaction = dbExtension.object(at: indexPath, with: self.mappings) as? TSInteraction else { fatalError() }
-
+                
                 DispatchQueue.main.async {
                     var shouldProcess = false
                     if let message = interaction as? TSMessage, SofaType(sofa: message.body ?? "") == .paymentRequest {
                         shouldProcess = true
                     }
-
+                    
                     messages.append(self.handleInteraction(interaction, shouldProcessCommands: shouldProcess))
                 }
             }
-
+            
             DispatchQueue.main.async {
                 UIView.performWithoutAnimation {
                     self.messages = messages
@@ -343,9 +343,9 @@ class ChatController: MessagesCollectionViewController {
             }
         }
     }
-
+    
     // Mark: Handle new messages
-
+    
     func showFingerprint(with _: Data, signalId _: String) {
         // Postpone this for now
         print("Should display fingerprint comparison UI.")
@@ -355,24 +355,24 @@ class ChatController: MessagesCollectionViewController {
         //        let fingerprintController = FingerprintViewController(fingerprint: fingerprint)
         //        self.present(fingerprintController, animated: true)
     }
-
+    
     func handleInvalidKeyError(_ errorMessage: TSInvalidIdentityKeyErrorMessage) {
         let keyOwner = self.contactsManager.displayName(forPhoneIdentifier: errorMessage.theirSignalId())
         let titleText = "Your safety number with \(keyOwner) has changed. You may wish to verify it."
-
+        
         let actionSheetController = UIAlertController(title: titleText, message: nil, preferredStyle: .actionSheet)
-
+        
         let dismissAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionSheetController.addAction(dismissAction)
-
+        
         let showSafteyNumberAction = UIAlertAction(title: NSLocalizedString("Compare fingerprints.", comment: "Action sheet item"), style: .default) { (_: UIAlertAction) -> Void in
-
+            
             self.showFingerprint(with: errorMessage.newIdentityKey(), signalId: errorMessage.theirSignalId())
         }
         actionSheetController.addAction(showSafteyNumberAction)
-
+        
         let acceptSafetyNumberAction = UIAlertAction(title: NSLocalizedString("Accept the new contact identity.", comment: "Action sheet item"), style: .default) { (_: UIAlertAction) -> Void in
-
+            
             errorMessage.acceptNewIdentityKey()
             if errorMessage is TSInvalidIdentityKeySendingErrorMessage {
                 self.messageSender.resendMessage(fromKeyError: (errorMessage as! TSInvalidIdentityKeySendingErrorMessage), success: { () -> Void in
@@ -383,10 +383,10 @@ class ChatController: MessagesCollectionViewController {
             }
         }
         actionSheetController.addAction(acceptSafetyNumberAction)
-
+        
         present(actionSheetController, animated: true, completion: nil)
     }
-
+    
     /// Handle incoming interactions or previous messages when restoring a conversation.
     ///
     /// - Parameters:
@@ -398,10 +398,10 @@ class ChatController: MessagesCollectionViewController {
             DispatchQueue.main.async {
                 self.handleInvalidKeyError(interaction)
             }
-
+            
             return Message(sofaWrapper: nil, signalMessage: interaction, date: interaction.date(), isOutgoing: false)
         }
-
+        
         if let message = interaction as? TSMessage, shouldProcessCommands {
             let type = SofaType(sofa: message.body)
             switch type {
@@ -412,13 +412,13 @@ class ChatController: MessagesCollectionViewController {
                 break
             }
         }
-
+        
         /// TODO: Simplify how we deal with interactions vs text messages.
         /// Since now we know we can expande the TSInteraction stored properties, maybe we can merge some of this together.
         if let interaction = interaction as? TSOutgoingMessage {
             let sofaWrapper = SofaWrapper.wrapper(content: interaction.body!)
             let message = Message(sofaWrapper: sofaWrapper, signalMessage: interaction, date: interaction.date(), isOutgoing: true)
-
+            
             if interaction.hasAttachments() {
                 message.messageType = "Image"
             } else if let payment = SofaWrapper.wrapper(content: interaction.body ?? "") as? SofaPayment {
@@ -426,12 +426,12 @@ class ChatController: MessagesCollectionViewController {
                 message.attributedTitle = NSAttributedString(string: "Payment sent", attributes: [NSForegroundColorAttributeName: Theme.outgoingMessageTextColor, NSFontAttributeName: Theme.medium(size: 17)])
                 message.attributedSubtitle = NSAttributedString(string: EthereumConverter.balanceAttributedString(forWei: payment.value).string, attributes: [NSForegroundColorAttributeName: Theme.outgoingMessageTextColor, NSFontAttributeName: Theme.regular(size: 15)])
             }
-
+            
             return message
         } else if let interaction = interaction as? TSIncomingMessage {
             let sofaWrapper = SofaWrapper.wrapper(content: interaction.body!)
             let message = Message(sofaWrapper: sofaWrapper, signalMessage: interaction, date: interaction.date(), isOutgoing: false, shouldProcess: shouldProcessCommands && interaction.paymentState == .none)
-
+            
             if interaction.hasAttachments() {
                 message.messageType = "Image"
             } else if let sofaMessage = sofaWrapper as? SofaMessage {
@@ -445,27 +445,27 @@ class ChatController: MessagesCollectionViewController {
                 message.attributedTitle = NSAttributedString(string: "Payment received", attributes: [NSForegroundColorAttributeName: Theme.incomingMessageTextColor, NSFontAttributeName: Theme.medium(size: 17)])
                 message.attributedSubtitle = NSAttributedString(string: EthereumConverter.balanceAttributedString(forWei: payment.value).string, attributes: [NSForegroundColorAttributeName: Theme.incomingMessageTextColor, NSFontAttributeName: Theme.regular(size: 15)])
             }
-
+            
             return message
         } else {
             return Message(sofaWrapper: nil, signalMessage: interaction as! TSMessage, date: interaction.date(), isOutgoing: false)
         }
     }
-
+    
     // MARK: Add displayable messages
-
+    
     private func addMessages(_ messages: [Message], scrollToBottom: Bool) {
         self.textLayoutQueue.async {
             let indexes = IndexSet(integersIn: 0 ..< messages.count)
-
+            
             DispatchQueue.main.async {
                 var layouts = [NOCChatItemCellLayout]()
-
+                
                 for message in messages {
                     let layout = self.createLayout(with: message)!
                     layouts.append(layout)
                 }
-
+                
                 if !layouts.isEmpty {
                     self.insertLayouts(layouts.reversed(), at: indexes, animated: true)
                 }
@@ -478,33 +478,33 @@ class ChatController: MessagesCollectionViewController {
             }
         }
     }
-
+    
     // MARK: - Helper methods
-
+    
     func visibleMessage(at indexPath: IndexPath) -> Message {
         return self.visibleMessages[indexPath.row]
     }
-
+    
     func message(at indexPath: IndexPath) -> Message {
         return self.messages[indexPath.row]
     }
-
+    
     func registerNotifications() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(yapDatabaseDidChange(notification:)), name: .YapDatabaseModified, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.handleBalanceUpdate(notification:)), name: .ethereumBalanceUpdateNotification, object: nil)
     }
-
+    
     func reversedIndexPath(_ indexPath: IndexPath) -> IndexPath {
         let row = (self.visibleMessages.count - 1) - indexPath.item
         return IndexPath(row: row, section: indexPath.section)
     }
-
+    
     // MARK: Handle database changes
-
+    
     func yapDatabaseDidChange(notification _: NSNotification) {
         let notifications = self.uiDatabaseConnection.beginLongLivedReadTransaction()
-
+        
         // If changes do not affect current view, update and return without updating collection view
         // TODO: Since this is used in more than one place, we should look into abstracting this away, into our own
         // table/collection view backing model.
@@ -514,37 +514,37 @@ class ChatController: MessagesCollectionViewController {
             self.uiDatabaseConnection.read { transaction in
                 self.mappings.update(with: transaction)
             }
-
+            
             return
         }
-
+        
         // HACK to work around radar #28167779
         // "UICollectionView performBatchUpdates can trigger a crash if the collection view is flagged for layout"
         // more: https://github.com/PSPDFKit-labs/radar.apple.com/tree/master/28167779%20-%20CollectionViewBatchingIssue
         // This was our #2 crash, and much exacerbated by the refactoring somewhere between 2.6.2.0-2.6.3.8
         self.collectionView.layoutIfNeeded() // ENDHACK to work around radar #28167779
-
+        
         var messageRowChanges = NSArray()
         var sectionChanges = NSArray()
-
+        
         viewConnection.getSectionChanges(&sectionChanges, rowChanges: &messageRowChanges, for: notifications, with: self.mappings)
-
+        
         if messageRowChanges.count == 0 {
             return
         }
-
+        
         self.uiDatabaseConnection.asyncRead { transaction in
             for change in messageRowChanges as! [YapDatabaseViewRowChange] {
                 guard let dbExtension = transaction.ext(TSMessageDatabaseViewExtensionName) as? YapDatabaseViewTransaction else { fatalError() }
-
+                
                 switch change.type {
                 case .insert:
                     guard let interaction = dbExtension.object(at: change.newIndexPath, with: self.mappings) as? TSInteraction else { fatalError("woot") }
-
+                    
                     DispatchQueue.main.async {
                         let result = self.handleInteraction(interaction, shouldProcessCommands: true)
                         self.messages.append(result)
-
+                        
                         if result.isOutgoing {
                             if result.sofaWrapper?.type == .paymentRequest {
                                 SoundPlayer.playSound(type: .requestPayment)
@@ -556,7 +556,7 @@ class ChatController: MessagesCollectionViewController {
                         } else {
                             SoundPlayer.playSound(type: .messageReceived)
                         }
-
+                        
                         if let incoming = interaction as? TSIncomingMessage, !incoming.wasRead {
                             incoming.markAsReadLocally()
                         }
@@ -564,26 +564,26 @@ class ChatController: MessagesCollectionViewController {
                 case .update:
                     let indexPath = change.indexPath
                     guard let interaction = dbExtension.object(at: indexPath, with: self.mappings) as? TSMessage else { return }
-
+                    
                     DispatchQueue.main.async {
                         guard self.visibleMessages.count == self.layouts.count else {
                             print("Called before colection view had a chance to insert message.")
-
+                            
                             return
                         }
-
+                        
                         let message = self.message(at: indexPath)
                         guard let visibleIndex = self.visibleMessages.index(of: message) else { return }
                         let reversedIndex = self.reversedIndexPath(IndexPath(row: visibleIndex, section: 0)).row
                         guard let layout = self.layouts[reversedIndex] as? MessageCellLayout else { return }
-
+                        
                         // commented out until we can prevent it from triggering an update
                         if let signalMessage = layout.message.signalMessage as? TSOutgoingMessage, let newSignalMessage = interaction as? TSOutgoingMessage {
                             signalMessage.setState(newSignalMessage.messageState)
                         }
-
+                        
                         layout.calculate()
-
+                        
                         self.updateLayout(at: UInt(reversedIndex), to: layout, animated: true)
                     }
                 default:
@@ -592,41 +592,41 @@ class ChatController: MessagesCollectionViewController {
             }
         }
     }
-
+    
     // MARK: Send messages
-
+    
     func sendMessage(sofaWrapper: SofaWrapper, date: Date = Date()) {
         let timestamp = NSDate.ows_millisecondsSince1970(for: date)
         let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: sofaWrapper.content)
-
+        
         self.messageSender.send(outgoingMessage, success: {
             print("message sent")
         }, failure: { error in
             print(error)
         })
     }
-
+    
     // MARK: - Collection view overrides
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
-
+        
         if let cell = cell as? ActionableMessageCell {
             cell.actionsDelegate = self
         }
-
+        
         return cell
     }
-
+    
     // MARK: - Control handling
-
+    
     override func didTapControlButton(_ button: SofaMessage.Button) {
         guard button.value != nil else {
             print("Implement handling actions. action: \(button.action ?? "nil")")
-
+            
             return
         }
-
+        
         // clear the buttons
         self.buttons = []
         let command = SofaCommand(button: button)
@@ -636,66 +636,66 @@ class ChatController: MessagesCollectionViewController {
 }
 
 extension ChatController: ActionableCellDelegate {
-
+    
     func didTapRejectButton(_ messageCell: ActionableMessageCell) {
         guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
         let visibleMessageIndexPath = reversedIndexPath(indexPath)
-
+        
         let message = visibleMessage(at: visibleMessageIndexPath)
         message.isActionable = false
-
+        
         let layout = self.layouts[indexPath.item] as? MessageCellLayout
         layout?.chatItem = message
         layout?.calculate()
-
+        
         let interaction = message.signalMessage
         interaction.paymentState = .rejected
         interaction.save()
     }
-
+    
     func didTapApproveButton(_ messageCell: ActionableMessageCell) {
         guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
         let visibleMessageIndexPath = reversedIndexPath(indexPath)
-
+        
         let message = visibleMessage(at: visibleMessageIndexPath)
         message.isActionable = false
-
+        
         let layout = self.layouts[indexPath.item] as? MessageCellLayout
         layout?.chatItem = message
         layout?.calculate()
-
+        
         let interaction = message.signalMessage
         interaction.paymentState = .pendingConfirmation
         interaction.save()
-
+        
         guard let paymentRequest = message.sofaWrapper as? SofaPaymentRequest else { fatalError("Could not retrieve payment request for approval.") }
-
+        
         let value = paymentRequest.value
         guard let destination = paymentRequest.destinationAddress else { return }
-
+        
         // TODO: prevent concurrent calls
         // Also, extract this.
         self.etherAPIClient.createUnsignedTransaction(to: destination, value: value) { transaction, error in
             let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
-
+            
             self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
                 if error != nil {
                     guard let json = json?.dictionary else { fatalError("!") }
-
+                    
                     let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
                     self.present(alert, animated: true)
                 } else if let json = json?.dictionary {
                     // update payment request message
                     message.isActionable = false
-
+                    
                     let interaction = message.signalMessage
                     interaction.paymentState = .pendingConfirmation
                     interaction.save()
-
+                    
                     // send payment message
                     guard let txHash = json["tx_hash"] as? String else { fatalError("Error recovering transaction hash.") }
                     let payment = SofaPayment(txHash: txHash, valueHex: value.toHexString)
-
+                    
                     self.sendMessage(sofaWrapper: payment)
                 }
             }
@@ -704,7 +704,7 @@ extension ChatController: ActionableCellDelegate {
 }
 
 extension ChatController: ChatInputTextPanelDelegate {
-
+    
     func inputTextPanel(_: ChatInputTextPanel, requestSendText text: String) {
         let wrapper = SofaMessage(content: ["body": text])
         sendMessage(sofaWrapper: wrapper)
@@ -737,20 +737,16 @@ extension ChatController: ChatInputTextPanelDelegate {
         }).deliver(on: SQueue.main()).start(next: { itemDescriptions in
             
             var mediaDescriptions = [[String: Any]]()
-            var filesDescriptions = [[String: Any]]()
             
             if let itemDescriptions = itemDescriptions as? [Dictionary<String, Any>] {
                 itemDescriptions.forEach ({
                     if $0["localImage"] != nil ||  $0["remoteImage"] != nil ||  $0["downloadImage"] != nil ||  $0["downloadDocument"] != nil ||  $0["downloadExternalGif"] != nil ||  $0["downloadExternalImage"] != nil || $0["remoteDocument"] != nil || $0["remoteCachedDocument"] != nil || $0["assetImage"] != nil || $0["assetVideo"] != nil {
                         mediaDescriptions.append($0)
-                    } else {
-                        filesDescriptions.append($0)
                     }
                 })
             }
             
             if mediaDescriptions.count > 0 {
-            
                 for description in mediaDescriptions {
                     if let assetImage = description["assetImage"] as? [String: Any] {
                         let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
@@ -764,11 +760,9 @@ extension ChatController: ChatInputTextPanelDelegate {
                             })
                         }
                     }
+                    
+                    // VIDEO HANDLING
                 }
-            }
-            
-            if filesDescriptions.count > 0 {
-            //send file
             }
         })
         
@@ -788,7 +782,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         if AccessChecker.checkMicrophoneAuthorizationStatus(for: MicrophoneAccessIntentVideo,alertDismissCompletion:nil) == true {
             mediaTYpes.append(kUTTypeVideo as String)
         }
-         legacyCameraController.mediaTypes = mediaTYpes
+        legacyCameraController.mediaTypes = mediaTYpes
         
         legacyCameraController.completionDelegate = self
         
@@ -825,9 +819,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         carouselItem.didSelectImage = { image, asset, fromView in
             if let fromView = fromView as UIView? {
-                let rect = self.view.convert(fromView.frame, from: fromView.superview)
-                self.fromView = fromView
-                self.fromView?.frame = rect
+                self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
             }
             
             let editorController = PhotoEditorController(item:asset as! MediaEditableItem, intent:PhotoEditorControllerAvatarIntent, adjustments:nil, caption:nil, screenImage:image, availbaleTabs:PhotoEditorController.defaultTabsForAvatarIntent(), selectedTab:PhotoEditorCropTab)!
@@ -875,7 +867,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         itemViews.append(carouselItem)
         
         let galleryItem = MenuSheetButtonItemView.init(title:"Photo or Video", type:MenuSheetButtonTypeDefault, action:{ [unowned self] in
-        
+            
             controller.dismiss(animated: true)
             self.displayMediaPicker(forFile: false, fromFileMenu: false)
         })!
@@ -883,7 +875,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         itemViews.append(galleryItem)
         
         carouselItem.underlyingViews = [galleryItem]
-      
+        
         let cancelItem = MenuSheetButtonItemView.init(title: "Cancel", type: MenuSheetButtonTypeCancel, action: {
             [unowned controller] in
             controller.dismiss(animated: true)
@@ -913,9 +905,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         cameraView?.detachPreviewView()
         
         if let fromView = cameraView as UIView? {
-            let rect = self.view.convert(fromView.frame, from: fromView.superview)
-            self.fromView = fromView
-            self.fromView?.frame = rect
+            self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
         }
         controller.transitioningDelegate = self
         
@@ -1028,7 +1018,7 @@ extension ChatController: ChatInputTextPanelDelegate {
     }
     
     private func displayMediaPicker(forFile: Bool, fromFileMenu:Bool) {
-    
+        
         guard AccessChecker.checkPhotoAuthorizationStatus(intent: PhotoAccessIntentRead, alertDismissCompletion: nil) else { return }
         let dismissBlock = { [unowned self] in
             self.dismiss(animated: true, completion: nil)
@@ -1081,10 +1071,8 @@ extension ChatController: ChatInputTextPanelDelegate {
 extension ChatController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let fromView = self.fromView as UIView? {
-            transition.originFrame = fromView.frame //selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
-            transition.presenting = true
-        }
+        transition.originFrame = self.fromViewRect //selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
+        transition.presenting = true
         
         return transition
     }
@@ -1108,7 +1096,7 @@ extension ChatController: ImagePickerDelegate {
     func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
         self.dismiss(animated: true)
     }
-
+    
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         self.dismiss(animated: true) {
             for image in images {
@@ -1125,55 +1113,55 @@ extension ChatController: ImagePickerDelegate {
             }
         }
     }
-
+    
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         
     }
 }
 
 extension ChatController: ChatsFloatingHeaderViewDelegate {
-
+    
     func messagesFloatingView(_: ChatsFloatingHeaderView, didPressRequestButton _: UIButton) {
         let paymentRequestController = PaymentRequestController()
         paymentRequestController.delegate = self
-
+        
         present(paymentRequestController, animated: true)
     }
-
+    
     func messagesFloatingView(_: ChatsFloatingHeaderView, didPressPayButton _: UIButton) {
         let paymentSendController = PaymentSendController()
         paymentSendController.delegate = self
-
+        
         present(paymentSendController, animated: true)
     }
 }
 
 extension ChatController: PaymentSendControllerDelegate {
-
+    
     func paymentSendControllerDidFinish(valueInWei: NSDecimalNumber?) {
         defer {
             self.dismiss(animated: true)
         }
-
+        
         guard let value = valueInWei else {
             return
         }
-
+        
         // TODO: prevent concurrent calls
         // Also, extract this.
         guard let tokenId = self.thread.contactIdentifier() else {
             return
         }
-
+        
         self.idAPIClient.retrieveContact(username: tokenId) { user in
             if let user = user {
                 self.etherAPIClient.createUnsignedTransaction(to: user.paymentAddress, value: value) { transaction, error in
                     let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
-
+                    
                     self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
                         if error != nil {
                             guard let json = json?.dictionary else { fatalError("!") }
-
+                            
                             let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
                             self.present(alert, animated: true)
                         } else if let json = json?.dictionary {
@@ -1211,10 +1199,22 @@ extension ChatController: PaymentRequestControllerDelegate {
     }
 }
 
+extension ChatController: MenuSheetEditingPresenter {
+    @available(iOS 2.0, *)
+    func present(_ controller: UIViewController!, from fromView: UIView!) {
+        if let fromView = fromView as UIView? {
+            self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
+        }
+        
+        controller.transitioningDelegate = self
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+
 extension ChatController: LegacyCameraControllerDelegate, TGImagePickerControllerDelegate {
     private func legacyCameraControllerCapturedVideo(path: String, fileSize: CGSize, image: UIImage, duration: TimeInterval, dimensions: TimeInterval, assetUrl: String) {
-    
-         self.dismiss(animated: true, completion: nil)
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func legacyCameraControllerCompleted(media: Any) {
@@ -1230,11 +1230,11 @@ extension ChatController: LegacyCameraControllerDelegate, TGImagePickerControlle
     }
     
     func legacyCameraControllerCompletedWithDocument(fileUrl :URL, fileName: String, mimeType: String) {
-    
+        
     }
     
     func imagePickerControllerDidFinishPickingWithAssets(imagePicker: TGImagePickerController!, assets: [Any]!) {
-         self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         for asset in assets! {
             if let image = asset as? UIImage {

@@ -30,6 +30,9 @@ typedef enum {
 @property (nonatomic, copy) UIView *(^beginTransitionOut)(id<ModernGalleryItem>, ModernGalleryItemView *);
 @property (nonatomic, copy) void (^completedTransitionOut)();
 
+@property (nonatomic, copy) void (^completionBlock)();
+
+
 - (NSArray *)visibleItemViews;
 - (ModernGalleryItemView *)itemViewForItem:(id<ModernGalleryItem>)item;
 - (id<ModernGalleryItem>)currentItem;

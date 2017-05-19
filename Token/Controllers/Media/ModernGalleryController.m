@@ -395,7 +395,10 @@
     
     _view.closePressed = ^{
         typeof(self)strongSelf = weakSelf;
-        [strongSelf dismissViewControllerAnimated:YES completion:nil];
+       
+        if (strongSelf.completionBlock) {
+            strongSelf.completionBlock();
+        }
     };
     
     _defaultHeaderView = [_model createDefaultHeaderView];
@@ -432,60 +435,16 @@
                 }
             }
             
-            if (strongSelf.hasFadeOutTransition)
-            {
-                if (strongSelf.beginTransitionOut)
-                    strongSelf.beginTransitionOut(focusItem, currentItemView);
-                
+//            if (strongSelf.hasFadeOutTransition)
+//            {
+//                if (strongSelf.beginTransitionOut)
+//                    strongSelf.beginTransitionOut(focusItem, currentItemView);
+            
                 [strongSelf->_view fadeOutWithDuration:0.3f completion:^
                 {
-                    [strongSelf dismiss];
+                   // [strongSelf dismiss];
                 }];
-            }
-            else
-            {
-                UIView *transitionOutToView = nil;
-                UIView *transitionOutFromView = nil;
-                CGRect transitionOutFromViewContentRect = CGRectZero;
-                
-                if (strongSelf.beginTransitionOut && focusItem != nil)
-                    transitionOutToView = strongSelf.beginTransitionOut(focusItem, currentItemView);
-                if (transitionOutToView != nil && currentItemView != nil)
-                {
-                    transitionOutFromView = [currentItemView transitionView];
-                    transitionOutFromViewContentRect = [currentItemView transitionViewContentRect];
-                }
-                
-                if (transitionOutFromView != nil && transitionOutToView != nil)
-                {
-                    [strongSelf animateTransitionOutFromView:transitionOutFromView fromViewContentRect:transitionOutFromViewContentRect toView:transitionOutToView velocity:CGPointMake(0.0f, velocity * 3.8f)];
-                    [strongSelf->_view transitionOutWithDuration:0.15];
-                    [strongSelf->_view.interfaceView animateTransitionOutWithDuration:0.15];
-                }
-                else
-                {
-                    if (iosMajorVersion() >= 7 && strongSelf.shouldAnimateStatusBarStyleTransition)
-                    {
-                        [strongSelf animateStatusBarTransition:0.2];
-                        strongSelf->_statusBarStyle = strongSelf->_defaultStatusBarStyle;
-                        [strongSelf setNeedsStatusBarAppearanceUpdate];
-                    }
-                    
-                    if (strongSelf.adjustsStatusBarVisibility)
-                    {
-                        [UIView animateWithDuration:0.2 animations:^
-                        {
-                            [Hacks setApplicationStatusBarAlpha:1.0f];
-                        }];
-                    }
-                    
-                    [strongSelf->_view simpleTransitionOutWithVelocity:velocity completion:^
-                    {
-                        __strong ModernGalleryController *strongSelf2 = weakSelf;
-                        [strongSelf2 dismiss];
-                    }];
-                }
-            }
+           // }
         }
         return true;
     };

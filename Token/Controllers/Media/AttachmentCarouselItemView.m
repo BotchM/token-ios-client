@@ -803,6 +803,18 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     {
         _galleryMixin = [self galleryMixinForIndexPath:indexPath previewMode:false outAsset:NULL];
         [_galleryMixin present];
+        
+        __weak typeof(_galleryMixin.galleryController)weakGalleryController = _galleryMixin.galleryController;
+        
+        _galleryMixin.galleryController.completionBlock = ^{
+            typeof(_galleryMixin.galleryController)strongGalleryController = weakGalleryController;
+            
+            [strongGalleryController dismissViewControllerAnimated:YES completion:nil];
+        };
+        
+        if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
+            [(id<MenuSheetEditingPresenter>)_parentController presentViewController:_galleryMixin.galleryController fromView:cell];
+        }
     }
 }
 
@@ -875,7 +887,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
 - (void)updateHiddenCellAnimated:(bool)animated
 {
     for (AttachmentAssetCell *cell in [_collectionView visibleCells])
-        [cell setHidden:([cell.asset isEqual:_hiddenItem]) animated:animated];
+        [cell setHidden:NO animated:animated];
 }
 
 #pragma mark -

@@ -205,16 +205,10 @@
     [_galleryController setPreviewMode:false];
     _galleryController.view.clipsToBounds = true;
     
-    [_parentController presentViewController:_galleryController animated:YES completion:nil];
-    
-    
-//    OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:_parentController contentController:_galleryController];
-//    controllerWindow.hidden = false
-    
     _strongGalleryController = nil;
 }
 
-- (UIViewController *)galleryController
+- (ModernGalleryController *)galleryController
 {
     return _galleryController;
 }

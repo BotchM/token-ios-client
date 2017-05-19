@@ -46,7 +46,7 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(toView)
         containerView.bringSubview(toFront: targetView)
         
-        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { 
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
             targetView.transform = self.presenting ?
                 CGAffineTransform.identity : scaleTransform
             targetView.center = CGPoint(x: finalFrame.midX,

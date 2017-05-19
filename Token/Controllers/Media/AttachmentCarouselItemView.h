@@ -7,6 +7,12 @@
 @class ViewController;
 @class AttachmentCameraView;
 
+@protocol MenuSheetEditingPresenter <NSObject>
+
+- (void)presentViewController:(UIViewController *)controller fromView:(UIView *)view;
+
+@end
+
 @interface AttachmentCarouselCollectionView : UICollectionView
 
 @end
