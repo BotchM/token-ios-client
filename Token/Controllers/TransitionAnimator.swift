@@ -3,7 +3,7 @@ import UIKit
 
 class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    let duration = 0.3
+    let duration = 0.4
     var presenting = true
     var originFrame = CGRect.zero
     
@@ -19,6 +19,10 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let toView = transitionContext.view(forKey: .to)!
         
         let targetView = presenting ? toView : transitionContext.view(forKey: .from)!
+        
+        if self.presenting == true {
+            targetView.alpha = 0.0
+        }
         
         let initialFrame = presenting ? originFrame : targetView.frame
         let finalFrame = presenting ? targetView.frame : originFrame
@@ -51,6 +55,11 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 CGAffineTransform.identity : scaleTransform
             targetView.center = CGPoint(x: finalFrame.midX,
                                         y: finalFrame.midY)
+            
+            if self.presenting {
+                targetView.alpha = 1.0;
+            }
+            
         }) { _ in
             if !self.presenting {
                 self.dismissCompletion?()
