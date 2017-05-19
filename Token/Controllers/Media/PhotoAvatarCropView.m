@@ -414,9 +414,6 @@ const CGFloat PhotoAvatarCropViewOverscreenSize = 1000;
 
 - (void)fadeInImageView
 {
-    self.backgroundColor = [UIColor purpleColor];
-    _imageView.backgroundColor = [UIColor yellowColor];
-    
     [UIView animateWithDuration:0.3f animations:^
     {
         _imageView.alpha = 1.0f;

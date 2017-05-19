@@ -86,7 +86,6 @@
         _originalLabel.textColor = [UIColor whiteColor];
         [_originalBackgroundView addSubview:_originalLabel];
         
-        self.backgroundColor = [UIColor yellowColor];
         self.tag = 777;
     }
     return self;
