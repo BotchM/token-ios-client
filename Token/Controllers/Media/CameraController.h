@@ -39,6 +39,4 @@ NS_SWIFT_NAME(init(camera:previewView:intent:));
 
 + (UIInterfaceOrientation)_interfaceOrientationForDeviceOrientation:(UIDeviceOrientation)orientation;
 
-+ (bool)useLegacyCamera;
-
 @end

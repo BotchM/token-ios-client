@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-#import "UIScrollView+Hacks.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

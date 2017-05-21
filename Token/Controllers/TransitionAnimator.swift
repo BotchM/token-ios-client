@@ -56,10 +56,7 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             targetView.center = CGPoint(x: finalFrame.midX,
                                         y: finalFrame.midY)
             
-            if self.presenting {
-                targetView.alpha = 1.0;
-            }
-            
+            targetView.alpha = self.presenting ? 1.0 : 0.0;
         }) { _ in
             if !self.presenting {
                 self.dismissCompletion?()

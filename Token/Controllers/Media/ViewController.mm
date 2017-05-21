@@ -1,9 +1,9 @@
 #import "ViewController.h"
 
-#import "ToolbarButton.h"
-#import "Label.h"
+//#import "ToolbarButton.h"
+
 #import "StringUtils.h"
-#import "Freedom.h"
+//#import "Freedom.h"
 
 //#import "TGNavigationController.h"
 #import "OverlayControllerWindow.h"
@@ -14,7 +14,7 @@
 #import "Font.h"
 #import "ImageUtils.h"
 
-#import "PopoverController.h"
+//#import "PopoverController.h"
 
 #import <set>
 #import "Common.h"
@@ -442,7 +442,7 @@ static std::set<int> autorotationLockIds;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
-    [_associatedPopoverController dismissPopoverAnimated:false];
+   // [_associatedPopoverController dismissPopoverAnimated:false];
 }
 
 - (NSMutableArray *)associatedWindowStack
@@ -453,22 +453,22 @@ static std::set<int> autorotationLockIds;
     return _associatedWindowStack;
 }
 
-- (void)setAssociatedPopoverController:(PopoverController *)associatedPopoverController
-{
-    if (_associatedPopoverController != nil)
-        [_associatedPopoverController dismissPopoverAnimated:false];
+//- (void)setAssociatedPopoverController:(PopoverController *)associatedPopoverController
+//{
+//    if (_associatedPopoverController != nil)
+//        [_associatedPopoverController dismissPopoverAnimated:false];
     
-    _associatedPopoverController = associatedPopoverController;
-    _associatedPopoverController.delegate = self;
-}
+    //_associatedPopoverController = associatedPopoverController;
+   // _associatedPopoverController.delegate = self;
+//}
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    if (popoverController == _associatedPopoverController)
-    {
-        _associatedPopoverController = nil;
-    }
-}
+//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+//{
+//    if (popoverController == _associatedPopoverController)
+//    {
+//        _associatedPopoverController = nil;
+//    }
+//}
 
 - (UINavigationController *)navigationController
 {
@@ -562,15 +562,15 @@ static std::set<int> autorotationLockIds;
     return false;
 }
 
-- (UIPopoverController *)popoverController
-{
+//- (UIPopoverController *)popoverController
+//{
 //    if ([self.navigationController isKindOfClass:[TGNavigationController class]])
 //    {
 //        return ((TGNavigationController *)self.navigationController).parentPopoverController;
 //    }
     
-    return nil;
-}
+//    return nil;
+//}
 
 - (void)acquireRotationLock
 {
@@ -951,7 +951,7 @@ static std::set<int> autorotationLockIds;
         static SEL methodSelector = NULL;
         dispatch_once(&onceToken, ^
         {
-            methodImpl = (void (*)(id, SEL))freedomImpl([UIApplication sharedApplication], 0xa7a8dd8a, NULL);
+         //   methodImpl = (void (*)(id, SEL))freedomImpl([UIApplication sharedApplication], 0xa7a8dd8a, NULL);
         });
         
         if (methodImpl != NULL)
@@ -1368,9 +1368,9 @@ static std::set<int> autorotationLockIds;
 - (void)updateSizeClass {
     [self _updateControllerInset:true];
     
-    if (_associatedPopoverController != nil) {
-        [_associatedPopoverController dismissPopoverAnimated:false];
-        
+//    if (_associatedPopoverController != nil) {
+//        [_associatedPopoverController dismissPopoverAnimated:false];
+    
 //        if ([_associatedPopoverController.contentViewController isKindOfClass:[TGNavigationController class]]) {
 //            TGNavigationController *contentViewController = (TGNavigationController *)_associatedPopoverController.contentViewController;
 //            if (contentViewController.detachFromPresentingControllerInCompactMode) {
@@ -1381,7 +1381,7 @@ static std::set<int> autorotationLockIds;
 //        }
         
         _associatedPopoverController = nil;
-    }
+   // }
 }
 
 - (void)layoutControllerForSize:(CGSize)__unused size duration:(NSTimeInterval)__unused duration {

@@ -771,24 +771,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
     }
     
-    func displayLegacyCamera() {
-        let legacyCameraController = LegacyCameraController()
-        legacyCameraController.sourceType = .camera
-        legacyCameraController.videoMaximumDuration = 100 * 60 * 60
-        legacyCameraController.videoQuality = .typeMedium
-        
-        var mediaTYpes = [kUTTypeImage as String]
-        
-        if AccessChecker.checkMicrophoneAuthorizationStatus(for: MicrophoneAccessIntentVideo,alertDismissCompletion:nil) == true {
-            mediaTYpes.append(kUTTypeVideo as String)
-        }
-        legacyCameraController.mediaTypes = mediaTYpes
-        
-        legacyCameraController.completionDelegate = self
-        
-        present(legacyCameraController, animated: true, completion: nil)
-    }
-    
     func inputTextPanelrequestSendAttachment(_: ChatInputTextPanel) {
         
         self.view.endEditing(true)
@@ -810,11 +792,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         carouselItem.cameraPressed = { cameraView in
             guard AccessChecker.checkCameraAuthorizationStatus(alertDismissComlpetion: nil) == true else { return }
             
-            if CameraController.useLegacyCamera() == true {
-                self.displayLegacyCamera()
-            } else {
-                self.displayCamera(from: cameraView, menu: controller, carouselItem: carouselItem)
-            }
+            self.displayCamera(from: cameraView, menu: controller, carouselItem: carouselItem)
         }
         
         carouselItem.didSelectImage = { image, asset, fromView in
@@ -1208,47 +1186,5 @@ extension ChatController: MenuSheetEditingPresenter {
         
         controller.transitioningDelegate = self
         self.present(controller, animated: true, completion: nil)
-    }
-}
-
-extension ChatController: LegacyCameraControllerDelegate, TGImagePickerControllerDelegate {
-    private func legacyCameraControllerCapturedVideo(path: String, fileSize: CGSize, image: UIImage, duration: TimeInterval, dimensions: TimeInterval, assetUrl: String) {
-        
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func legacyCameraControllerCompleted(media: Any) {
-        self.dismiss(animated: true, completion: nil)
-        
-        if media is VideoMediaAttachment {
-            //controllerWantsToSendRemoteVideoWithMedia:media asReplyToMessageId:[self currentReplyMessageId] text:nil botContextResult:nil botReplyMarkup:nil];
-        }
-    }
-    
-    func legacyCameraControllerCompletedWithNoResult() {
-        self.dismiss(animated: true, completion:  nil)
-    }
-    
-    func legacyCameraControllerCompletedWithDocument(fileUrl :URL, fileName: String, mimeType: String) {
-        
-    }
-    
-    func imagePickerControllerDidFinishPickingWithAssets(imagePicker: TGImagePickerController!, assets: [Any]!) {
-        self.dismiss(animated: true, completion: nil)
-        
-        for asset in assets! {
-            if let image = asset as? UIImage {
-                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
-                
-                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
-                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
-                
-                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
-                    print("Success")
-                }, failure: { error in
-                    print("Failure: \(error)")
-                })
-            }
-        }
     }
 }

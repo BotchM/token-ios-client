@@ -1,6 +1,6 @@
 #import "ProgressWindow.h"
 
-#import "ActivityIndicatorView.h"
+//#import "ActivityIndicatorView.h"
 
 //#import "TGAppDelegate.h"
 #import "Common.h"

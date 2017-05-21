@@ -1,6 +1,6 @@
 #import "ImageDataSource.h"
 
-#import "NSObject+TGLock.h"
+//#import "NSObject+TGLock.h"
 
 @implementation ImageDataSource
 

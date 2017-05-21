@@ -34,11 +34,10 @@
 
 - (SSignal *)originalImageSignal:(NSTimeInterval)position
 {
-//    if (self.isVideo)
-//        return [MediaAssetImageSignals videoThumbnailForAsset:self size:self.dimensions timestamp:CMTimeMakeWithSeconds(position, NSEC_PER_SEC)];
-//    
-//    return [[MediaAssetImageSignals imageForAsset:self imageType:MediaAssetImageTypeFullSize size:CGSizeZero] takeLast];
-    return [SSignal new];
+    if (self.isVideo)
+        return [MediaAssetImageSignals videoThumbnailForAsset:self size:self.dimensions timestamp:CMTimeMakeWithSeconds(position, NSEC_PER_SEC)];
+    
+    return [MediaAssetImageSignals imageForAsset:self imageType:MediaAssetImageTypeFullSize size:CGSizeZero];
 }
 
 @end

@@ -1,7 +1,7 @@
 #import "CameraVolumeButtonHandler.h"
 
 #import "StringUtils.h"
-#import "Freedom.h"
+//#import "Freedom.h"
 
 #import "Common.h"
 
@@ -48,7 +48,7 @@ static void PGButtonHandlerEnableMonitoring(bool enable)
     static SEL methodSelector = NULL;
     dispatch_once(&onceToken, ^
     {
-        methodImpl = (void (*)(id, SEL, BOOL))freedomImpl([UIApplication sharedApplication], 0xf8de0049, NULL);
+       // methodImpl = (void (*)(id, SEL, BOOL))freedomImpl([UIApplication sharedApplication], 0xf8de0049, NULL);
     });
     
     if (methodImpl != NULL)

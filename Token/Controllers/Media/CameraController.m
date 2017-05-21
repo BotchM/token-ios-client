@@ -6,7 +6,7 @@
 #import <pop/POP.h>
 #import <objc/runtime.h>
 
-#import "Freedom.h"
+//#import "Freedom.h"
 #import "StringUtils.h"
 //#import "UIDevice+PlatformInfo.h"
 
@@ -28,7 +28,7 @@
 
 #import "CameraPreviewView.h"
 #import "CameraMainPhoneView.h"
-#import "CameraMainTabletView.h"
+
 #import "CameraFocusCrosshairsControl.h"
 
 #import "FullscreenContainerView.h"
@@ -78,14 +78,14 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone && (iosMajorVersion() > 8 || (iosMajorVersion() == 8 && iosMinorVersion() >= 3)))
         {
-            FreedomDecoration instanceDecorations[] =
-            {
-                { .name = 0x4ea0b831U,
-                    .imp = (IMP)&CameraControllerClampPointToScreenSize,
-                    .newIdentifier = FreedomIdentifierEmpty,
-                    .newEncoding = FreedomIdentifierEmpty
-                }
-            };
+//            FreedomDecoration instanceDecorations[] =
+//            {
+//                { .name = 0x4ea0b831U,
+//                    .imp = (IMP)&CameraControllerClampPointToScreenSize,
+//                    .newIdentifier = FreedomIdentifierEmpty,
+//                    .newEncoding = FreedomIdentifierEmpty
+//                }
+//            };
             
            // freedomClassAutoDecorate(0x913b3af6, NULL, 0, instanceDecorations, sizeof(instanceDecorations) / sizeof(instanceDecorations[0]));
         }
@@ -278,23 +278,8 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
     _pinchGestureRecognizer.delegate = self;
     [_overlayView addGestureRecognizer:_pinchGestureRecognizer];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        _interfaceView = [[CameraMainPhoneView alloc] initWithFrame:screenBounds];
-        [_interfaceView setInterfaceOrientation:interfaceOrientation animated:false];
-    }
-    else
-    {
-        _interfaceView = [[CameraMainTabletView alloc] initWithFrame:screenBounds];
-        [_interfaceView setInterfaceOrientation:interfaceOrientation animated:false];
-        
-        CGSize referenceSize = [self referenceViewSizeForOrientation:interfaceOrientation];
-        if (referenceSize.width > referenceSize.height)
-            referenceSize = CGSizeMake(referenceSize.height, referenceSize.width);
-        
-        _interfaceView.transform = CGAffineTransformMakeRotation(TGRotationForInterfaceOrientation(interfaceOrientation));
-        _interfaceView.frame = CGRectMake(0, 0, referenceSize.width, referenceSize.height);
-    }
+    _interfaceView = [[CameraMainPhoneView alloc] initWithFrame:screenBounds];
+    [_interfaceView setInterfaceOrientation:interfaceOrientation animated:false];
     
     _interfaceView.requestedVideoRecordingDuration = ^NSTimeInterval
     {
@@ -1837,11 +1822,6 @@ static CGPoint CameraControllerClampPointToScreenSize(__unused id self, __unused
         default:
             return UIInterfaceOrientationUnknown;
     }
-}
-
-+ (bool)useLegacyCamera
-{
-    return iosMajorVersion() < 7;
 }
 
 @end

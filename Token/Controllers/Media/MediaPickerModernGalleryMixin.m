@@ -223,6 +223,8 @@
 {
     MediaAsset *currentAsset = ((MediaPickerGalleryItem *)_galleryController.currentItem).asset;
     bool exists = ([fetchResult indexOfAsset:currentAsset] != NSNotFound);
+   
+    if (!_galleryModel) return;
     
     if (!exists)
     {
