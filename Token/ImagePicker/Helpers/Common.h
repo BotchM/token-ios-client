@@ -94,6 +94,6 @@ void DispatchAfter(double delay, dispatch_queue_t queue, dispatch_block_t block)
 #define CGOdd(x) ((((int)x) & 1) ? x : (x + 1))
 
 //#import "TGAppearance.h"
-#import "TColor.h"
+#import "Color.h"
 
 #endif

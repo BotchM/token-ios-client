@@ -32,6 +32,7 @@
 #import "PhotoEditorController.h"
 #import "VideoEditAdjustments.h"
 #import "MediaAsset+MediaEditableItem.h"
+#import "CameraPhotoPreviewController.h"
 
 #import "Common.h"
 
@@ -804,17 +805,70 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         _galleryMixin = [self galleryMixinForIndexPath:indexPath previewMode:false outAsset:NULL];
         [_galleryMixin present];
         
-        __weak typeof(_galleryMixin.galleryController)weakGalleryController = _galleryMixin.galleryController;
+        //        __weak typeof(_galleryMixin.galleryController)weakGalleryController = _galleryMixin.galleryController;
+        //
+        //        _galleryMixin.galleryController.completionBlock = ^{
+        //            typeof(_galleryMixin.galleryController)strongGalleryController = weakGalleryController;
+        //
+        //            [strongGalleryController dismissViewControllerAnimated:YES completion:nil];
+        //        };
         
-        _galleryMixin.galleryController.completionBlock = ^{
-            typeof(_galleryMixin.galleryController)strongGalleryController = weakGalleryController;
+        
+        [[MediaAssetImageSignals imageForAsset:asset imageType:MediaAssetImageTypeFullSize size:[UIScreen mainScreen].bounds.size] startWithNext:^(UIImage *image) {
             
-            [strongGalleryController dismissViewControllerAnimated:YES completion:nil];
-        };
-        
-        if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
-            [(id<MenuSheetEditingPresenter>)_parentController presentViewController:_galleryMixin.galleryController fromView:cell];
-        }
+            OverlayController *overlayController = nil;
+            
+            CameraPhotoPreviewController *controller = [[CameraPhotoPreviewController alloc] initWithImage:image metadata:nil];
+            controller.allowCaptions = self.allowCaptions;
+            controller.shouldStoreAssets = YES;
+            controller.suggestionContext = self.suggestionContext;
+            
+            controller.beginTransitionIn = ^CGRect
+            {
+                CGRect frame = CGRectZero;
+                
+                if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
+                    
+                    frame = [(id<MenuSheetEditingPresenter>)_parentController referenceFrameForInitialView:cell];
+                }
+                
+                return frame;
+            };
+            
+            controller.finishedTransitionIn = ^
+            {
+                // typeof(self)strongSelf = weakSelf;
+                
+            };
+            
+            controller.beginTransitionOut = ^CGRect(CGRect referenceFrame)
+            {
+                CGRect frame = CGRectZero;
+                
+                if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
+                    
+                    frame = [(id<MenuSheetEditingPresenter>)_parentController referenceFrameForInitialView:cell];
+                }
+                
+                return frame;
+            };
+            
+            controller.retakePressed = ^
+            {
+                // *** BACK PRESSED ***
+            };
+            
+            controller.sendPressed = ^(UIImage *resultImage, NSString *caption, NSArray *stickers)
+            {
+                // *** SEND PRESSED ***
+            };
+            
+            overlayController = controller;
+            
+            if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
+                [(id<MenuSheetEditingPresenter>)_parentController presentViewController:overlayController fromView:cell];
+            }
+        }];
     }
 }
 

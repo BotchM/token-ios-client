@@ -9,7 +9,11 @@
 
 @protocol MenuSheetEditingPresenter <NSObject>
 
-- (void)presentViewController:(UIViewController *)controller fromView:(UIView *)view;
+- (void)presentViewController:(UIViewController *)controller fromView:(UIView *)fromView
+NS_SWIFT_NAME(present(controller:from:));
+
+- (CGRect)referenceFrameForInitialView:(UIView *)initialView
+NS_SWIFT_NAME(referenceFrame(for:));
 
 @end
 

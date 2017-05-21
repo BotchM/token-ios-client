@@ -1178,8 +1178,15 @@ extension ChatController: PaymentRequestControllerDelegate {
 }
 
 extension ChatController: MenuSheetEditingPresenter {
+    
     @available(iOS 2.0, *)
-    func present(_ controller: UIViewController!, from fromView: UIView!) {
+    func referenceFrame(for initialView: UIView!) -> CGRect {
+        return self.view.convert(initialView.frame, from: initialView.superview)
+    }
+
+    
+    @available(iOS 2.0, *)
+    func present(controller: UIViewController!, from fromView: UIView!) {
         if let fromView = fromView as UIView? {
             self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
         }
