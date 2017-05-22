@@ -110,6 +110,8 @@ class ChatController: MessagesCollectionViewController {
         self.storageManager.newDatabaseConnection()
     }()
     
+    fileprivate var menuSheetController: MenuSheetController?
+    
     var thread: TSThread
     
     var messageSender: MessageSender
@@ -775,10 +777,10 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         self.view.endEditing(true)
         
-        let controller = MenuSheetController()
-        controller.dismissesByOutsideTap = true
-        controller.hasSwipeGesture = true
-        controller.maxHeight = 445 - MenuSheetButtonItemViewHeight
+        self.menuSheetController = MenuSheetController()
+        self.menuSheetController?.dismissesByOutsideTap = true
+        self.menuSheetController?.hasSwipeGesture = true
+        self.menuSheetController?.maxHeight = 445 - MenuSheetButtonItemViewHeight
         var itemViews = [UIView]()
         
         checkMicrophoneAccess()
@@ -792,7 +794,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         carouselItem.cameraPressed = { cameraView in
             guard AccessChecker.checkCameraAuthorizationStatus(alertDismissComlpetion: nil) == true else { return }
             
-            self.displayCamera(from: cameraView, menu: controller, carouselItem: carouselItem)
+            self.displayCamera(from: cameraView, menu: self.menuSheetController!, carouselItem: carouselItem)
         }
         
         carouselItem.didSelectImage = { image, asset, fromView in
@@ -828,7 +830,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         carouselItem.sendPressed = { [unowned self] currentItem, asFiles in
-            controller.dismiss(animated: true, manual: false) {
+            self.menuSheetController?.dismiss(animated: true, manual: false) {
                 
                 let intent: MediaAssetsControllerIntent = asFiles == true ? .sendFile : .sendMedia
                 let descriptionGenerator: ((Any?, String?, String?) -> Any?) = { [unowned self] result, caption, hash -> Any? in
@@ -846,7 +848,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         let galleryItem = MenuSheetButtonItemView.init(title:"Photo or Video", type:MenuSheetButtonTypeDefault, action:{ [unowned self] in
             
-            controller.dismiss(animated: true)
+            self.menuSheetController?.dismiss(animated: true)
             self.displayMediaPicker(forFile: false, fromFileMenu: false)
         })!
         
@@ -855,15 +857,14 @@ extension ChatController: ChatInputTextPanelDelegate {
         carouselItem.underlyingViews = [galleryItem]
         
         let cancelItem = MenuSheetButtonItemView.init(title: "Cancel", type: MenuSheetButtonTypeCancel, action: {
-            [unowned controller] in
-            controller.dismiss(animated: true)
+            self.menuSheetController?.dismiss(animated: true)
         })!
         
         itemViews.append(cancelItem)
-        controller.setItemViews(itemViews)
+        self.menuSheetController?.setItemViews(itemViews)
         carouselItem.remainingHeight = MenuSheetButtonItemViewHeight * CGFloat(itemViews.count - 1)
         
-        controller.present(in: self, sourceView:self.view, animated:true)
+        self.menuSheetController?.present(in: self, sourceView:self.view, animated:true)
     }
     
     func displayCamera(from cameraView: AttachmentCameraView?, menu: MenuSheetController, carouselItem: AttachmentCarouselItemView) {
@@ -903,16 +904,7 @@ extension ChatController: ChatInputTextPanelDelegate {
             
             menu.dismiss(animated: true)
             if let image = resultImage as UIImage? {
-                guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
-                
-                let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
-                let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
-                
-                self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
-                    print("Success")
-                }, failure: { error in
-                    print("Failure: \(error)")
-                })
+                self.send(image: image)
             }
         }
         
@@ -928,6 +920,21 @@ extension ChatController: ChatInputTextPanelDelegate {
         if UIDevice.current.userInterfaceIdiom == .phone {
             controllerWindow?.frame = CGRect(x: 0.0, y: 0.0, width: screenSize.width, height: screenSize.height)
         }
+    }
+    
+    func send(image: UIImage) {
+        self.menuSheetController?.dismiss(animated: true)
+        
+        guard let imageData = UIImageJPEGRepresentation(image, 0.6) else { return }
+        
+        let timestamp = NSDate.ows_millisecondsSince1970(for: Date())
+        let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: "")
+        
+        self.messageSender.sendAttachmentData(imageData, contentType: "image/jpeg", filename: "image.jpeg", in: outgoingMessage, success: {
+            print("Success")
+        }, failure: { error in
+            print("Failure: \(error)")
+        })
     }
     
     func description(for item: Any?, caption: String?, hash: String?) -> [String: Any] {
@@ -1178,6 +1185,11 @@ extension ChatController: PaymentRequestControllerDelegate {
 }
 
 extension ChatController: MenuSheetEditingPresenter {
+    @available(iOS 2.0, *)
+    func proceed(with image: UIImage!) {
+        self.send(image: image)
+    }
+
     
     @available(iOS 2.0, *)
     func referenceFrame(for initialView: UIView!) -> CGRect {
@@ -1190,6 +1202,8 @@ extension ChatController: MenuSheetEditingPresenter {
         if let fromView = fromView as UIView? {
             self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
         }
+        
+        print("Rect - \(self.fromViewRect)")
         
         controller.transitioningDelegate = self
         self.present(controller, animated: true, completion: nil)

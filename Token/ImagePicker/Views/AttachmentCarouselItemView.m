@@ -101,6 +101,8 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
 @property (nonatomic, assign) BOOL hasCamera;
 @property (nonatomic, assign) BOOL selfPortrait;
 
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
 @end
 
 @implementation AttachmentCarouselItemView
@@ -777,6 +779,9 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     
     AttachmentAssetCell *cell = (AttachmentAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
+    self.selectedIndexPath = indexPath;
+    [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath]];
+    
     __block UIImage *thumbnailImage = nil;
     if ([MediaAssetsLibrary usesPhotoFramework])
     {
@@ -805,14 +810,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
         _galleryMixin = [self galleryMixinForIndexPath:indexPath previewMode:false outAsset:NULL];
         [_galleryMixin present];
         
-        //        __weak typeof(_galleryMixin.galleryController)weakGalleryController = _galleryMixin.galleryController;
-        //
-        //        _galleryMixin.galleryController.completionBlock = ^{
-        //            typeof(_galleryMixin.galleryController)strongGalleryController = weakGalleryController;
-        //
-        //            [strongGalleryController dismissViewControllerAnimated:YES completion:nil];
-        //        };
-        
+        __weak typeof(self)weakSelf = self;
         
         [[MediaAssetImageSignals imageForAsset:asset imageType:MediaAssetImageTypeFullSize size:[UIScreen mainScreen].bounds.size] startWithNext:^(UIImage *image) {
             
@@ -828,7 +826,6 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
                 CGRect frame = CGRectZero;
                 
                 if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
-                    
                     frame = [(id<MenuSheetEditingPresenter>)_parentController referenceFrameForInitialView:cell];
                 }
                 
@@ -837,37 +834,37 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
             
             controller.finishedTransitionIn = ^
             {
-                // typeof(self)strongSelf = weakSelf;
-                
+        
             };
             
             controller.beginTransitionOut = ^CGRect(CGRect referenceFrame)
             {
+                 typeof(self)strongSelf = weakSelf;
+                strongSelf.selectedIndexPath = nil;
+                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                
                 CGRect frame = CGRectZero;
                 
                 if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
-                    
-                    frame = [(id<MenuSheetEditingPresenter>)_parentController referenceFrameForInitialView:cell];
+                    frame = [(id<MenuSheetEditingPresenter>)_parentController referenceFrameForInitialView:cell.imageView];
                 }
                 
                 return frame;
             };
             
-            controller.retakePressed = ^
-            {
-                // *** BACK PRESSED ***
-            };
-            
             controller.sendPressed = ^(UIImage *resultImage, NSString *caption, NSArray *stickers)
             {
-                // *** SEND PRESSED ***
+                if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
+                    [(id<MenuSheetEditingPresenter>)_parentController proceedWithImage:resultImage];
+                }
             };
             
             overlayController = controller;
             
             if ([_parentController conformsToProtocol:@protocol(MenuSheetEditingPresenter)]) {
-                [(id<MenuSheetEditingPresenter>)_parentController presentViewController:overlayController fromView:cell];
+                [(id<MenuSheetEditingPresenter>)_parentController presentViewController:overlayController fromView:cell.imageView];
             }
+            
         }];
     }
 }
@@ -880,7 +877,7 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger index = indexPath.row;
-
+    
     MediaAsset *asset = [_fetchResult assetAtIndex:index];
     NSString *cellIdentifier = nil;
     switch (asset.type)
@@ -902,6 +899,9 @@ const NSUInteger AttachmentDisplayedAssetLimit = 500;
     }
     
     AttachmentAssetCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    cell.hidden = (self.selectedIndexPath == indexPath);
+    
     NSInteger pivotIndex = NSNotFound;
     NSInteger limit = 0;
     if (_pivotInItemIndex != NSNotFound)

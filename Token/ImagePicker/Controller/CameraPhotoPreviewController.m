@@ -203,10 +203,10 @@
         if (strongSelf.retakePressed != nil)
             strongSelf.retakePressed();
         
-       // [strongSelf transitionOutWithCompletion:^
-        // {
+        [strongSelf transitionOutWithCompletion:^
+         {
              [strongSelf dismissViewControllerAnimated:YES completion:nil];
-        // }];
+         }];
     };
     
     void (^donePressed)(void) = ^
@@ -217,13 +217,8 @@
         
         strongSelf->_dismissing = true;
         strongSelf.view.userInteractionEnabled = false;
-        
-      //  if (strongSelf.shouldStoreAssets)
-        {
-            //if (TGAppDelegateInstance.saveCapturedMedia)
-                [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImage:strongSelf->_image] startWithNext:nil];
-            
-           // if (TGAppDelegateInstance.saveEditedPhotos)
+    
+            [[[MediaAssetsLibrary sharedLibrary] saveAssetWithImage:strongSelf->_image] startWithNext:nil];
             {
                 [[[[[[editingContext fullSizeImageUrlForItem:strongSelf->_image] filter:^bool(id result)
                      {
@@ -237,7 +232,6 @@
                               }];
                   }] startWithNext:nil];
             }
-        }
         
         SSignal *originalSignal = [[[SSignal single:strongSelf->_image] map:^id(UIImage *image)
                                     {
@@ -271,6 +265,11 @@
         NSArray *stickers = [editingContext adjustmentsForItem:strongSelf->_image].paintingData.stickers;
         [[imageSignal deliverOn:[SQueue mainQueue]] startWithNext:^(UIImage *result)
          {
+             CGRect referenceFrame = _imageView.frame;
+             CGRect targetFrame = CGRectZero;
+             if (self.beginTransitionOut != nil)
+                 targetFrame = self.beginTransitionOut(referenceFrame);
+             
              [strongSelf dismissViewControllerAnimated:YES completion:^{
                  strongSelf.sendPressed(result, caption, stickers);
              }];
@@ -403,34 +402,23 @@
 {
     _transitionInProgress = true;
     
-    _captionMixin.inputPanel.alpha = 0.0f;
-    _portraitToolbarView.alpha = 0.0f;
-    _landscapeToolbarView.alpha = 0.0f;
-    
-    [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveLinear animations:^
-     {
+//    _captionMixin.inputPanel.alpha = 0.0f;
+//    _portraitToolbarView.alpha = 0.0f;
+//    _landscapeToolbarView.alpha = 0.0f;
+//    
+//    [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveLinear animations:^
+//     {
          _captionMixin.inputPanel.alpha = 1.0f;
          _portraitToolbarView.alpha = 1.0f;
          _landscapeToolbarView.alpha = 1.0f;
-     } completion:nil];
+    // } completion:nil];
+    
+    self.view.backgroundColor = [UIColor blackColor];
     
     CGSize referenceSize = [self referenceViewSizeForOrientation:self.interfaceOrientation];
     CGRect referenceFrame = CGRectZero;
     if (self.beginTransitionIn != nil)
         referenceFrame = self.beginTransitionIn();
-    
-//    if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-//    {
-//        referenceFrame = CGRectMake(referenceSize.width - referenceFrame.size.height - referenceFrame.origin.y,
-//                                    referenceFrame.origin.x,
-//                                    referenceFrame.size.height, referenceFrame.size.width);
-//    }
-//    else if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-//    {
-//        referenceFrame = CGRectMake(referenceFrame.origin.y,
-//                                    referenceSize.height - referenceFrame.size.width - referenceFrame.origin.x,
-//                                    referenceFrame.size.height, referenceFrame.size.width);
-//    }
     
     CGRect containerFrame = CGRectMake(0, 0, referenceSize.width, referenceSize.height);
     CGSize fittedSize = ScaleToSize(_imageView.image.size, containerFrame.size);
@@ -459,37 +447,16 @@
    
     _transitionInProgress = false;
     [_scrollView addSubview:_imageView];
-    //_imageView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
-    self.view.backgroundColor = [UIColor blackColor];
+    
     
     [self reset];
     if (self.finishedTransitionIn != nil)
         self.finishedTransitionIn();
-    
-//    POPSpringAnimation *animation = [PhotoEditorAnimation prepareTransitionAnimationForPropertyNamed:kPOPViewFrame];
-//    animation.fromValue = [NSValue valueWithCGRect:referenceFrame];
-//    animation.toValue = [NSValue valueWithCGRect:targetFrame];
-//    animation.completionBlock = ^(__unused POPAnimation *animation, __unused BOOL finished)
-//    {
-//        _transitionInProgress = false;
-//        [_scrollView addSubview:_imageView];
-//        _imageView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
-//        self.view.backgroundColor = [UIColor blackColor];
-//        
-//        [self reset];
-//        
-//        if (self.finishedTransitionIn != nil)
-//            self.finishedTransitionIn();
-   // };
-    
- //   [_imageView pop_addAnimation:animation forKey:@"frame"];
 }
 
 - (void)transitionOutWithCompletion:(void (^)(void))completion
 {
     _transitionInProgress = true;
-    
-    self.view.backgroundColor = [UIColor clearColor];
     
     CGRect frame = [self.view convertRect:_imageView.frame fromView:_scrollView];
     [self.view addSubview:_imageView];
@@ -498,68 +465,12 @@
     CGSize referenceSize = [self referenceViewSizeForOrientation:self.interfaceOrientation];
     CGRect referenceFrame = _imageView.frame;
     
-//    if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-//    {
-//        referenceFrame = CGRectMake(referenceSize.height - referenceFrame.size.height - referenceFrame.origin.y,
-//                                    referenceFrame.origin.x,
-//                                    referenceFrame.size.height, referenceFrame.size.width);
-//    }
-//    else if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-//    {
-//        referenceFrame = CGRectMake(referenceFrame.origin.y,
-//                                    referenceSize.width - referenceFrame.size.width - referenceFrame.origin.x,
-//                                    referenceFrame.size.height, referenceFrame.size.width);
-//    }
-    
     CGRect targetFrame = CGRectZero;
     if (self.beginTransitionOut != nil)
         targetFrame = self.beginTransitionOut(referenceFrame);
     
-//    if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-//    {
-//        targetFrame = CGRectMake(referenceSize.width - targetFrame.size.height - targetFrame.origin.y,
-//                                 targetFrame.origin.x,
-//                                 targetFrame.size.height, targetFrame.size.width);
-//    }
-//    else if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-//    {
-//        targetFrame = CGRectMake(targetFrame.origin.y,
-//                                 referenceSize.height - targetFrame.size.width - targetFrame.origin.x,
-//                                 targetFrame.size.height, targetFrame.size.width);
-//    }
-    
-//    CGFloat referenceAspectRatio = referenceFrame.size.width / referenceFrame.size.height;
-//    CGFloat targetAspectRatio = targetFrame.size.width / targetFrame.size.height;
-//    
-//    if (ABS(targetAspectRatio - referenceAspectRatio) > 0.03f)
-//    {
-//        CGSize newSize = CGSizeZero;
-//        if (targetFrame.size.width > targetFrame.size.height)
-//            newSize = CGSizeMake(targetFrame.size.width, _imageView.image.size.height * targetFrame.size.width / _imageView.image.size.width);
-//        else
-//            newSize = CGSizeMake(_imageView.image.size.width * targetFrame.size.height / _imageView.image.size.height, targetFrame.size.height);
-//        
-//        targetFrame = CGRectMake(CGRectGetMidX(targetFrame) - newSize.width / 2,
-//                                 CGRectGetMidY(targetFrame) - newSize.height / 2,
-//                                 newSize.width, newSize.height);
-//    }
-//    
-//    POPSpringAnimation *animation = [PhotoEditorAnimation prepareTransitionAnimationForPropertyNamed:kPOPViewFrame];
-//    animation.fromValue = [NSValue valueWithCGRect:_imageView.frame];
-//    animation.toValue = [NSValue valueWithCGRect:targetFrame];
-//    [_imageView pop_addAnimation:animation forKey:@"frame"];
-//    
-//    [UIView animateWithDuration:0.3f animations:^
-//     {
-//         _imageView.alpha = 0.0f;
-//         _portraitToolbarView.alpha = 0.0f;
-//         _landscapeToolbarView.alpha = 0.0f;
-//         _captionMixin.inputPanel.alpha = 0.0f;
-//     } completion:^(__unused BOOL finished)
-//     {
          if (completion != nil)
              completion();
-   //  }];
 }
 
 #pragma mark - Scroll View
