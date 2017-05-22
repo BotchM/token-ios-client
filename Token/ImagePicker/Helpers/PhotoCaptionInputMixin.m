@@ -3,14 +3,9 @@
 #import "ImageUtils.h"
 #import "ObserverProxy.h"
 #import "ViewController.h"
-
-//#import "TGUser.h"
 #import "SuggestionContext.h"
 
-//#import "ModernConversationMentionsAssociatedPanel.h"
-//#import "ModernConversationHashtagsAssociatedPanel.h"
-
-@interface PhotoCaptionInputMixin () //<MediaPickerCaptionInputPanelDelegate>
+@interface PhotoCaptionInputMixin ()
 {
     ObserverProxy *_keyboardWillChangeFrameProxy;
     bool _editing;
@@ -41,15 +36,6 @@
 {
     if (_inputPanel != nil)
         return;
-    
-//    UIView *parentView = [self _parentView];
-//    
-//    CGSize screenSize = parentView.frame.size;
-//    _inputPanel = [[MediaPickerCaptionInputPanel alloc] initWithFrame:CGRectMake(0, 0, screenSize.width, [_inputPanel heightForInputFieldHeight:0])];
-//    _inputPanel.bottomMargin = 0;
-//    _inputPanel.delegate = self;
-//    
-//    [parentView addSubview:self.inputPanel];
 }
 
 - (void)destroy
@@ -59,16 +45,6 @@
 
 - (void)createDismissViewIfNeeded
 {
-//    UIView *parentView = [self _parentView];
-//    
-//    _dismissView = [[UIView alloc] initWithFrame:parentView.bounds];
-//    _dismissView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//    
-//    _dismissTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDismissTap:)];
-//    _dismissTapRecognizer.enabled = false;
-//    [_dismissView addGestureRecognizer:_dismissTapRecognizer];
-//    
-//    [parentView insertSubview:_dismissView belowSubview:_inputPanel];
 }
 
 - (void)setCaption:(NSString *)caption
@@ -79,7 +55,6 @@
 - (void)setCaption:(NSString *)caption animated:(bool)animated
 {
     _caption = caption;
-    //[self.inputPanel setCaption:caption animated:animated];
 }
 
 - (void)setCaptionPanelHidden:(bool)hidden animated:(bool)__unused animated
@@ -93,9 +68,6 @@
     
     [self createDismissViewIfNeeded];
     [self createInputPanelIfNeeded];
-    
-   // [self.inputPanel adjustForOrientation:self.interfaceOrientation keyboardHeight:_keyboardHeight duration:0.0 animationCurve:0];
-   // [self.inputPanel layoutSubviews];
 }
 
 - (void)enableDismissal
@@ -110,42 +82,11 @@
     if (gestureRecognizer.state != UIGestureRecognizerStateRecognized)
         return;
     
-   // [self.inputPanel dismiss];
     [_dismissView removeFromSuperview];
 }
 
 #pragma mark - Input Panel Delegate
 
-//- (bool)inputPanelShouldBecomeFirstResponder:(MediaPickerCaptionInputPanel *)__unused inputPanel
-//{
-//    return true;
-//}
-
-//- (void)inputPanelFocused:(MediaPickerCaptionInputPanel *)__unused inputPanel
-//{
-//    [ViewController disableAutorotation];
-//    
-//    [self beginEditing];
-//    
-//    _dismissView.hidden = false;
-//    
-//    [self.inputPanel.window makeKeyWindow];
-//    
-//    if (self.panelFocused != nil)
-//        self.panelFocused();
-//    
-//    [self enableDismissal];
-//}
-
-//- (void)inputPanelRequestedSetCaption:(MediaPickerCaptionInputPanel *)__unused inputPanel text:(NSString *)text
-//{
-//    [ViewController enableAutorotation];
-//    
-//    _dismissView.hidden = true;
-//    
-//    if (self.finishedWithCaption != nil)
-//        self.finishedWithCaption(text);
-//}
 
 - (void)inputPanelMentionEntered:(MediaPickerCaptionInputPanel *)__unused inputTextPanel mention:(NSString *)mention startOfLine:(bool)__unused startOfLine
 {

@@ -14,8 +14,6 @@
 #import "ImageUtils.h"
 #import "Common.h"
 
-//#import "ImageMessageViewModel.h"
-
 #import <VideoToolbox/VideoToolbox.h>
 
 #import "WeakReference.h"

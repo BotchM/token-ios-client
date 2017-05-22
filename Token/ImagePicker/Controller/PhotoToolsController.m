@@ -1,7 +1,5 @@
 #import "PhotoToolsController.h"
 
-//#import "TGAppDelegate.h"
-
 #import "PhotoEditorAnimation.h"
 #import "PhotoEditorInterfaceAssets.h"
 #import "PhotoEditorCollectionView.h"

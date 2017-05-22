@@ -1,7 +1,6 @@
 #import "AttachmentFileTipView.h"
 #import "ModernButton.h"
 #import "Common.h"
-//#import "TGAppDelegate.h"
 
 #import "Font.h"
 #import "StringUtils.h"

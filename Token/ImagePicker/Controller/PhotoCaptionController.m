@@ -1,7 +1,5 @@
 #import "PhotoCaptionController.h"
 
-//#import "TGAppDelegate.h"
-
 #import "PhotoEditorAnimation.h"
 
 #import "ImageUtils.h"

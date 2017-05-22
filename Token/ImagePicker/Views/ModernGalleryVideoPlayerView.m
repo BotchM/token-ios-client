@@ -11,14 +11,10 @@
 #import "ModernGalleryVideoView.h"
 #import "Common.h"
 #import "AudioSessionManager.h"
-//#import "TGEmbedPIPController.h"
-
-//#import "TransformImageView.h"
 
 @interface ModernGalleryVideoPlayerView () <AVPictureInPictureControllerDelegate>
 {
     ImageView *_legacyImageView;
-    //TransformImageView *_transformImageView;
     
     NSString *_videoPath;
     AVPlayer *_player;
@@ -85,7 +81,6 @@
 }
 
 - (void)loadImageWithSignal:(SSignal *)signal {
-   // [_transformImageView setSignal:signal];
 }
 
 - (void)setVideoPath:(NSString *)videoPath duration:(NSTimeInterval)duration
@@ -113,7 +108,6 @@
 - (void)reset
 {
     [_legacyImageView reset];
-   // [_transformImageView setSignal:[SSignal never]];
     [self stop];
 }
 
@@ -256,7 +250,7 @@
 
 - (void)_didBeginPlayback
 {
-   // [TGEmbedPIPController pausePictureInPicturePlayback];
+
 }
 
 - (void)playerItemDidPlayToEndTime:(NSNotification *)__unused notification
@@ -330,20 +324,17 @@
 
 - (void)pictureInPictureController:(AVPictureInPictureController *)__unused pictureInPictureController restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL))completionHandler
 {
-//    [TGEmbedPIPController _cancelSystemPIPWithCompletion:^
-//    {
-//        completionHandler(true);
-//    }];
+
 }
 
 - (void)pictureInPictureControllerDidStartPictureInPicture:(AVPictureInPictureController *)__unused pictureInPictureController
 {
-   // [TGEmbedPIPController _systemPictureInPictureDidStart];
+  
 }
 
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)__unused pictureInPictureController
 {
- //   [TGEmbedPIPController _systemPictureInPictureDidStop];
+ 
 }
 
 - (void)pictureInPictureController:(AVPictureInPictureController *)__unused pictureInPictureController failedToStartPictureInPictureWithError:(NSError *)error
@@ -362,9 +353,6 @@
 
 - (void)resumePIPPlayback
 {
-    //if (_shouldResumePIPPlayback)
-    //    [self playVideo];
-    
     _shouldResumePIPPlayback = false;
 }
 
@@ -378,7 +366,6 @@
 - (void)layoutSubviews
 {
     _legacyImageView.frame = self.bounds;
-    //_transformImageView.frame = self.bounds;
     _videoView.frame = self.bounds;
 }
 

@@ -3,7 +3,6 @@
 #import "ViewController.h"
 #import "OverlayFormsheetController.h"
 #import "Common.h"
-//#import "TGAppDelegate.h"
 
 @interface OverlayFormsheetWindow ()
 {

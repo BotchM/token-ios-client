@@ -1,27 +1,11 @@
 #import "AccessChecker.h"
 
 #import <CoreLocation/CoreLocation.h>
-//#import "TGSynchronizeContactsActor.h"
 #import "MediaAssetsLibrary.h"
 #import "Camera.h"
 #import "Common.h"
 
-//#import "TGAccessRequiredAlertView.h"
-
 @implementation AccessChecker
-
-+ (bool)checkAddressBookAuthorizationStatusWithAlertDismissComlpetion:(void (^)(void))alertDismissCompletion
-{
-//    if ([TGSynchronizeContactsManager instance].phonebookAccessStatus == TGPhonebookAccessStatusDisabled)
-//    {
-//        [[[TGAccessRequiredAlertView alloc] initWithMessage:TGLocalized(@"AccessDenied.Contacts")
-//                                         showSettingsButton:true
-//                                            completionBlock:alertDismissCompletion] show];
-//        return false;
-//    }
-    
-    return true;
-}
 
 + (bool)checkPhotoAuthorizationStatusForIntent:(PhotoAccessIntent)intent alertDismissCompletion:(void (^)(void))alertDismissCompletion
 {
@@ -47,18 +31,6 @@
                 default:
                     break;
             }
-            
-//            [[[TGAccessRequiredAlertView alloc] initWithMessage:message
-//                                             showSettingsButton:true
-                                              //  completionBlock:alertDismissCompletion] show];
-        }
-            return false;
-            
-        case MediaLibraryAuthorizationStatusRestricted:
-        {
-//            [[[TGAccessRequiredAlertView alloc] initWithMessage:TGLocalized(@"AccessDenied.PhotosRestricted")
-//                                             showSettingsButton:false
-//                                                completionBlock:alertDismissCompletion] show];
         }
             return false;
             

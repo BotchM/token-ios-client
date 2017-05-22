@@ -3,7 +3,6 @@
 #import <SSignalKit/SQueue.h>
 
 #import "PaintUtils.h"
-//#import "PhotoPaintStickerEntity.h"
 
 #import "MediaEditingContext.h"
 #import "PaintUndoManager.h"

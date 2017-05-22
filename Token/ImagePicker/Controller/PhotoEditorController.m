@@ -2,7 +2,6 @@
 #import "PhotoEditorController.h"
 
 #import "AppDelegate.h"
-//#import "AppDelegate.h"
 #import <objc/runtime.h>
 
 #import "ASWatcher.h"
@@ -44,15 +43,15 @@
 #import "PhotoAvatarCropController.h"
 #import "PhotoToolsController.h"
 #import "PhotoPaintController.h"
-#import "PhotoDummyController.h" //
-#import "PhotoQualityController.h" //
-#import "PhotoEditorItemController.h" //
+#import "PhotoDummyController.h"
+#import "PhotoQualityController.h"
+#import "PhotoEditorItemController.h"
 
-#import "MessageImageViewOverlayView.h" //
+#import "MessageImageViewOverlayView.h"
 
-#import "MenuSheetController.h" //
+#import "MenuSheetController.h"
 
-#import "AVURLAsset+MediaItem.h" //
+#import "AVURLAsset+MediaItem.h"
 
 @interface PhotoEditorController () <ASWatcher, UIDocumentInteractionControllerDelegate>
 {
@@ -149,8 +148,7 @@
     self.view.frame = (CGRect){ CGPointZero, [self referenceViewSize]};
     self.view.clipsToBounds = true;
     
-   // if ([self presentedForAvatarCreation] && ![self presentedFromCamera])
-        self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor blackColor];
     
     _wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_wrapperView];

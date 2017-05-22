@@ -36,7 +36,6 @@ void TGLogv(NSString *format, va_list args);
 
 void TGLogSynchronize();
 NSArray *TGGetLogFilePaths(int count);
-NSArray *TGGetPackedLogs();
     
 #ifdef __cplusplus
 }

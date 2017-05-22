@@ -1,7 +1,4 @@
 #import "PhotoPaintSettingsView.h"
-
-//#import "TGAppDelegate.h"
-
 #import "ImageUtils.h"
 #import "PhotoEditorInterfaceAssets.h"
 

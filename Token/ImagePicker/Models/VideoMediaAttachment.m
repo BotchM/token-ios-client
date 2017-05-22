@@ -1,6 +1,5 @@
 #import "VideoMediaAttachment.h"
 #import "Common.h"
-//#import "Message.h"
 
 @interface VideoMediaAttachment ()
 {

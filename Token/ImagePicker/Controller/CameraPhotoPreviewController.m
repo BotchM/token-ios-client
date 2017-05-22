@@ -2,7 +2,6 @@
 
 #import <objc/runtime.h>
 
-//#import "TGAppDelegate.h"
 #import "CameraShotMetadata.h"
 #import "PhotoEditorValues.h"
 #import "PhotoEditorUtils.h"

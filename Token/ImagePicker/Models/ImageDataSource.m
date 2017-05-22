@@ -1,7 +1,5 @@
 #import "ImageDataSource.h"
 
-//#import "NSObject+TGLock.h"
-
 @implementation ImageDataSource
 
 + (NSMutableArray *)_dataSourceList

@@ -1,6 +1,5 @@
 #import "MediaAssetsPickerController.h"
 
-//#import "TGAppDelegate.h"
 #import "UICollectionView+Utils.h"
 #import "ImageUtils.h"
 #import "PhotoEditorUtils.h"
@@ -14,16 +13,10 @@
 #import "MediaAssetImageSignals.h"
 #import "MediaAssetFetchResultChange.h"
 
-//#import "ModernBarButton.h"
-
-//#import "MediaAsset+MediaEditableItem.h"
 #import "PhotoEditorController.h"
 #import "PhotoEditorValues.h"
 
 #import "Common.h"
-
-//#import "MediaPickerModernGalleryMixin.h"
-//#import "MediaPickerGalleryItem.h"
 
 @interface MediaAssetsPickerController () <UIViewControllerPreviewingDelegate>
 {
@@ -33,8 +26,6 @@
     SMetaDisposable *_assetsDisposable;
     
     MediaAssetFetchResult *_fetchResult;
-    
-   // ModernBarButton *_searchBarButton;
     
     MediaPickerModernGalleryMixin *_galleryMixin;
     MediaPickerModernGalleryMixin *_previewGalleryMixin;

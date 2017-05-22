@@ -34,8 +34,6 @@ typedef enum {
 
 @interface AccessChecker : NSObject
 
-+ (bool)checkAddressBookAuthorizationStatusWithAlertDismissComlpetion:(void (^)(void))alertDismissCompletion;
-
 + (bool)checkPhotoAuthorizationStatusForIntent:(PhotoAccessIntent)intent alertDismissCompletion:(void (^)(void))alertDismissCompletion
 NS_SWIFT_NAME(checkPhotoAuthorizationStatus(intent:alertDismissCompletion:));
 

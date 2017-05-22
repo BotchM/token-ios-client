@@ -1,6 +1,5 @@
 #import "CameraTimeCodeView.h"
 
-//#import <MTProtoKit/MTTime.h>
 #import "TimerTarget.h"
 #import "CameraInterfaceAssets.h"
 #import "Common.h"

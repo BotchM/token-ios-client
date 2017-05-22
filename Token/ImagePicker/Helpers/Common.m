@@ -10,8 +10,6 @@
 
 #import <CoreMotion/CoreMotion.h>
 
-//#import "TGAppDelegate.h"
-
 int cpuCoreCount()
 {
     static int count = 0;

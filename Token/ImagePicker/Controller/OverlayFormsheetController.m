@@ -1,6 +1,5 @@
 #import "OverlayFormsheetController.h"
 
-//#import "TGAppDelegate.h"
 #import "ViewController.h"
 
 const CGSize OverlayFormsheetControllerReferenceSize = { 540.0f, 620.0f };

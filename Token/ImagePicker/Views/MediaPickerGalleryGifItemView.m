@@ -6,8 +6,6 @@
 #import "Font.h"
 #import "Common.h"
 
-//#import "ModernAnimatedImagePlayer.h"
-
 #import "MessageImageViewOverlayView.h"
 
 #import "MediaAssetImageSignals.h"
@@ -21,7 +19,6 @@
     UITapGestureRecognizer *_tapGestureRecognizer;
     
     SMetaDisposable *_gifDataDisposable;
-    //ModernAnimatedImagePlayer *_player;
     
     MessageImageViewOverlayView *_progressView;
     bool _progressVisible;
@@ -77,15 +74,11 @@
         return;
     
     _containerView.frame = self.bounds;
-    
-   // [self _layoutPlayerView];
 }
 
 - (void)prepareForRecycle
 {
     [_imageView reset];
-//    [_player stop];
-//    _player = nil;
     
     _imageAvailable = false;
     [self setProgressVisible:false value:0.0f animated:false];
@@ -96,7 +89,6 @@
     [super setItem:item synchronously:synchronously];
     
     _imageSize = item.asset.dimensions;
-    //[self _layoutPlayerView];
     
     if (item.asset == nil)
     {
@@ -159,21 +151,6 @@
         strongSelf->_fileInfoLabel.text = [NSString stringWithFormat:@"%@ • %@ • %@", extension, fileSize, dimensions];
     }]];
 }
-
-//- (void)_playWithData:(NSData *)data
-//{
-//    [self.imageView setSignal:nil];
-//
-//    _player = [[ModernAnimatedImagePlayer alloc] initWithSize:_imageSize data:data];
-//    __weak MediaPickerGalleryGifItemView *weakSelf = self;
-//    _player.frameReady = ^(UIImage *image)
-//    {
-//        __strong MediaPickerGalleryGifItemView *strongSelf = weakSelf;
-//        if (strongSelf != nil)
-//            [strongSelf->_imageView loadUri:@"embedded-image://" withOptions:@{ImageViewOptionEmbeddedImage: image}];
-//    };
-//    [_player play];
-//}
 
 - (void)singleTap
 {
@@ -257,16 +234,6 @@
     
     return nil;
 }
-
-//- (void)_layoutPlayerView
-//{
-//    if (CGSizeEqualToSize(_imageSize, CGSizeZero))
-//        return;
-//    
-//    CGSize fittedSize = ScaleToSize(_imageSize, self.frame.size);
-//    
-//    _imageView.frame = CGRectMake((self.frame.size.width - fittedSize.width) / 2.0f, (self.frame.size.height - fittedSize.height) / 2.0f, fittedSize.width, fittedSize.height);
-//}
 
 - (UIView *)transitionView
 {

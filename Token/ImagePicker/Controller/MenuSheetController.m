@@ -7,7 +7,6 @@
 #import "MenuSheetItemView.h"
 #import "MenuSheetCollectionView.h"
 
-//#import "TGAppDelegate.h"
 #import "Common.h"
 
 #import "ObserverProxy.h"

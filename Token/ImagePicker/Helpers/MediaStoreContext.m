@@ -5,8 +5,6 @@
 
 #import <pthread.h>
 
-//#import "TGAppDelegate.h"
-
 @interface MediaStoreContext ()
 {
     NSMutableDictionary *_mediaImageAverageColorCache;

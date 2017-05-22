@@ -1,5 +1,4 @@
 #import "GPUImageOutput.h"
-//#import "GPUImagePicture.h"
 #import <mach/mach.h>
 
 void runOnMainQueueWithoutDeadlocking(void (^block)(void))

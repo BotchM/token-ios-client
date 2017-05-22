@@ -1,21 +1,20 @@
 #import "PhotoEditorItemController.h"
 
-#import "PhotoEditorTabController.h" // 
-//#import "TGNavigationController.h" // NOT NEEDED
+#import "PhotoEditorTabController.h"
 
 #import "ImageUtils.h"
-#import "PhotoEditorUtils.h" //
+#import "PhotoEditorUtils.h"
 
-#import "PhotoEditor.h" //
-#import "PhotoEditorItem.h" //
-#import "PhotoFilter.h" //
-#import "PhotoTool.h" //
+#import "PhotoEditor.h"
+#import "PhotoEditorItem.h"
+#import "PhotoFilter.h"
+#import "PhotoTool.h"
 
-#import "PhotoEditorPreviewView.h" // HAVE
-#import "PhotoEditorToolButtonsView.h" // HAVE
+#import "PhotoEditorPreviewView.h"
+#import "PhotoEditorToolButtonsView.h"
 
-#import "PhotoEditorAnimation.h" // HAVE
-#import "PhotoEditorInterfaceAssets.h" // HAVE
+#import "PhotoEditorAnimation.h"
+#import "PhotoEditorInterfaceAssets.h" 
 #import "Common.h"
 
 @interface PhotoEditorItemController () <ViewControllerNavigationBarAppearance>

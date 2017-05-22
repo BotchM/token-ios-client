@@ -1,7 +1,5 @@
 #import "MediaPickerController.h"
 
-//#import "TGAppDelegate.h"
-
 #import "MediaEditingContext.h"
 #import "MediaSelectionContext.h"
 

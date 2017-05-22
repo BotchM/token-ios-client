@@ -2,8 +2,6 @@
 
 #import "ModernGalleryDefaultFooterView.h"
 
-//#import "ModernBackToolbarButton.h"
-
 #import "Font.h"
 
 #import "ViewController.h"

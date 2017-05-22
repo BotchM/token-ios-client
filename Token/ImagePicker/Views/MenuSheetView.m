@@ -3,7 +3,6 @@
 #import "MenuSheetItemView.h"
 #import "Common.h"
 #import "ImageUtils.h"
-//#import "TGAppDelegate.h"
 
 NSString *const MenuDividerTop = @"top";
 NSString *const MenuDividerBottom = @"bottom";

@@ -8,21 +8,18 @@
 #import "TGActionSheet.h"
 
 #import "MenuSheetController.h"
-//#import "TGOverlayFormsheetWindow.h"
 
 #import "CameraPreviewView.h"
 #import "AttachmentCameraView.h"
 #import "AttachmentCarouselItemView.h"
 
 #import "CameraController.h"
-//#import "LegacyCameraController.h"
 #import "TGImagePickerController.h"
 #import "MediaAssetsController.h"
-//#import "TGWebSearchController.h"
 
 #import "Common.h"
 
-@interface TGMediaAvatarMenuMixin ()// <TGLegacyCameraControllerDelegate>
+@interface TGMediaAvatarMenuMixin ()
 {
     ViewController *_parentController;
     bool _hasDeleteButton;

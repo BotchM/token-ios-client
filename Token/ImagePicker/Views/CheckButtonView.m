@@ -2,8 +2,6 @@
 #import "Common.h"
 #import "Color.h"
 
-//#import <LegacyDatabase/LegacyDatabase.h>
-
 @interface CheckButtonView ()
 {
     UIView *_wrapperView;

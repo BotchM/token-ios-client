@@ -15,8 +15,6 @@
 #import "MediaAssetsVideoCell.h"
 #import "MediaAssetsGifCell.h"
 
-//#import "MediaPickerModernGalleryMixin.h"
-
 #import "MediaPickerToolbarView.h"
 
 #import "MediaPickerSelectionGestureRecognizer.h"

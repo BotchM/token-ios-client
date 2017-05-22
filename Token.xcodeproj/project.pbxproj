@@ -235,7 +235,6 @@
 		2BD708941ED21E1600E23AF3 /* ASQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707E71ED21E1600E23AF3 /* ASQueue.m */; };
 		2BD708951ED21E1600E23AF3 /* ATQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707EA1ED21E1600E23AF3 /* ATQueue.m */; };
 		2BD708961ED21E1600E23AF3 /* AudioWaveform.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707EC1ED21E1600E23AF3 /* AudioWaveform.m */; };
-		2BD708971ED21E1600E23AF3 /* AudioWaveformSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707EE1ED21E1600E23AF3 /* AudioWaveformSignal.m */; };
 		2BD708981ED21E1600E23AF3 /* CameraCaptureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F01ED21E1600E23AF3 /* CameraCaptureSession.m */; };
 		2BD708991ED21E1600E23AF3 /* CameraDeviceAngleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F21ED21E1600E23AF3 /* CameraDeviceAngleSampler.m */; };
 		2BD7089A1ED21E1600E23AF3 /* CameraInterfaceAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F41ED21E1600E23AF3 /* CameraInterfaceAssets.m */; };
@@ -1005,8 +1004,6 @@
 		2BD707EA1ED21E1600E23AF3 /* ATQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATQueue.m; path = Token/ImagePicker/Helpers/ATQueue.m; sourceTree = SOURCE_ROOT; };
 		2BD707EB1ED21E1600E23AF3 /* AudioWaveform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioWaveform.h; path = Token/ImagePicker/Helpers/AudioWaveform.h; sourceTree = SOURCE_ROOT; };
 		2BD707EC1ED21E1600E23AF3 /* AudioWaveform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioWaveform.m; path = Token/ImagePicker/Helpers/AudioWaveform.m; sourceTree = SOURCE_ROOT; };
-		2BD707ED1ED21E1600E23AF3 /* AudioWaveformSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioWaveformSignal.h; path = Token/ImagePicker/Helpers/AudioWaveformSignal.h; sourceTree = SOURCE_ROOT; };
-		2BD707EE1ED21E1600E23AF3 /* AudioWaveformSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioWaveformSignal.m; path = Token/ImagePicker/Helpers/AudioWaveformSignal.m; sourceTree = SOURCE_ROOT; };
 		2BD707EF1ED21E1600E23AF3 /* CameraCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraCaptureSession.h; path = Token/ImagePicker/Helpers/CameraCaptureSession.h; sourceTree = SOURCE_ROOT; };
 		2BD707F01ED21E1600E23AF3 /* CameraCaptureSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraCaptureSession.m; path = Token/ImagePicker/Helpers/CameraCaptureSession.m; sourceTree = SOURCE_ROOT; };
 		2BD707F11ED21E1600E23AF3 /* CameraDeviceAngleSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraDeviceAngleSampler.h; path = Token/ImagePicker/Helpers/CameraDeviceAngleSampler.h; sourceTree = SOURCE_ROOT; };
@@ -2216,8 +2213,6 @@
 				2BD707EA1ED21E1600E23AF3 /* ATQueue.m */,
 				2BD707EB1ED21E1600E23AF3 /* AudioWaveform.h */,
 				2BD707EC1ED21E1600E23AF3 /* AudioWaveform.m */,
-				2BD707ED1ED21E1600E23AF3 /* AudioWaveformSignal.h */,
-				2BD707EE1ED21E1600E23AF3 /* AudioWaveformSignal.m */,
 				2BD707EF1ED21E1600E23AF3 /* CameraCaptureSession.h */,
 				2BD707F01ED21E1600E23AF3 /* CameraCaptureSession.m */,
 				2BD707F11ED21E1600E23AF3 /* CameraDeviceAngleSampler.h */,
@@ -4274,7 +4269,6 @@
 				2BD708CB1ED21E1600E23AF3 /* ObserverProxy.m in Sources */,
 				2BD70BFF1ED2383F00E23AF3 /* ImageInfo.mm in Sources */,
 				2BD708AB1ED21E1600E23AF3 /* GLProgram.m in Sources */,
-				2BD708971ED21E1600E23AF3 /* AudioWaveformSignal.m in Sources */,
 				2BD7089C1ED21E1600E23AF3 /* CameraShotMetadata.m in Sources */,
 				2BD70A0B1ED22C0400E23AF3 /* AttachmentPhotoCell.m in Sources */,
 				145666061E30D31A00E52027 /* EthereumAPIClient.swift in Sources */,

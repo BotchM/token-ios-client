@@ -8,11 +8,6 @@
 #import "StringUtils.h"
 #import "ViewController.h"
 
-//#import "HPTextViewInternal.h"
-
-//#import "ModernConversationInputTextPanel.h"
-//#import "ModernConversationAssociatedInputPanel.h"
-
 const NSInteger MediaPickerCaptionInputPanelCaptionLimit = 200;
 const NSInteger MediaPickerCaptionInputPanelCaptionCounterThreshold = 100;
 

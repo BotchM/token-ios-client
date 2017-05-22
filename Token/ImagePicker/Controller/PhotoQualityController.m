@@ -1,27 +1,25 @@
-#import "PhotoQualityController.h" //
+#import "PhotoQualityController.h"
 
-#import "ImageUtils.h" //
-#import "StringUtils.h" //
-#import "PhotoEditorUtils.h" //
+#import "ImageUtils.h"
+#import "StringUtils.h"
+#import "PhotoEditorUtils.h"
 
-//#import "TGNavigationController.h"// NOT NEEDED
+#import "PhotoEditorInterfaceAssets.h"
+#import "PhotoEditorAnimation.h"
 
-#import "PhotoEditorInterfaceAssets.h" //
-#import "PhotoEditorAnimation.h" //
+#import "ModernGalleryVideoView.h"
+#import "PhotoEditorPreviewView.h"
+#import "PhotoEditorGenericToolView.h"
+#import "PhotoEditorToolButtonsView.h"
 
-#import "ModernGalleryVideoView.h" //
-#import "PhotoEditorPreviewView.h" //
-#import "PhotoEditorGenericToolView.h" //
-#import "PhotoEditorToolButtonsView.h" //
+#import "MediaAsset.h"
+#import "MediaAssetImageSignals.h"
+#import "MediaVideoConverter.h"
 
-#import "MediaAsset.h" //
-#import "MediaAssetImageSignals.h" //
-#import "MediaVideoConverter.h" //
-
-#import "PaintingWrapperView.h" //
-#import "MessageImageViewOverlayView.h" //
+#import "PaintingWrapperView.h"
+#import "MessageImageViewOverlayView.h"
 #import "Common.h"
-#import "PhotoEditor.h" //
+#import "PhotoEditor.h" 
 
 const NSTimeInterval PhotoQualityPreviewDuration = 15.0f;
 

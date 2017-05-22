@@ -1,7 +1,5 @@
 #import "PhotoAvatarCropController.h"
 
-//#import "TGAppDelegate.h"
-
 #import "PhotoEditorInterfaceAssets.h"
 #import "PhotoEditorAnimation.h"
 #import "Font.h"

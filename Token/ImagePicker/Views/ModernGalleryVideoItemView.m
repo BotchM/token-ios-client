@@ -8,8 +8,6 @@
 #import "ModernGalleryVideoItem.h"
 #import "VideoMediaAttachment.h"
 #import "Common.h"
-
-//#import "VideoDownloadActor.h"
 #import "DocumentMediaAttachment.h"
 
 #import "ModernGalleryRotationGestureRecognizer.h"
@@ -28,12 +26,7 @@
 
 #import "ActionStage.h"
 
-//#import "TGDownloadManager.h"
-//#import "Message.h"
-
 #import "AudioSessionManager.h"
-
-//#import "TGPreparedLocalDocumentMessage.h"
 
 @interface ModernGalleryVideoItemView () <DoubleTapGestureRecognizerDelegate, ASWatcher>
 {
@@ -49,7 +42,6 @@
     MessageImageViewOverlayView *_progressView;
     
     bool _mediaAvailable;
-    //bool _downloading;
     int32_t _transactionId;
     
     ModernGalleryVideoFooterView *_footerView;
@@ -62,7 +54,6 @@
     NSTimeInterval _duration;
     
     SMetaDisposable *_currentAudioSession;
-    //bool _autoplayAfterDownload;
 }
 
 @property (nonatomic, strong) ASHandle *actionHandle;
@@ -161,47 +152,7 @@
         _contentView.button = _actionButton;
         [_contentView addSubview:_actionButton];
         
-//        _scrubbingInterfaceView = [[ModernGalleryVideoScrubbingInterfaceView alloc] init];
         __weak ModernGalleryVideoItemView *weakSelf = self;
-//        _scrubbingInterfaceView.scrubbingBegan = ^
-//        {
-//            __strong ModernGalleryVideoItemView *strongSelf = weakSelf;
-//            if (strongSelf != nil)
-//            {
-//                [strongSelf pausePressed];
-//                [strongSelf setIsScrubbing:true];
-//            }
-//        };
-//        _scrubbingInterfaceView.scrubbingChanged = ^(CGFloat position)
-//        {
-//            __strong ModernGalleryVideoItemView *strongSelf = weakSelf;
-//            if (strongSelf != nil)
-//            {
-//                NSTimeInterval positionSeconds = CMTimeGetSeconds(strongSelf.player.currentItem.duration) * position;
-//                [strongSelf.player.currentItem seekToTime:CMTimeMake((int64_t)(positionSeconds * 1000.0), 1000.0)];
-//            }
-//        };
-//        _scrubbingInterfaceView.scrubbingCancelled = ^
-//        {
-//            __strong ModernGalleryVideoItemView *strongSelf = weakSelf;
-//            if (strongSelf != nil)
-//            {
-//                [strongSelf setIsScrubbing:false];
-//                [strongSelf play];
-//            }
-//        };
-//        _scrubbingInterfaceView.scrubbingFinished = ^(CGFloat position)
-//        {
-//            __strong ModernGalleryVideoItemView *strongSelf = weakSelf;
-//            if (strongSelf != nil)
-//            {
-//                NSTimeInterval positionSeconds = CMTimeGetSeconds(strongSelf.player.currentItem.duration) * position;
-//                [strongSelf.player.currentItem seekToTime:CMTimeMake((int64_t)(positionSeconds * 1000.0), 1000.0)];
-//                
-//                [strongSelf setIsScrubbing:false];
-//                [strongSelf play];
-//            }
-//        };
         
         _footerView = [[ModernGalleryVideoFooterView alloc] init];
         _footerView.playPressed = ^
@@ -269,7 +220,6 @@
     _actionButton.transform = CGAffineTransformIdentity;
     
     self.isPlaying = false;
-    //_autoplayAfterDownload = false;
     
     [self footerView].hidden = true;
 }
@@ -333,105 +283,7 @@
     [self stop];
 }
 
-//- (void)_joinDownload
-//{
-//    id media = ((ModernGalleryVideoItem *)self.item).media;
-//    if (media == nil)
-//        return;
-//    
-//    if ([media isKindOfClass:[VideoMediaAttachment class]]) {
-//        VideoMediaAttachment *videoAttachment = media;
-//        [ActionStageInstance() dispatchOnStageQueue:^
-//        {
-//            NSString *url = [videoAttachment.videoInfo urlWithQuality:1 actualQuality:NULL actualSize:NULL];
-//            NSString *path = [[NSString alloc] initWithFormat:@"/as/media/video/(%@)", url];
-//            if ([ActionStageInstance() requestActorStateNow:path])
-//            {
-//                DispatchOnMainThread(^
-//                {
-//                    _downloading = true;
-//                    [self setProgressVisible:true value:0.0f animated:false];
-//                });
-//                
-//                [ActionStageInstance() requestActor:path options:nil watcher:self];
-//            }
-//        }];
-//    } else if ([media isKindOfClass:[DocumentMediaAttachment class]]) {
-//        DocumentMediaAttachment *document = media;
-//        [ActionStageInstance() dispatchOnStageQueue:^
-//        {
-//            NSString *path = [NSString stringWithFormat:@"/tg/media/document/(%d:%" PRId64 ":%@)", document.datacenterId, document.documentId, document.documentUri.length != 0 ? document.documentUri : @""];
-//            
-//            if ([ActionStageInstance() requestActorStateNow:path])
-//            {
-//                DispatchOnMainThread(^
-//                {
-//                    _downloading = true;
-//                    [self setProgressVisible:true value:0.0f animated:false];
-//                });
-//                
-//                [ActionStageInstance() requestActor:path options:@{@"documentAttachment": document} watcher:self];
-//            }
-//        }];
-//    }
-//}
 
-//- (void)_cancelDownload
-//{
-//    [ActionStageInstance() removeWatcher:self];
-//    
-//    id media = ((ModernGalleryVideoItem *)self.item).media;
-//    
-//    if ([media isKindOfClass:[DocumentMediaAttachment class]]) {
-//        DocumentMediaAttachment *document = media;
-//        
-//        if (document.documentId != 0) {
-//            id itemId = [[MediaId alloc] initWithType:3 itemId:document.documentId];
-//            [[TGDownloadManager instance] cancelItem:itemId];
-//        } else if (document.localDocumentId != 0 && document.documentUri.length != 0) {
-//            id itemId = [[MediaId alloc] initWithType:3 itemId:document.localDocumentId];
-//            [[TGDownloadManager instance] cancelItem:itemId];
-//        }
-//    } else if ([media isKindOfClass:[VideoMediaAttachment class]]) {
-//        VideoMediaAttachment *videoAttachment = media;
-//        
-//        id itemId = [[MediaId alloc] initWithType:1 itemId:videoAttachment.videoId];
-//        [[TGDownloadManager instance] cancelItem:itemId];
-//    }
-//    
-//    DispatchOnMainThread(^
-//    {
-//        _downloading = false;
-//        [self setProgressVisible:false value:0.0f animated:false];
-//    });
-//}
-
-//- (void)_requestDownload
-//{
-//    id media = ((ModernGalleryVideoItem *)self.item).media;
-//    
-//    if ([media isKindOfClass:[DocumentMediaAttachment class]]) {
-//        DocumentMediaAttachment *document = media;
-//        NSString *path = [NSString stringWithFormat:@"/tg/media/document/(%d:%" PRId64 ":%@)", document.datacenterId, document.documentId, document.documentUri.length != 0 ? document.documentUri : @""];
-//        [ActionStageInstance() requestActor:path options:@{@"documentAttachment": document} watcher:self];
-//    } else if ([media isKindOfClass:[VideoMediaAttachment class]]) {
-//        VideoMediaAttachment *videoAttachment = media;
-//        NSString *url = [videoAttachment.videoInfo urlWithQuality:1 actualQuality:NULL actualSize:NULL];
-//        
-//        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-//        dict[@"videoAttachment"] = videoAttachment;
-//        if (((ModernGalleryVideoItem *)self.item).videoDownloadArguments != nil)
-//            dict[@"additionalOptions"] = ((ModernGalleryVideoItem *)self.item).videoDownloadArguments;
-//        
-//        [ActionStageInstance() requestActor:[[NSString alloc] initWithFormat:@"/as/media/video/(%@)", url] options:dict watcher:self];
-//    }
-//    
-//    DispatchOnMainThread(^
-//    {
-//        _downloading = true;
-//        [self setProgressVisible:true value:0.0f animated:false];
-//    });
-//}
 
 - (void)setItem:(ModernGalleryVideoItem *)item synchronously:(bool)synchronously
 {
@@ -442,82 +294,6 @@
     [self cleanupCurrentPlayer];
     
     [self footerView].hidden = true;
-    
-    CGSize dimensions = CGSizeZero;
-    NSTimeInterval duration = 0.0;
-    NSString *videoPath = nil;
-    
-    id media = ((ModernGalleryVideoItem *)self.item).media;
-    
-//    if ([media isKindOfClass:[VideoMediaAttachment class]]) {
-//        VideoMediaAttachment *videoAttachment = media;
-//        dimensions = videoAttachment.dimensions;
-//        duration = videoAttachment.duration;
-//        videoPath = [VideoDownloadActor localPathForVideoUrl:[videoAttachment.videoInfo urlWithQuality:0 actualQuality:NULL actualSize:NULL]];
-//    } else if ([media isKindOfClass:[DocumentMediaAttachment class]]) {
-//        DocumentMediaAttachment *document = media;
-//        dimensions = document.pictureSize;
-//        for (id attribute in document.attributes) {
-//            if ([attribute isKindOfClass:[DocumentAttributeVideo class]]) {
-//                duration = ((DocumentAttributeVideo *)attribute).duration;
-//            }
-//        }
-//        NSString *documentPath = document.localDocumentId != 0 ? [TGPreparedLocalDocumentMessage localDocumentDirectoryForLocalDocumentId:document.localDocumentId version:document.version] : [TGPreparedLocalDocumentMessage localDocumentDirectoryForDocumentId:document.documentId version:document.version];
-//        NSString *legacyVideoFilePath = [documentPath stringByAppendingPathComponent:[document safeFileName]];
-//        videoPath = legacyVideoFilePath;
-//        if (![videoPath.pathExtension isEqualToString:@"mp4"] && ![videoPath.pathExtension isEqualToString:@"mp4"]) {
-//            NSString *movPath = [videoPath stringByAppendingString:@".mov"];
-//            [[NSFileManager defaultManager] linkItemAtPath:movPath toPath:[document safeFileName] error:NULL];
-//            videoPath = movPath;
-//        }
-//    }
-    
-   // [_scrubbingInterfaceView setDuration:duration currentTime:0.0 isPlaying:false isPlayable:false animated:false];
-    
-    if (videoPath != nil)
-    {
-//        _videoDimensions = dimensions;
-//        
-//        _duration = duration;
-//        
-//        [_imageView loadUri:item.previewUri withOptions:@{ImageViewOptionSynchronous: @(synchronously)}];
-//        
-//        int32_t transactionId = _transactionId;
-//        __weak ModernGalleryVideoItemView *weakSelf = self;
-//        dispatch_block_t checkMediaAvailability = ^
-//        {
-//            __strong ModernGalleryVideoItemView *strongSelf = weakSelf;
-//            if (strongSelf != nil)
-//            {
-//                if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath isDirectory:NULL])
-//                {
-//                    DispatchOnMainThread(^
-//                    {
-//                        if (strongSelf->_transactionId == transactionId)
-//                            [strongSelf setMediaAvailable:true];
-//                    });
-//                }
-//                else
-//                {
-//                    DispatchOnMainThread(^
-//                    {
-//                        if (strongSelf->_transactionId == transactionId)
-//                        {
-//                            [strongSelf setMediaAvailable:false];
-//                            [strongSelf _joinDownload];
-//                        }
-//                    });
-//                }
-//            }
-//        };
-//        
-//        if (synchronously)
-//            checkMediaAvailability();
-//        else
-//            [ActionStageInstance() dispatchOnStageQueue:checkMediaAvailability];
-//        
-//        [self layoutSubviews];
-    }
 }
 
 - (void)setMediaAvailable:(bool)mediaAvailable
@@ -537,9 +313,6 @@
 
 - (void)loadAndPlay
 {
-//    if (!_mediaAvailable)
-//        _autoplayAfterDownload = true;
-    
     [self playPressed];
 }
 
@@ -559,33 +332,7 @@
         [self _willPlay];
         
         CGSize dimensions = CGSizeZero;
-        NSTimeInterval duration = 0.0;
         NSString *videoPath = nil;
-        
-        id media = ((ModernGalleryVideoItem *)self.item).media;
-        
-//        if ([media isKindOfClass:[VideoMediaAttachment class]]) {
-//            VideoMediaAttachment *videoAttachment = media;
-//            dimensions = videoAttachment.dimensions;
-//            duration = videoAttachment.duration;
-//            videoPath = [VideoDownloadActor localPathForVideoUrl:[videoAttachment.videoInfo urlWithQuality:0 actualQuality:NULL actualSize:NULL]];
-//        } else if ([media isKindOfClass:[DocumentMediaAttachment class]]) {
-//            DocumentMediaAttachment *document = media;
-//            dimensions = document.pictureSize;
-//            for (id attribute in document.attributes) {
-//                if ([attribute isKindOfClass:[DocumentAttributeVideo class]]) {
-//                    duration = ((DocumentAttributeVideo *)attribute).duration;
-//                }
-//            }
-//            NSString *documentPath = document.localDocumentId != 0 ? [TGPreparedLocalDocumentMessage localDocumentDirectoryForLocalDocumentId:document.localDocumentId version:document.version] : [TGPreparedLocalDocumentMessage localDocumentDirectoryForDocumentId:document.documentId version:document.version];
-//            NSString *legacyVideoFilePath = [documentPath stringByAppendingPathComponent:[document safeFileName]];
-//            videoPath = legacyVideoFilePath;
-//            if (![videoPath.pathExtension isEqualToString:@"mp4"] && ![videoPath.pathExtension isEqualToString:@"mp4"]) {
-//                NSString *movPath = [videoPath stringByAppendingString:@".mov"];
-//                [[NSFileManager defaultManager] linkItemAtPath:movPath toPath:[document safeFileName] error:NULL];
-//                videoPath = movPath;
-//            }
-//        }
         
         if (_player == nil)
         {
@@ -652,10 +399,6 @@
             [self positionTimerEvent];
         }
     }
-//    else if (_downloading)
-//        [self _cancelDownload];
-//    else
-//        [self _requestDownload];
 }
 
 - (void)setDefaultFooterHidden:(bool)hidden
@@ -761,14 +504,12 @@
 
 - (CGFloat)normalizeAngle:(CGFloat)angle
 {
-    return angle;
-    
-    /*CGFloat n = (int)(angle / (CGFloat)M_2_PI);
+    CGFloat n = (int)(angle / (CGFloat)M_2_PI);
     if (angle < 0)
         angle += n * M_2_PI;
     else
         angle -= n * M_2_PI;
-    return angle;*/
+    return angle;
 }
 
 - (void)rotationGesture:(UIRotationGestureRecognizer *)recognizer
@@ -811,13 +552,6 @@
     _footerView.isPlaying = _isPlaying;
 }
 
-//- (void)setIsScrubbing:(bool)isScrubbing
-//{
-//    _isScrubbing = isScrubbing;
-//    
-//    _actionButton.hidden = _isPlaying || _isScrubbing;
-//}
-
 - (void)videoFlickerTimerEvent
 {
     [_videoFlickerTimer invalidate];
@@ -837,7 +571,6 @@
     NSTimeInterval actualDuration = CMTimeGetSeconds(_player.currentItem.duration);
     if (actualDuration > 0.1f)
         duration = actualDuration;
-   // [_scrubbingInterfaceView setDuration:duration currentTime:forceZero ? 0.0 : CMTimeGetSeconds(_player.currentItem.currentTime) isPlaying:_isPlaying isPlayable:_player != nil animated:animated];
 }
 
 - (void)doubleTapGesture:(DoubleTapGestureRecognizer *)recognizer
@@ -912,24 +645,6 @@
 {
     if ([path hasPrefix:@"/as/media/video/"])
     {
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            if (status == ASStatusSuccess)
-            {
-//                _downloading = false;
-//                _mediaAvailable = true;
-//                
-//                [self setProgressVisible:false value:1.0f animated:false];
-//                
-//                [_imageView loadUri:((ModernGalleryVideoItem *)self.item).previewUri withOptions:@{ImageViewOptionKeepCurrentImageAsPlaceholder: @true}];
-//                
-//                if (_autoplayAfterDownload)
-//                {
-//                    _autoplayAfterDownload = false;
-//                    [self playPressed];
-//                }
-            }
-        });
     }
 }
 

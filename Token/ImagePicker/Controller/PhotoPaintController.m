@@ -2,15 +2,12 @@
 
 #import "UIImage+TG.h"
 
-//#import "TGAppDelegate.h"
-
 #import "ImageUtils.h"
 #import "PaintUtils.h"
 #import "PhotoEditorUtils.h"
 #import "PhotoEditorAnimation.h"
 #import "PhotoEditorInterfaceAssets.h"
 #import "ObserverProxy.h"
-//#import "TGAlertView.h"
 
 #import "MenuView.h"
 #import "ModernButton.h"
@@ -38,29 +35,23 @@
 #import "PhotoPaintActionsView.h"
 #import "PhotoPaintSettingsView.h"
 
-//#import "PhotoStickersView.h"
-
 #import "PhotoPaintSettingsWrapperView.h"
 #import "PhotoBrushSettingsView.h"
 #import "PhotoTextSettingsView.h"
 
 #import "PhotoPaintSelectionContainerView.h"
 #import "PhotoEntitiesContainerView.h"
-//#import "PhotoStickerEntityView.h"
 #import "PhotoTextEntityView.h"
 
 #import "PaintFaceDetector.h"
 #import "PhotoMaskPosition.h"
 #import "DocumentMediaAttachment.h"
 #import "Common.h"
-//#import "DocumentAttributeSticker.h"
 
 const CGFloat PhotoPaintTopPanelSize = 44.0f;
 const CGFloat PhotoPaintBottomPanelSize = 79.0f;
 const CGSize PhotoPaintingLightMaxSize = { 1280.0f, 1280.0f };
 const CGSize PhotoPaintingMaxSize = { 1600.0f, 1600.0f };
-
-//const CGFloat PhotoPaintStickerKeyboardSize = 260.0f;
 
 @interface PhotoPaintController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, ASWatcher>
 {

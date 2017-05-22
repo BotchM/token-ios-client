@@ -3,7 +3,6 @@
 #import "pop/POP.h"
 #import <SSignalKit/SSignalKit.h>
 
-//#import "TGAppDelegate.h"
 #import "Common.h"
 #import "Hacks.h"
 #import "Font.h"
