@@ -20,7 +20,7 @@ import MobileCoreServices
 import ImagePicker
 import AVFoundation
 
-class ChatController: MessagesCollectionViewController {
+class ChatController: MessagesCollectionViewController { // OverlayController (!)
     
     fileprivate var etherAPIClient: EthereumAPIClient {
         return EthereumAPIClient.shared
@@ -787,7 +787,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
         carouselItem.condensed = false
-        carouselItem.parentController = self
+        //carouselItem.parentController = self // TO MERGE
         carouselItem.allowCaptions = true
         carouselItem.inhibitDocumentCaptions = true
         carouselItem.suggestionContext = SuggestionContext()
@@ -833,12 +833,8 @@ extension ChatController: ChatInputTextPanelDelegate {
             self.menuSheetController?.dismiss(animated: true, manual: false) {
                 
                 let intent: MediaAssetsControllerIntent = asFiles == true ? .sendFile : .sendMedia
-                let descriptionGenerator: ((Any?, String?, String?) -> Any?) = { [unowned self] result, caption, hash -> Any? in
-                    return self.description(for: result, caption: caption, hash: hash)
-                }
                 
-                
-                if let signals = MediaAssetsController.resultSignals(selectionContext:carouselItem.selectionContext, editingContext:carouselItem.editingContext, intent:intent, currentItem: currentItem, storeAssets:true, useMediaCache:true, descriptionGenerator: descriptionGenerator) as? [SSignal] {
+                if let signals = MediaAssetsController.resultSignals(selectionContext:carouselItem.selectionContext, editingContext:carouselItem.editingContext, intent:intent, currentItem: currentItem, storeAssets:true, useMediaCache:true) as? [SSignal] {
                     self.asyncProcess(signals: signals)
                 }
             }
@@ -881,18 +877,32 @@ extension ChatController: ChatInputTextPanelDelegate {
         controller.shouldStoreCapturedAssets = true
         controller.allowCaptions = true
         
-        cameraView?.detachPreviewView()
+       // let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
+        //controllerWindow.isHidden = false
         
-        if let fromView = cameraView as UIView? {
-            self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
+       // controllerWindow.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        
+        var standalone = true
+        var startFrame = CGRect(x: 0, y: screenSize.height, width: screenSize.width, height: screenSize.height)
+        
+        if let cameraView = cameraView as AttachmentCameraView?, let frame = cameraView.previewView().frame as CGRect? {
+            standalone = false
+            startFrame = controller.view.convert(frame, from: cameraView)
         }
-        controller.transitioningDelegate = self
         
-        self.present(controller, animated: true, completion: nil)
+        cameraView?.detachPreviewView()
+        controller.beginTransitionIn(from: startFrame)
+        
+        
         controller.beginTransitionOut = {
             
-            carouselItem.updateCameraView()
-            carouselItem.updateVisibleItems()
+            if let cameraView = cameraView as AttachmentCameraView? {
+
+                cameraView.willAttachPreviewView()
+                return controller.view.convert(cameraView.frame, from:cameraView.superview)
+            }
+            
+            return CGRect.zero
         }
         
         controller.finishedTransitionOut = {
@@ -913,12 +923,15 @@ extension ChatController: ChatInputTextPanelDelegate {
             menu.dismiss(animated: false)
         }
         
-        let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
-        controllerWindow?.isHidden = false
-        
+        // TO MERGE
+        //
+        //
+        //  let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
+        // controllerWindow?.isHidden = false
+        //
         
         if UIDevice.current.userInterfaceIdiom == .phone {
-            controllerWindow?.frame = CGRect(x: 0.0, y: 0.0, width: screenSize.width, height: screenSize.height)
+            //  controllerWindow?.frame = CGRect(x: 0.0, y: 0.0, width: screenSize.width, height: screenSize.height)
         }
     }
     
@@ -935,67 +948,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }, failure: { error in
             print("Failure: \(error)")
         })
-    }
-    
-    func description(for item: Any?, caption: String?, hash: String?) -> [String: Any] {
-        var description = [String: Any]()
-        
-        if let _ = item as? UIImage? {
-            print("IMAGE !!!")
-            //[self.companion imageDescriptionFromImage:(UIImage *)item stickers:nil caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
-        } else if let dict = item as? [String: Any], let type = dict["type"] as? String {
-            
-            switch type {
-            case "editedPhoto":
-                //  return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
-                break
-            case "cloudPhoto":
-                description = self.imageDescription(asset: dict["asset"] as? MediaAsset, previewImage: dict["previewImage"] as? UIImage, document: dict["document"], fileName: dict["fileName"] as? String, caption: "Caption")
-                //
-                break
-            case "video":
-                //  return [self.companion videoDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] adjustments:dict[@"adjustments"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] stickers:dict[@"stickers"] caption:caption];
-                break
-            case "file":
-                // return [self.companion documentDescriptionFromFileAtTempUrl:dict[@"tempFileUrl"] fileName:dict[@"fileName"] mimeType:dict[@"mimeType"] isAnimation:dict[@"isAnimation"] caption:caption];
-                break
-            case "webPhoto":
-                //   return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:nil];
-                break
-            default:
-                break
-            }
-        }
-        
-        return description
-    }
-    
-    func imageDescription(asset: MediaAsset?, previewImage: UIImage?, document: Any?, fileName: String?, caption: String?) -> [String: Any] {
-        
-        var description = [String: Any]()
-        
-        if let asset = asset as MediaAsset? {
-            let dimensions: CGSize = asset.dimensions
-            
-            description["assetIdentifier"] = asset.uniqueIdentifier
-            
-            if let previewImage = previewImage as UIImage? {
-                description["thumbnailData"] = UIImageJPEGRepresentation(previewImage, 1.0)
-            }
-            description["thumbnailSize"] = NSValue.init(cgSize: dimensions)
-            description["document"] = document != nil
-            
-            if let fileName = fileName as String?, fileName.length > 0 {
-                //description["attributes"] = [DocumentAttributeFilename(fileName: fileName)]
-            }
-            
-            if let caption = caption as String?, caption.length > 0 {
-                description["caption"] = caption
-            }
-            
-        }
-        
-        return ["assetImage": description]
     }
     
     func inputTextPanelDidChangeHeight(_ height: CGFloat) {
@@ -1181,31 +1133,5 @@ extension ChatController: PaymentRequestControllerDelegate {
         let paymentRequest = SofaPaymentRequest(content: request)
         
         sendMessage(sofaWrapper: paymentRequest)
-    }
-}
-
-extension ChatController: MenuSheetEditingPresenter {
-    @available(iOS 2.0, *)
-    func proceed(with image: UIImage!) {
-        self.send(image: image)
-    }
-
-    
-    @available(iOS 2.0, *)
-    func referenceFrame(for initialView: UIView!) -> CGRect {
-        return self.view.convert(initialView.frame, from: initialView.superview)
-    }
-
-    
-    @available(iOS 2.0, *)
-    func present(controller: UIViewController!, from fromView: UIView!) {
-        if let fromView = fromView as UIView? {
-            self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
-        }
-        
-        print("Rect - \(self.fromViewRect)")
-        
-        controller.transitioningDelegate = self
-        self.present(controller, animated: true, completion: nil)
     }
 }

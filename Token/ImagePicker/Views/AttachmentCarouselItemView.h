@@ -8,19 +8,6 @@
 @class ViewController;
 @class AttachmentCameraView;
 
-@protocol MenuSheetEditingPresenter <NSObject>
-
-- (void)presentViewController:(UIViewController *)controller fromView:(UIView *)fromView
-NS_SWIFT_NAME(present(controller:from:));
-
-- (CGRect)referenceFrameForInitialView:(UIView *)initialView
-NS_SWIFT_NAME(referenceFrame(for:));
-
-- (void)proceedWithImage:(UIImage *)image
-NS_SWIFT_NAME(proceed(with image:));
-
-@end
-
 @interface AttachmentCarouselCollectionView : UICollectionView
 
 @end
