@@ -4,13 +4,13 @@
 #import "TGEmbedPlayerController.h"
 #import "TGEmbedPlayerView.h"
 
-@class TGViewController;
+@class ViewController;
 @class TGWebPageMediaAttachment;
 @class TGDocumentMediaAttachment;
 
 @interface TGEmbedItemView : TGMenuSheetItemView <TGPIPAblePlayerContainerView, TGEmbedPlayerWrapperView>
 
-@property (nonatomic, weak) TGViewController *parentController;
+@property (nonatomic, weak) ViewController *parentController;
 @property (nonatomic, assign) bool hasNoAboutInformation;
 
 @property (nonatomic, copy) void (^onMetadataLoaded)(NSString *title, NSString *subtitle);

@@ -4,6 +4,7 @@
 
 #import "PhotoEditorController.h"
 #import "PhotoToolbarView.h"
+#import "ViewController.h"
 
 @class SSignal;
 @class CameraShotMetadata;
@@ -18,7 +19,7 @@ typedef enum {
     PhotoEditorControllerVideoIntent = (1 << 3)
 } PhotoEditorControllerIntent;
 
-@interface PhotoEditorController : UIViewController
+@interface PhotoEditorController : OverlayController
 
 @property (nonatomic, strong) SuggestionContext *suggestionContext;
 @property (nonatomic, strong) MediaEditingContext *editingContext;

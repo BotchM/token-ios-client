@@ -7,7 +7,7 @@
 
 #import "OverlayControllerWindow.h"
 
-@interface ProgressWindowController : OverlayWindowViewController
+@interface ProgressWindowController : TGOverlayWindowViewController
 
 @property (nonatomic, weak) UIWindow *weakWindow;
 @property (nonatomic, strong) UIView *containerView;

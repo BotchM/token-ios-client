@@ -27,6 +27,7 @@
 #import "DocumentAttributeFilename.h"
 #import "DocumentAttributeAnimated.h"
 #import "DocumentAttributeVideo.h"
+#import "ItemDescriptor.h"
 
 @interface MediaAssetsController () <UINavigationControllerDelegate>
 {
@@ -253,7 +254,7 @@
 
 - (void)completeWithCurrentItem:( MediaAsset *)currentItem
 {
-    NSArray *signals = [self resultSignalsWithCurrentItem:currentItem descriptionGenerator:self.descriptionGenerator];
+    NSArray *signals = [self resultSignalsWithCurrentItem:currentItem];
     if (self.completionBlock != nil)
         self.completionBlock(signals);
 }
@@ -275,44 +276,42 @@
     }
 }
 
-- (NSArray *)resultSignalsWithCurrentItem:( MediaAsset *)currentItem descriptionGenerator:(id (^)(id, NSString *, NSString *))descriptionGenerator
+- (NSArray *)resultSignalsWithCurrentItem:( MediaAsset *)currentItem
 {
     bool storeAssets = (_editingContext != nil) && self.shouldStoreAssets;
-    return [ MediaAssetsController resultSignalsForSelectionContext:_selectionContext editingContext:_editingContext intent:_intent currentItem:currentItem storeAssets:storeAssets useMediaCache:self.localMediaCacheEnabled descriptionGenerator:descriptionGenerator];
+    return [ MediaAssetsController resultSignalsForSelectionContext:_selectionContext editingContext:_editingContext intent:_intent currentItem:currentItem storeAssets:storeAssets useMediaCache:self.localMediaCacheEnabled];
 }
 
-+ (NSArray *)resultSignalsForSelectionContext:( MediaSelectionContext *)selectionContext editingContext:( MediaEditingContext *)editingContext intent:( MediaAssetsControllerIntent)intent currentItem:( MediaAsset *)currentItem storeAssets:(bool)storeAssets useMediaCache:(bool)__unused useMediaCache descriptionGenerator:(id (^)(id, NSString *, NSString *))descriptionGenerator
++ (NSArray *)resultSignalsForSelectionContext:( MediaSelectionContext *)selectionContext editingContext:( MediaEditingContext *)editingContext intent:( MediaAssetsControllerIntent)intent currentItem:( MediaAsset *)currentItem storeAssets:(bool)storeAssets useMediaCache:(bool)__unused useMediaCache
 {
     NSMutableArray *signals = [[NSMutableArray alloc] init];
     NSMutableArray *selectedItems = [selectionContext.selectedItems mutableCopy];
     if (selectedItems.count == 0 && currentItem != nil)
         [selectedItems addObject:currentItem];
     
-//    if (TGAppDelegateInstance.saveEditedPhotos && storeAssets) // -->>> // *** CHECK CONFIGUTRATION HERE ***//
+    NSMutableArray *fullSizeSignals = [[NSMutableArray alloc] init];
+    for ( MediaAsset *asset in selectedItems)
+        [fullSizeSignals addObject:[editingContext fullSizeImageUrlForItem:asset]];
+    
+    SSignal *combinedSignal = nil;
+    SQueue *queue = [SQueue concurrentDefaultQueue];
+    
+    for (SSignal *signal in fullSizeSignals)
     {
-        NSMutableArray *fullSizeSignals = [[NSMutableArray alloc] init];
-        for ( MediaAsset *asset in selectedItems)
-            [fullSizeSignals addObject:[editingContext fullSizeImageUrlForItem:asset]];
-        
-        SSignal *combinedSignal = nil;
-        SQueue *queue = [SQueue concurrentDefaultQueue];
-        
-        for (SSignal *signal in fullSizeSignals)
-        {
-            if (combinedSignal == nil)
-                combinedSignal = [signal startOn:queue];
-            else
-                combinedSignal = [[combinedSignal then:signal] startOn:queue];
-        }
-        
-        [[[[combinedSignal deliverOn:[SQueue mainQueue]] filter:^bool(id result)
-           {
-               return [result isKindOfClass:[NSURL class]];
-           }] mapToSignal:^SSignal *(NSURL *url)
-          {
-              return [[MediaAssetsLibrary sharedLibrary] saveAssetWithImageAtUrl:url];
-          }] startWithNext:nil];
+        if (combinedSignal == nil)
+            combinedSignal = [signal startOn:queue];
+        else
+            combinedSignal = [[combinedSignal then:signal] startOn:queue];
     }
+    
+    [[[[combinedSignal deliverOn:[SQueue mainQueue]] filter:^bool(id result)
+       {
+           return [result isKindOfClass:[NSURL class]];
+       }] mapToSignal:^SSignal *(NSURL *url)
+      {
+          return [[MediaAssetsLibrary sharedLibrary] saveAssetWithImageAtUrl:url];
+      }] startWithNext:nil];
+    
     
     static dispatch_once_t onceToken;
     static UIImage *blankImage;
@@ -363,8 +362,7 @@
                                              dict[@"fileName"] = assetData.fileName;
                                              dict[@"mimeType"] = MimeTypeForFileUTI(assetData.fileUTI);
                                              
-                                             id generatedItem = descriptionGenerator(dict, caption, nil);
-                                             return generatedItem;
+                                             return [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                          }] catch:^SSignal *(id error)
                                         {
                                             if (![error isKindOfClass:[NSNumber class]])
@@ -380,8 +378,7 @@
                                                         dict[@"mimeType"] = MimeTypeForFileUTI(asset.uniformTypeIdentifier);
                                                         dict[@"fileName"] = asset.fileName;
                                                         
-                                                        id generatedItem = descriptionGenerator(dict, nil, nil);
-                                                        return generatedItem;
+                                                        return [ItemDescriptor descriptionForItem:dict caption:nil hash:nil];;
                                                     }];
                                         }]];
                 }
@@ -398,8 +395,7 @@
                                                  dict[@"asset"] = asset;
                                                  dict[@"previewImage"] = image;
                                                  
-                                                 id generatedItem = [self _descriptionForItem:dict caption:caption hash:nil];
-                                                 return generatedItem;
+                                                 return [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                              }];
                     
                     SSignal *assetSignal = inlineSignal;
@@ -438,9 +434,7 @@
                                              
                                              if (adjustments.paintingData.stickers.count > 0)
                                                  dict[@"stickers"] = adjustments.paintingData.stickers;
-                                             
-                                             id generatedItem = descriptionGenerator(dict, caption, nil);
-                                             return generatedItem;
+                                             return  [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                          }] catch:^SSignal *(__unused id error)
                                         {
                                             return inlineSignal;
@@ -468,8 +462,7 @@
                                             if (adjustments.paintingData.stickers.count > 0)
                                                 dict[@"stickers"] = adjustments.paintingData.stickers;
                                             
-                                            id generatedItem = [self _descriptionForItem:dict caption:caption hash:nil];
-                                            return generatedItem;
+                                            return  [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                         }]];
                 }
                 else
@@ -522,8 +515,7 @@
                                             if (adjustments.paintingData.stickers.count > 0)
                                                 dict[@"stickers"] = adjustments.paintingData.stickers;
                                         
-                                            id generatedItem = [self _descriptionForItem:dict caption:caption hash:nil];
-                                            return generatedItem;
+                                            return [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                         }]];
                 }
             }
@@ -551,8 +543,7 @@
                                                          dict[@"mimeType"] = @"video/mp4";
                                                          dict[@"isAnimation"] = @true;
                                                          
-                                                         id generatedItem = descriptionGenerator(dict, caption, nil);
-                                                         return generatedItem;
+                                                         return  [ItemDescriptor descriptionForItem:dict caption:nil hash:nil];
                                                      }];
                                          }
                                          else
@@ -565,7 +556,7 @@
                                              dict[@"fileName"] = assetData.fileName;
                                              dict[@"mimeType"] = MimeTypeForFileUTI(assetData.fileUTI);
                                              
-                                             id generatedItem = descriptionGenerator(dict, caption, nil);
+                                             id generatedItem = [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                              return [SSignal single:generatedItem];
                                          }
                                      }] catch:^SSignal *(id error)
@@ -581,8 +572,7 @@
                                                     dict[@"asset"] = asset;
                                                     dict[@"previewImage"] = image;
                                                     
-                                                    id generatedItem = descriptionGenerator(dict, caption, nil);
-                                                    return generatedItem;
+                                                    return [ItemDescriptor descriptionForItem:dict caption:caption hash:nil];
                                                 }];
                                     }]];
             }
@@ -593,147 +583,6 @@
         }
     }
     return signals;
-}
-
-+ (NSDictionary *)_descriptionForItem:(id)item caption:(NSString *)caption hash:(NSString *)hash
-{
-    if (item == nil)
-        return nil;
-    
-    NSDictionary *resultDict = [[NSDictionary alloc] init];
-    
-    if ([item isKindOfClass:[UIImage class]])
-    {
-        //return [self.companion imageDescriptionFromImage:(UIImage *)item stickers:nil caption:caption optionalAssetUrl:hash != nil ? [[NSString alloc] initWithFormat:@"image-%@", hash] : nil];
-    }
-    else if ([item isKindOfClass:[NSDictionary class]])
-    {
-        
-        NSDictionary *dict = (NSDictionary *)item;
-        NSString *type = dict[@"type"];
-        
-        if ([type isEqualToString:@"editedPhoto"]) {
-        }
-        if ([type isEqualToString:@"cloudPhoto"])
-        {
-            resultDict = [self imageDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] caption:caption];
-        }
-        else if ([type isEqualToString:@"video"])
-        {
-           resultDict = [self videoDescriptionFromMediaAsset:dict[@"asset"] previewImage:dict[@"previewImage"] adjustments:dict[@"adjustments"] document:[dict[@"document"] boolValue] fileName:dict[@"fileName"] stickers:dict[@"stickers"] caption:caption];
-        }
-        else if ([type isEqualToString:@"file"])
-        {
-           // return [self.companion documentDescriptionFromFileAtTempUrl:dict[@"tempFileUrl"] fileName:dict[@"fileName"] mimeType:dict[@"mimeType"] isAnimation:dict[@"isAnimation"] caption:caption];
-        }
-        else if ([type isEqualToString:@"webPhoto"])
-        {
-            //return [self.companion imageDescriptionFromImage:dict[@"image"] stickers:dict[@"stickers"] caption:caption optionalAssetUrl:nil];
-        }
-    }
-    
-    return resultDict;
-}
-
-+ (NSDictionary *)videoDescriptionFromMediaAsset:(MediaAsset *)asset previewImage:(UIImage *)previewImage adjustments:(VideoEditAdjustments *)adjustments document:(bool)document fileName:(NSString *)fileName stickers:(NSArray *)stickers caption:(NSString *)caption
-{
-    if (asset == nil)
-        return nil;
-    
-    NSData *thumbnailData = UIImageJPEGRepresentation(previewImage, 0.54f);
-    
-    NSTimeInterval duration = asset.videoDuration;
-    CGSize dimensions = asset.dimensions;
-    if (!CGSizeEqualToSize(dimensions, CGSizeZero))
-        dimensions = TGFitSize(dimensions, CGSizeMake(640, 640));
-    else
-        dimensions = TGFitSize(previewImage.size, CGSizeMake(640, 640));
-    
-    if (adjustments != nil)
-    {
-        if (adjustments.trimApplied)
-            duration = adjustments.trimEndValue - adjustments.trimStartValue;
-        if ([adjustments cropAppliedForAvatar:false])
-        {
-            CGSize size = adjustments.cropRect.size;
-            if (adjustments.cropOrientation != UIImageOrientationUp && adjustments.cropOrientation != UIImageOrientationDown)
-                size = CGSizeMake(size.height, size.width);
-            dimensions = TGFitSize(size, CGSizeMake(640, 640));
-        }
-    }
-    
-    bool isAnimation = adjustments.sendAsGif;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@
-                                 {
-                                     @"assetIdentifier": asset.uniqueIdentifier,
-                                     @"duration": @(duration),
-                                     @"dimensions": [NSValue valueWithCGSize:dimensions],
-                                     @"thumbnailData": thumbnailData,
-                                     @"thumbnailSize": [NSValue valueWithCGSize:dimensions],
-                                     @"document": @(document || isAnimation)
-                                 }];
-    
-    if (adjustments != nil)
-        dict[@"adjustments"] = adjustments;
-    
-    NSMutableArray *attributes = [[NSMutableArray alloc] init];
-    if (isAnimation)
-    {
-        dict[@"mimeType"] = @"video/mp4";
-        [attributes addObject:[[DocumentAttributeFilename alloc] initWithFilename:@"animation.mp4"]];
-        [attributes addObject:[[DocumentAttributeAnimated alloc] init]];
-    }
-    else
-    {
-        if (fileName.length > 0)
-            [attributes addObject:[[DocumentAttributeFilename alloc] initWithFilename:fileName]];
-    }
-    
-    if (!document)
-        [attributes addObject:[[DocumentAttributeVideo alloc] initWithSize:dimensions duration:(int32_t)duration]];
-    
-    if ((document || isAnimation) && attributes.count > 0)
-        dict[@"attributes"] = attributes;
-    
-    if (caption != nil)
-        dict[@"caption"] = caption;
-    
-    if (stickers != nil)
-        dict[@"stickerDocuments"] = stickers;
-    
-    return @{@"assetVideo": dict};
-}
-
-+ (NSDictionary *)imageDescriptionFromMediaAsset:(MediaAsset *)asset previewImage:(UIImage *)previewImage document:(bool)document fileName:(NSString *)fileName caption:(NSString *)caption
-{
-    if (asset == nil)
-        return nil;
-    
-    NSData *thumbnailData = UIImageJPEGRepresentation(previewImage, 0.54f);
-    CGSize dimensions = asset.dimensions;
-    if (CGSizeEqualToSize(dimensions, CGSizeZero))
-        dimensions = previewImage.size;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@
-                                 {
-                                     @"assetIdentifier": asset.uniqueIdentifier,
-                                     @"thumbnailData": thumbnailData,
-                                     @"thumbnailSize": [NSValue valueWithCGSize:dimensions],
-                                     @"document": @(document)
-                                 }];
-    
-    NSMutableArray *attributes = [[NSMutableArray alloc] init];
-    if (fileName.length > 0)
-        [attributes addObject:[[DocumentAttributeFilename alloc] initWithFilename:fileName]];
-    
-    if (document && attributes.count > 0)
-        dict[@"attributes"] = attributes;
-    
-    if (caption != nil)
-        dict[@"caption"] = caption;
-    
-    return @{@"assetImage": dict};
 }
 
 #pragma mark -

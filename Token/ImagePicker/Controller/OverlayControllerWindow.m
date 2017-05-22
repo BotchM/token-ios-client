@@ -3,16 +3,14 @@
 #import "ViewController.h"
 #import "OverlayController.h"
 
+#import "AppDelegate.h"
 #import "Common.h"
 
-//#import "TGAppDelegate.h"
-
-@implementation OverlayWindowViewController
+@implementation TGOverlayWindowViewController
 
 - (UIViewController *)statusBarAppearanceSourceController
 {
-    
-    UIViewController *topViewController = nil;// TGAppDelegateInstance.rootController.viewControllers.lastObject;
+    UIViewController *topViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     
     if ([topViewController isKindOfClass:[UITabBarController class]])
         topViewController = [(UITabBarController *)topViewController selectedViewController];
@@ -35,15 +33,15 @@
     return topViewController;
 }
 
-//- (UIViewController *)autorotationSourceController
-//{
-//    UIViewController *topViewController = TGAppDelegateInstance.rootController.viewControllers.lastObject;
-//    
-//    if ([topViewController isKindOfClass:[UITabBarController class]])
-//        topViewController = [(UITabBarController *)topViewController selectedViewController];
-//    
-//    return topViewController;
-//}
+- (UIViewController *)autorotationSourceController
+{
+    UIViewController *topViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    
+    if ([topViewController isKindOfClass:[UITabBarController class]])
+        topViewController = [(UITabBarController *)topViewController selectedViewController];
+    
+    return topViewController;
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -59,34 +57,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    static NSArray *nonRotateableWindowClasses = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-    {
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        Class alertClass = NSClassFromString(TGEncodeText(@"`VJBmfsuPwfsmbzXjoepx", -1));
-        if (alertClass != nil)
-            [array addObject:alertClass];
-        
-        nonRotateableWindowClasses = array;
-    });
-    
-    for (UIWindow *window in [UIApplication sharedApplication].windows.reverseObjectEnumerator)
-    {
-        for (Class classInfo in nonRotateableWindowClasses)
-        {
-            if ([window isKindOfClass:classInfo])
-                return false;
-        }
-    }
-//    
-//    if (TGAppDelegateInstance.rootController.presentedViewController != nil)
-//        return [TGAppDelegateInstance.rootController.presentedViewController shouldAutorotate];
-    
-//    if ([self autorotationSourceController] != nil)
-//        return [[self autorotationSourceController] shouldAutorotate];
-    
-    return true;
+    return false;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -145,7 +116,7 @@
         self.windowLevel = UIWindowLevelStatusBar - 0.001f;
         
         _parentController = parentController;
-        //[parentController.associatedWindowStack addObject:self];
+        [parentController.associatedWindowStack addObject:self];
         
         contentController.overlayWindow = self;
         self.rootViewController = contentController;
@@ -184,8 +155,8 @@
 - (void)setHidden:(BOOL)hidden {
     [super setHidden:hidden];
     
-//    if (!hidden && !_keepKeyboard)
-//        [TGAppDelegateInstance.window endEditing:true];
+    if (!hidden && !_keepKeyboard)
+       [[UIApplication sharedApplication].delegate.window endEditing:true];
 }
 
 @end

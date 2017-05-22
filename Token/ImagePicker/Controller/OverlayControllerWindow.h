@@ -3,7 +3,7 @@
 @class ViewController;
 @class OverlayController;
 
-@interface OverlayWindowViewController : UIViewController
+@interface TGOverlayWindowViewController : UIViewController
 
 @end
 
@@ -12,12 +12,11 @@
 @property (nonatomic) bool keepKeyboard;
 @property (nonatomic) bool dismissByMenuSheet;
 
-- (instancetype)initWithParentController:(UIViewController *)parentController contentController:(UIViewController *)contentController
+- (instancetype)initWithParentController:(ViewController *)parentController contentController:(OverlayController *)contentController
 NS_SWIFT_NAME(init(parentController:contentController:));
 
-
 - (instancetype)initWithParentController:(ViewController *)parentController contentController:(OverlayController *)contentController keepKeyboard:(bool)keepKeyboard
-NS_SWIFT_NAME(init(parentController:contentController:keepKeyboard:));
+NS_SWIFT_NAME(init(parentController:contentController:keyboard:));
 
 - (void)dismiss;
 

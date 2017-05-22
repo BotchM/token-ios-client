@@ -4,6 +4,8 @@
 
 #import "ModernGalleryView.h"
 
+#import "AppDelegate.h"
+
 #import "ModernGalleryItem.h"
 #import "ModernGalleryScrollView.h"
 #import "ModernGalleryItemView.h"
@@ -14,8 +16,6 @@
 #import "ModernGalleryContainerView.h"
 #import "ModernGalleryInterfaceView.h"
 #import "ModernGalleryDefaultInterfaceView.h"
-
-#import "SharedMediaCollectionView.h"
 
 #import "ModernGalleryModel.h"
 
@@ -28,15 +28,15 @@
 #import "JNWSpringAnimation.h"
 
 #import "ImageUtils.h"
-#import "AppDelegate.h"
 
+#import "SharedMediaCollectionView.h"
 #import "AttachmentCarouselItemView.h"
+
 #import "Common.h"
-#import <UIKit/UIKit.h>
 
 #define ModernGalleryItemPadding 20.0f
 
-@interface ModernGalleryController () <UIScrollViewDelegate, ModernGalleryScrollViewDelegate, ModernGalleryItemViewDelegate>//, TGKeyCommandResponder>
+@interface ModernGalleryController () <UIScrollViewDelegate, ModernGalleryScrollViewDelegate, ModernGalleryItemViewDelegate>
 {
     NSMutableDictionary *_reusableItemViewsByIdentifier;
     NSMutableArray *_visibleItemViews;
@@ -393,14 +393,6 @@
     _view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_view];
     
-    _view.closePressed = ^{
-        typeof(self)strongSelf = weakSelf;
-       
-        if (strongSelf.completionBlock) {
-            strongSelf.completionBlock();
-        }
-    };
-    
     _defaultHeaderView = [_model createDefaultHeaderView];
     if (_defaultHeaderView != nil)
         [_view addItemHeaderView:_defaultHeaderView];
@@ -435,16 +427,60 @@
                 }
             }
             
-//            if (strongSelf.hasFadeOutTransition)
-//            {
-//                if (strongSelf.beginTransitionOut)
-//                    strongSelf.beginTransitionOut(focusItem, currentItemView);
-            
+            if (strongSelf.hasFadeOutTransition)
+            {
+                if (strongSelf.beginTransitionOut)
+                    strongSelf.beginTransitionOut(focusItem, currentItemView);
+                
                 [strongSelf->_view fadeOutWithDuration:0.3f completion:^
                 {
-                   // [strongSelf dismiss];
+                    [strongSelf dismiss];
                 }];
-           // }
+            }
+            else
+            {
+                UIView *transitionOutToView = nil;
+                UIView *transitionOutFromView = nil;
+                CGRect transitionOutFromViewContentRect = CGRectZero;
+                
+                if (strongSelf.beginTransitionOut && focusItem != nil)
+                    transitionOutToView = strongSelf.beginTransitionOut(focusItem, currentItemView);
+                if (transitionOutToView != nil && currentItemView != nil)
+                {
+                    transitionOutFromView = [currentItemView transitionView];
+                    transitionOutFromViewContentRect = [currentItemView transitionViewContentRect];
+                }
+                
+                if (transitionOutFromView != nil && transitionOutToView != nil)
+                {
+                    [strongSelf animateTransitionOutFromView:transitionOutFromView fromViewContentRect:transitionOutFromViewContentRect toView:transitionOutToView velocity:CGPointMake(0.0f, velocity * 3.8f)];
+                    [strongSelf->_view transitionOutWithDuration:0.15];
+                    [strongSelf->_view.interfaceView animateTransitionOutWithDuration:0.15];
+                }
+                else
+                {
+                    if (iosMajorVersion() >= 7 && strongSelf.shouldAnimateStatusBarStyleTransition)
+                    {
+                        [strongSelf animateStatusBarTransition:0.2];
+                        strongSelf->_statusBarStyle = strongSelf->_defaultStatusBarStyle;
+                        [strongSelf setNeedsStatusBarAppearanceUpdate];
+                    }
+                    
+                    if (strongSelf.adjustsStatusBarVisibility)
+                    {
+                        [UIView animateWithDuration:0.2 animations:^
+                        {
+                            [Hacks setApplicationStatusBarAlpha:1.0f];
+                        }];
+                    }
+                    
+                    [strongSelf->_view simpleTransitionOutWithVelocity:velocity completion:^
+                    {
+                        __strong ModernGalleryController *strongSelf2 = weakSelf;
+                        [strongSelf2 dismiss];
+                    }];
+                }
+            }
         }
         return true;
     };
@@ -1568,17 +1604,6 @@ static CGFloat transformRotation(CGAffineTransform transform)
     {
         _view.transitionOut(0.0f);
     }
-}
-
-- (NSArray *)availableKeyCommands
-{
-    return @
-    [
-//        [TGKeyCommand keyCommandWithTitle:nil input:UIKeyInputLeftArrow modifierFlags:0],
-//        [TGKeyCommand keyCommandWithTitle:nil input:UIKeyInputRightArrow modifierFlags:0],
-//        [TGKeyCommand keyCommandWithTitle:nil input:UIKeyInputEscape modifierFlags:0],
-//        [TGKeyCommand keyCommandWithTitle:nil input:@"\t" modifierFlags:0]
-    ];
 }
 
 - (bool)isExclusive

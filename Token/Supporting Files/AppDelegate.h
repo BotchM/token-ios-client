@@ -19,8 +19,8 @@
 #import <SignalServiceKit/ContactsUpdater.h>
 #import "ContactsManager.h"
 
-@import PushKit;
-@import UserNotifications;
+#import <PushKit/PushKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate>
 

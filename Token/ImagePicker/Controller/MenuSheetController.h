@@ -1,5 +1,6 @@
 #import "MenuSheetButtonItemView.h"
 #import "MenuSheetTitleItemView.h"
+#import "ViewController.h"
 
 @class SDisposableSet;
 
@@ -28,7 +29,7 @@
 @property (nonatomic, readonly) UIUserInterfaceSizeClass sizeClass;
 
 @property (nonatomic, readonly) UIPanGestureRecognizer *panGestureRecognizer;
-@property (nonatomic, readonly) UIViewController *parentController;
+@property (nonatomic, readonly) ViewController *parentController;
 
 @property (nonatomic, assign) CGFloat maxHeight;
 

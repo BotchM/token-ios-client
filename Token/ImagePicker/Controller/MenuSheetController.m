@@ -879,7 +879,7 @@ typedef enum
         changeBlock();
 }
 
-- (UIViewController *)parentController
+- (ViewController *)parentController
 {
     return _parentController;
 }

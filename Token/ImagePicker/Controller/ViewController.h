@@ -6,9 +6,9 @@ typedef enum {
     ViewControllerStyleBlack = 1
 } ViewControllerStyle;
 
-@class Label;
+@class TGLabel;
 @class TGNavigationController;
-@class PopoverController;
+@class TGPopoverController;
 
 typedef enum {
     ViewControllerNavigationBarAnimationNone = 0,
@@ -63,7 +63,7 @@ typedef enum {
 + (bool)useExperimentalRTL;
 
 @property (nonatomic, strong) NSMutableArray *associatedWindowStack;
-@property (nonatomic, strong) PopoverController *associatedPopoverController;
+@property (nonatomic, strong) TGPopoverController *associatedPopoverController;
 
 @property (nonatomic) ViewControllerStyle style;
 

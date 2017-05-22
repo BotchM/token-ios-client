@@ -19,7 +19,6 @@ typedef NS_ENUM(NSUInteger, MediaAssetsControllerIntent) {
 @property (nonatomic, assign) bool inhibitDocumentCaptions;
 @property (nonatomic, assign) bool shouldStoreAssets;
 
-@property (nonatomic, copy) NSDictionary *(^descriptionGenerator)(id, NSString *, NSString *);
 @property (nonatomic, strong, readonly) NSMutableArray *selectedItems;
 
 @property (nonatomic, assign) bool liveVideoUploadEnabled;
@@ -41,7 +40,7 @@ NS_SWIFT_NAME(init(assetGroup:intent:));
 
 + (MediaAssetType)assetTypeForIntent:(MediaAssetsControllerIntent)intent;
 
-+ (NSArray *)resultSignalsForSelectionContext:(MediaSelectionContext *)selectionContext editingContext:(MediaEditingContext *)editingContext intent:(MediaAssetsControllerIntent)intent currentItem:(MediaAsset *)currentItem storeAssets:(bool)storeAssets useMediaCache:(bool)useMediaCache descriptionGenerator:(id (^)(id, NSString *, NSString *))descriptionGenerator
-NS_SWIFT_NAME(resultSignals(selectionContext:editingContext:intent:currentItem:storeAssets:useMediaCache:descriptionGenerator:));
++ (NSArray *)resultSignalsForSelectionContext:(MediaSelectionContext *)selectionContext editingContext:(MediaEditingContext *)editingContext intent:(MediaAssetsControllerIntent)intent currentItem:(MediaAsset *)currentItem storeAssets:(bool)storeAssets useMediaCache:(bool)useMediaCache
+NS_SWIFT_NAME(resultSignals(selectionContext:editingContext:intent:currentItem:storeAssets:useMediaCache:));
 
 @end

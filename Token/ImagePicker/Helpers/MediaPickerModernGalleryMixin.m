@@ -136,7 +136,7 @@
             if (strongSelf != nil && strongSelf.itemFocused != nil)
                 strongSelf.itemFocused(item);
         };
-
+        
         modernGallery.beginTransitionIn = ^UIView *(MediaPickerGalleryItem *item, ModernGalleryItemView *itemView)
         {
             __strong MediaPickerModernGalleryMixin *strongSelf = weakSelf;
@@ -169,7 +169,7 @@
                     [(MediaPickerGalleryVideoItemView *)itemView playIfAvailable];
             }
         };
-
+        
         modernGallery.beginTransitionOut = ^UIView *(MediaPickerGalleryItem *item, ModernGalleryItemView *itemView)
         {
             __strong MediaPickerModernGalleryMixin *strongSelf = weakSelf;
@@ -186,7 +186,7 @@
             }
             return nil;
         };
-
+        
         modernGallery.completedTransitionOut = ^
         {
             __strong MediaPickerModernGalleryMixin *strongSelf = weakSelf;
@@ -203,12 +203,15 @@
     _galleryModel.editorClosed = self.editorClosed;
     
     [_galleryController setPreviewMode:false];
+    
+    OverlayControllerWindow *controllerWindow = [[OverlayControllerWindow alloc] initWithParentController:_parentController contentController:_galleryController];
+    controllerWindow.hidden = false;
     _galleryController.view.clipsToBounds = true;
     
     _strongGalleryController = nil;
 }
 
-- (ModernGalleryController *)galleryController
+- (UIViewController *)galleryController
 {
     return _galleryController;
 }
@@ -223,8 +226,6 @@
 {
     MediaAsset *currentAsset = ((MediaPickerGalleryItem *)_galleryController.currentItem).asset;
     bool exists = ([fetchResult indexOfAsset:currentAsset] != NSNotFound);
-   
-    if (!_galleryModel) return;
     
     if (!exists)
     {
@@ -234,10 +235,10 @@
     
     __block id<ModernGalleryItem> focusItem = nil;
     NSArray *galleryItems = [self prepareGalleryItemsForFetchResult:fetchResult selectionContext:_galleryModel.selectionContext editingContext:_editingContext asFile:_asFile enumerationBlock:^(MediaPickerGalleryItem *item)
-    {
-        if (focusItem == nil && [item isEqual:_galleryController.currentItem])
-            focusItem = item;
-    }];
+                             {
+                                 if (focusItem == nil && [item isEqual:_galleryController.currentItem])
+                                     focusItem = item;
+                             }];
     
     [_galleryModel _replaceItems:galleryItems focusingOnItem:focusItem];
 }

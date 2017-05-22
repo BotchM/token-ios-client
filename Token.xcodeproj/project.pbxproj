@@ -116,6 +116,7 @@
 		14ED3ABD1E4A2B3400DF8079 /* BrowseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED3ABC1E4A2B3400DF8079 /* BrowseController.swift */; };
 		14ED3ABF1E4A347400DF8079 /* BrowseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED3ABE1E4A347400DF8079 /* BrowseNavigationController.swift */; };
 		14EE6B4D1E72E54A000B07DA /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F8D1C71E72B4AA003F5749 /* Checkbox.swift */; };
+		2B1D21E11ED35DB9007D19B4 /* ItemDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1D21E01ED35DB9007D19B4 /* ItemDescriptor.m */; };
 		2B2F85021ECA40A300D6576D /* CameraAutoFocusCrosshairs.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B61ECA40A300D6576D /* CameraAutoFocusCrosshairs.png */; };
 		2B2F85031ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B71ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png */; };
 		2B2F85041ECA40A300D6576D /* CameraAutoFocusCrosshairs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B81ECA40A300D6576D /* CameraAutoFocusCrosshairs@3x.png */; };
@@ -196,6 +197,15 @@
 		2B2F85521ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F854F1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png */; };
 		2B2F85531ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F85501ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png */; };
 		2B355BDA1EAE356C0093FA8F /* TokenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B355BD91EAE356C0093FA8F /* TokenUser.swift */; };
+		2B8B6ED31ED2EB160075EC80 /* OverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED01ED2EB160075EC80 /* OverlayController.m */; };
+		2B8B6ED41ED2EB160075EC80 /* OverlayControllerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED21ED2EB160075EC80 /* OverlayControllerWindow.m */; };
+		2B8B6ED71ED2EB590075EC80 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED61ED2EB590075EC80 /* ViewController.mm */; };
+		2B8B6EDC1ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED91ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m */; };
+		2B8B6EDD1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EDB1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m */; };
+		2B8B6EE01ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EDF1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m */; };
+		2B8B6EE31ED2F0100075EC80 /* TGActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE21ED2F0100075EC80 /* TGActionSheet.m */; };
+		2B8B6EE61ED2F36F0075EC80 /* TGImagePickerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE51ED2F36F0075EC80 /* TGImagePickerController.mm */; };
+		2B8B6EE91ED2FEA50075EC80 /* Freedom.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE81ED2FEA50075EC80 /* Freedom.mm */; };
 		2BAB90A71EC1194B005D98C6 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAB90A01EC1194B005D98C6 /* Accelerate.framework */; };
 		2BAB90A81EC1194B005D98C6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAB90A11EC1194B005D98C6 /* AudioToolbox.framework */; };
 		2BAB90A91EC1194B005D98C6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAB90A21EC1194B005D98C6 /* CoreGraphics.framework */; };
@@ -442,8 +452,6 @@
 		2BD70AB01ED22F8C00E23AF3 /* MediaGroupsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8A1ED22F8C00E23AF3 /* MediaGroupsController.m */; };
 		2BD70AB11ED22F8C00E23AF3 /* MediaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8C1ED22F8C00E23AF3 /* MediaPickerController.m */; };
 		2BD70AB21ED22F8C00E23AF3 /* ModernGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8E1ED22F8C00E23AF3 /* ModernGalleryController.m */; };
-		2BD70AB31ED22F8C00E23AF3 /* OverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A901ED22F8C00E23AF3 /* OverlayController.m */; };
-		2BD70AB41ED22F8C00E23AF3 /* OverlayControllerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A911ED22F8C00E23AF3 /* OverlayControllerWindow.m */; };
 		2BD70AB51ED22F8C00E23AF3 /* OverlayFormsheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A931ED22F8C00E23AF3 /* OverlayFormsheetController.m */; };
 		2BD70AB61ED22F8C00E23AF3 /* OverlayFormsheetWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A951ED22F8C00E23AF3 /* OverlayFormsheetWindow.m */; };
 		2BD70AB71ED22F8C00E23AF3 /* PhotoAvatarCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A971ED22F8C00E23AF3 /* PhotoAvatarCropController.m */; };
@@ -456,7 +464,6 @@
 		2BD70ABE1ED22F8C00E23AF3 /* PhotoPaintController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA51ED22F8C00E23AF3 /* PhotoPaintController.m */; };
 		2BD70ABF1ED22F8C00E23AF3 /* PhotoQualityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA71ED22F8C00E23AF3 /* PhotoQualityController.m */; };
 		2BD70AC01ED22F8C00E23AF3 /* PhotoToolsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA91ED22F8C00E23AF3 /* PhotoToolsController.m */; };
-		2BD70AC11ED22F8C00E23AF3 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AAB1ED22F8C00E23AF3 /* ViewController.mm */; };
 		2BD70B4F1ED2321B00E23AF3 /* BlurEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC41ED2321B00E23AF3 /* BlurEffect.m */; };
 		2BD70B501ED2321B00E23AF3 /* BlurTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC61ED2321B00E23AF3 /* BlurTool.m */; };
 		2BD70B511ED2321B00E23AF3 /* ContrastTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC81ED2321B00E23AF3 /* ContrastTool.m */; };
@@ -859,6 +866,8 @@
 		14ED3ABC1E4A2B3400DF8079 /* BrowseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseController.swift; sourceTree = "<group>"; };
 		14ED3ABE1E4A347400DF8079 /* BrowseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BrowseNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		21C18022E25A13D670BB406A /* Pods-CocoaPods-Distribution.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPods-Distribution.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CocoaPods-Distribution/Pods-CocoaPods-Distribution.debug.xcconfig"; sourceTree = "<group>"; };
+		2B1D21DF1ED35DB9007D19B4 /* ItemDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemDescriptor.h; path = Token/ImagePicker/Helpers/ItemDescriptor.h; sourceTree = SOURCE_ROOT; };
+		2B1D21E01ED35DB9007D19B4 /* ItemDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemDescriptor.m; path = Token/ImagePicker/Helpers/ItemDescriptor.m; sourceTree = SOURCE_ROOT; };
 		2B2F84B61ECA40A300D6576D /* CameraAutoFocusCrosshairs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CameraAutoFocusCrosshairs.png; path = Icons/CameraAutoFocusCrosshairs.png; sourceTree = "<group>"; };
 		2B2F84B71ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CameraAutoFocusCrosshairs@2x.png"; path = "Icons/CameraAutoFocusCrosshairs@2x.png"; sourceTree = "<group>"; };
 		2B2F84B81ECA40A300D6576D /* CameraAutoFocusCrosshairs@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CameraAutoFocusCrosshairs@3x.png"; path = "Icons/CameraAutoFocusCrosshairs@3x.png"; sourceTree = "<group>"; };
@@ -939,6 +948,24 @@
 		2B2F854F1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AttachmentMenuInteractiveCameraIcon@2x.png"; path = "Icons/AttachmentMenuInteractiveCameraIcon@2x.png"; sourceTree = "<group>"; };
 		2B2F85501ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AttachmentMenuInteractiveCameraIcon@3x.png"; path = "Icons/AttachmentMenuInteractiveCameraIcon@3x.png"; sourceTree = "<group>"; };
 		2B355BD91EAE356C0093FA8F /* TokenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenUser.swift; sourceTree = "<group>"; };
+		2B8B6ECF1ED2EB160075EC80 /* OverlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayController.h; path = Token/ImagePicker/Controller/OverlayController.h; sourceTree = SOURCE_ROOT; };
+		2B8B6ED01ED2EB160075EC80 /* OverlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayController.m; path = Token/ImagePicker/Controller/OverlayController.m; sourceTree = SOURCE_ROOT; };
+		2B8B6ED11ED2EB160075EC80 /* OverlayControllerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayControllerWindow.h; path = Token/ImagePicker/Controller/OverlayControllerWindow.h; sourceTree = SOURCE_ROOT; };
+		2B8B6ED21ED2EB160075EC80 /* OverlayControllerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayControllerWindow.m; path = Token/ImagePicker/Controller/OverlayControllerWindow.m; sourceTree = SOURCE_ROOT; };
+		2B8B6ED51ED2EB590075EC80 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Token/ImagePicker/Controller/ViewController.h; sourceTree = SOURCE_ROOT; };
+		2B8B6ED61ED2EB590075EC80 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = Token/ImagePicker/Controller/ViewController.mm; sourceTree = SOURCE_ROOT; };
+		2B8B6ED81ED2EF590075EC80 /* TGMediaAvatarEditorTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGMediaAvatarEditorTransition.h; path = Token/ImagePicker/Controller/TGMediaAvatarEditorTransition.h; sourceTree = SOURCE_ROOT; };
+		2B8B6ED91ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGMediaAvatarEditorTransition.m; path = Token/ImagePicker/Controller/TGMediaAvatarEditorTransition.m; sourceTree = SOURCE_ROOT; };
+		2B8B6EDA1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGMediaAvatarMenuMixin.h; path = Token/ImagePicker/Controller/TGMediaAvatarMenuMixin.h; sourceTree = SOURCE_ROOT; };
+		2B8B6EDB1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGMediaAvatarMenuMixin.m; path = Token/ImagePicker/Controller/TGMediaAvatarMenuMixin.m; sourceTree = SOURCE_ROOT; };
+		2B8B6EDE1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGModernGalleryTransitionView.h; path = Token/ImagePicker/Controller/TGModernGalleryTransitionView.h; sourceTree = SOURCE_ROOT; };
+		2B8B6EDF1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGModernGalleryTransitionView.m; path = Token/ImagePicker/Controller/TGModernGalleryTransitionView.m; sourceTree = SOURCE_ROOT; };
+		2B8B6EE11ED2F0100075EC80 /* TGActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGActionSheet.h; path = Token/ImagePicker/Controller/TGActionSheet.h; sourceTree = SOURCE_ROOT; };
+		2B8B6EE21ED2F0100075EC80 /* TGActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGActionSheet.m; path = Token/ImagePicker/Controller/TGActionSheet.m; sourceTree = SOURCE_ROOT; };
+		2B8B6EE41ED2F36F0075EC80 /* TGImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGImagePickerController.h; path = Token/ImagePicker/Controller/TGImagePickerController.h; sourceTree = SOURCE_ROOT; };
+		2B8B6EE51ED2F36F0075EC80 /* TGImagePickerController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TGImagePickerController.mm; path = Token/ImagePicker/Controller/TGImagePickerController.mm; sourceTree = SOURCE_ROOT; };
+		2B8B6EE71ED2FEA50075EC80 /* Freedom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Freedom.h; path = Token/ImagePicker/Helpers/Freedom.h; sourceTree = SOURCE_ROOT; };
+		2B8B6EE81ED2FEA50075EC80 /* Freedom.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Freedom.mm; path = Token/ImagePicker/Helpers/Freedom.mm; sourceTree = SOURCE_ROOT; };
 		2BAB90A01EC1194B005D98C6 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2BAB90A11EC1194B005D98C6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2BAB90A21EC1194B005D98C6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1083,7 +1110,6 @@
 		2BD708531ED21E1600E23AF3 /* NSValue+JNWAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSValue+JNWAdditions.m"; path = "Token/ImagePicker/Helpers/NSValue+JNWAdditions.m"; sourceTree = SOURCE_ROOT; };
 		2BD708541ED21E1600E23AF3 /* ObserverProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObserverProxy.h; path = Token/ImagePicker/Helpers/ObserverProxy.h; sourceTree = SOURCE_ROOT; };
 		2BD708551ED21E1600E23AF3 /* ObserverProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObserverProxy.m; path = Token/ImagePicker/Helpers/ObserverProxy.m; sourceTree = SOURCE_ROOT; };
-		2BD708561ED21E1600E23AF3 /* OverlayControllerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayControllerWindow.h; path = Token/ImagePicker/Helpers/OverlayControllerWindow.h; sourceTree = SOURCE_ROOT; };
 		2BD708571ED21E1600E23AF3 /* PGCameraMomentSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PGCameraMomentSegment.h; path = Token/ImagePicker/Helpers/PGCameraMomentSegment.h; sourceTree = SOURCE_ROOT; };
 		2BD708581ED21E1600E23AF3 /* PGCameraMomentSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PGCameraMomentSegment.m; path = Token/ImagePicker/Helpers/PGCameraMomentSegment.m; sourceTree = SOURCE_ROOT; };
 		2BD708591ED21E1600E23AF3 /* PGCameraMomentSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PGCameraMomentSession.h; path = Token/ImagePicker/Helpers/PGCameraMomentSession.h; sourceTree = SOURCE_ROOT; };
@@ -1424,9 +1450,6 @@
 		2BD70A8C1ED22F8C00E23AF3 /* MediaPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaPickerController.m; path = Token/ImagePicker/Controller/MediaPickerController.m; sourceTree = SOURCE_ROOT; };
 		2BD70A8D1ED22F8C00E23AF3 /* ModernGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernGalleryController.h; path = Token/ImagePicker/Controller/ModernGalleryController.h; sourceTree = SOURCE_ROOT; };
 		2BD70A8E1ED22F8C00E23AF3 /* ModernGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernGalleryController.m; path = Token/ImagePicker/Controller/ModernGalleryController.m; sourceTree = SOURCE_ROOT; };
-		2BD70A8F1ED22F8C00E23AF3 /* OverlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayController.h; path = Token/ImagePicker/Controller/OverlayController.h; sourceTree = SOURCE_ROOT; };
-		2BD70A901ED22F8C00E23AF3 /* OverlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayController.m; path = Token/ImagePicker/Controller/OverlayController.m; sourceTree = SOURCE_ROOT; };
-		2BD70A911ED22F8C00E23AF3 /* OverlayControllerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayControllerWindow.m; path = Token/ImagePicker/Controller/OverlayControllerWindow.m; sourceTree = SOURCE_ROOT; };
 		2BD70A921ED22F8C00E23AF3 /* OverlayFormsheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayFormsheetController.h; path = Token/ImagePicker/Controller/OverlayFormsheetController.h; sourceTree = SOURCE_ROOT; };
 		2BD70A931ED22F8C00E23AF3 /* OverlayFormsheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayFormsheetController.m; path = Token/ImagePicker/Controller/OverlayFormsheetController.m; sourceTree = SOURCE_ROOT; };
 		2BD70A941ED22F8C00E23AF3 /* OverlayFormsheetWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayFormsheetWindow.h; path = Token/ImagePicker/Controller/OverlayFormsheetWindow.h; sourceTree = SOURCE_ROOT; };
@@ -1451,8 +1474,6 @@
 		2BD70AA71ED22F8C00E23AF3 /* PhotoQualityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoQualityController.m; path = Token/ImagePicker/Controller/PhotoQualityController.m; sourceTree = SOURCE_ROOT; };
 		2BD70AA81ED22F8C00E23AF3 /* PhotoToolsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoToolsController.h; path = Token/ImagePicker/Controller/PhotoToolsController.h; sourceTree = SOURCE_ROOT; };
 		2BD70AA91ED22F8C00E23AF3 /* PhotoToolsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoToolsController.m; path = Token/ImagePicker/Controller/PhotoToolsController.m; sourceTree = SOURCE_ROOT; };
-		2BD70AAA1ED22F8C00E23AF3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Token/ImagePicker/Controller/ViewController.h; sourceTree = SOURCE_ROOT; };
-		2BD70AAB1ED22F8C00E23AF3 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = Token/ImagePicker/Controller/ViewController.mm; sourceTree = SOURCE_ROOT; };
 		2BD70AC31ED2321B00E23AF3 /* BlurEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurEffect.h; path = Token/ImagePicker/EditorTools/BlurEffect.h; sourceTree = SOURCE_ROOT; };
 		2BD70AC41ED2321B00E23AF3 /* BlurEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlurEffect.m; path = Token/ImagePicker/EditorTools/BlurEffect.m; sourceTree = SOURCE_ROOT; };
 		2BD70AC51ED2321B00E23AF3 /* BlurTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurTool.h; path = Token/ImagePicker/EditorTools/BlurTool.h; sourceTree = SOURCE_ROOT; };
@@ -2160,9 +2181,13 @@
 		2BD707D91ED21D1000E23AF3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2B1D21DF1ED35DB9007D19B4 /* ItemDescriptor.h */,
+				2B1D21E01ED35DB9007D19B4 /* ItemDescriptor.m */,
 				2BD70C1D1ED2388200E23AF3 /* TransitionAnimator.swift */,
 				2BD70B9C1ED2368C00E23AF3 /* Camera.h */,
 				2BD70B9D1ED2368C00E23AF3 /* Camera.m */,
+				2B8B6EE71ED2FEA50075EC80 /* Freedom.h */,
+				2B8B6EE81ED2FEA50075EC80 /* Freedom.mm */,
 				2BD70B9F1ED2371700E23AF3 /* FileUtils.h */,
 				2BD70BA01ED2371700E23AF3 /* FileUtils.m */,
 				2BD70BA11ED2371700E23AF3 /* Font.h */,
@@ -2296,7 +2321,6 @@
 				2BD708531ED21E1600E23AF3 /* NSValue+JNWAdditions.m */,
 				2BD708541ED21E1600E23AF3 /* ObserverProxy.h */,
 				2BD708551ED21E1600E23AF3 /* ObserverProxy.m */,
-				2BD708561ED21E1600E23AF3 /* OverlayControllerWindow.h */,
 				2BD708571ED21E1600E23AF3 /* PGCameraMomentSegment.h */,
 				2BD708581ED21E1600E23AF3 /* PGCameraMomentSegment.m */,
 				2BD708591ED21E1600E23AF3 /* PGCameraMomentSession.h */,
@@ -2652,6 +2676,12 @@
 				2BD70BAA1ED2379D00E23AF3 /* MediaAssetsController.m */,
 				2BD70BAB1ED2379D00E23AF3 /* MenuSheetController.h */,
 				2BD70BAC1ED2379D00E23AF3 /* MenuSheetController.m */,
+				2B8B6ED51ED2EB590075EC80 /* ViewController.h */,
+				2B8B6ED61ED2EB590075EC80 /* ViewController.mm */,
+				2B8B6ECF1ED2EB160075EC80 /* OverlayController.h */,
+				2B8B6ED01ED2EB160075EC80 /* OverlayController.m */,
+				2B8B6ED11ED2EB160075EC80 /* OverlayControllerWindow.h */,
+				2B8B6ED21ED2EB160075EC80 /* OverlayControllerWindow.m */,
 				2BD70A811ED22F8C00E23AF3 /* CameraController.h */,
 				2BD70A821ED22F8C00E23AF3 /* CameraController.m */,
 				2BD70A831ED22F8C00E23AF3 /* CameraPhotoPreviewController.h */,
@@ -2666,9 +2696,6 @@
 				2BD70A8C1ED22F8C00E23AF3 /* MediaPickerController.m */,
 				2BD70A8D1ED22F8C00E23AF3 /* ModernGalleryController.h */,
 				2BD70A8E1ED22F8C00E23AF3 /* ModernGalleryController.m */,
-				2BD70A8F1ED22F8C00E23AF3 /* OverlayController.h */,
-				2BD70A901ED22F8C00E23AF3 /* OverlayController.m */,
-				2BD70A911ED22F8C00E23AF3 /* OverlayControllerWindow.m */,
 				2BD70A921ED22F8C00E23AF3 /* OverlayFormsheetController.h */,
 				2BD70A931ED22F8C00E23AF3 /* OverlayFormsheetController.m */,
 				2BD70A941ED22F8C00E23AF3 /* OverlayFormsheetWindow.h */,
@@ -2692,9 +2719,17 @@
 				2BD70AA61ED22F8C00E23AF3 /* PhotoQualityController.h */,
 				2BD70AA71ED22F8C00E23AF3 /* PhotoQualityController.m */,
 				2BD70AA81ED22F8C00E23AF3 /* PhotoToolsController.h */,
+				2B8B6ED81ED2EF590075EC80 /* TGMediaAvatarEditorTransition.h */,
+				2B8B6ED91ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m */,
+				2B8B6EDE1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.h */,
+				2B8B6EDF1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m */,
+				2B8B6EDA1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.h */,
+				2B8B6EDB1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m */,
+				2B8B6EE41ED2F36F0075EC80 /* TGImagePickerController.h */,
+				2B8B6EE51ED2F36F0075EC80 /* TGImagePickerController.mm */,
 				2BD70AA91ED22F8C00E23AF3 /* PhotoToolsController.m */,
-				2BD70AAA1ED22F8C00E23AF3 /* ViewController.h */,
-				2BD70AAB1ED22F8C00E23AF3 /* ViewController.mm */,
+				2B8B6EE11ED2F0100075EC80 /* TGActionSheet.h */,
+				2B8B6EE21ED2F0100075EC80 /* TGActionSheet.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -3923,6 +3958,7 @@
 			files = (
 				2BD70A3F1ED22C0400E23AF3 /* MessageImageViewTimestampView.m in Sources */,
 				2BD70BA51ED2371700E23AF3 /* FileUtils.m in Sources */,
+				2B8B6EE61ED2F36F0075EC80 /* TGImagePickerController.mm in Sources */,
 				2BD70A271ED22C0400E23AF3 /* MediaAssetsVideoCell.m in Sources */,
 				2BD70A4F1ED22C0400E23AF3 /* ModernGalleryVideoView.m in Sources */,
 				2BD70A621ED22C0400E23AF3 /* PhotoEditorButton.m in Sources */,
@@ -3931,7 +3967,6 @@
 				2BD70C0D1ED2383F00E23AF3 /* MediaPickerGalleryItem.m in Sources */,
 				2BD70B881ED2321B00E23AF3 /* PhotoToolComposer.m in Sources */,
 				9FE18B2B1E2D1FD300940DC8 /* ProfileEditController.swift in Sources */,
-				2BD70AC11ED22F8C00E23AF3 /* ViewController.mm in Sources */,
 				2BD70B5F1ED2321B00E23AF3 /* Painting.m in Sources */,
 				9F2433D41E5F46F6003D95A1 /* SignalNotificationHandler.swift in Sources */,
 				9FAC46ED1E800C13005F76A9 /* UIColor+Additions.swift in Sources */,
@@ -3977,10 +4012,12 @@
 				2BD70AAD1ED22F8C00E23AF3 /* CameraPhotoPreviewController.m in Sources */,
 				2BD70B651ED2321B00E23AF3 /* PaintShader.m in Sources */,
 				2BD70B661ED2321B00E23AF3 /* PaintShaderSet.m in Sources */,
+				2B8B6EDD1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m in Sources */,
 				2BD708901ED21E1600E23AF3 /* AnimationBlockDelegate.m in Sources */,
 				2BD70A1B1ED22C0400E23AF3 /* FullscreenContainerView.m in Sources */,
 				2BD70C121ED2383F00E23AF3 /* ModernButtonViewModel.m in Sources */,
 				9F40F3C61E59FE97007A7DE7 /* TGBaseMessageCellLayout.swift in Sources */,
+				2B8B6EE01ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m in Sources */,
 				A9AC74111E78064500365029 /* TextLabel.swift in Sources */,
 				2BD70A171ED22C0400E23AF3 /* CameraZoomView.m in Sources */,
 				1400418A1E71588A00C1FD87 /* ReputationView.swift in Sources */,
@@ -4135,7 +4172,9 @@
 				2BD70B731ED2321B00E23AF3 /* PhotoEditorPicture.m in Sources */,
 				2BD708B11ED21E1600E23AF3 /* GPUImageOutput.m in Sources */,
 				2BD70A401ED22C0400E23AF3 /* ModernButton.m in Sources */,
+				2B1D21E11ED35DB9007D19B4 /* ItemDescriptor.m in Sources */,
 				2BD70A591ED22C0400E23AF3 /* PhotoCropAreaView.m in Sources */,
+				2B8B6EDC1ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m in Sources */,
 				2BD70A3C1ED22C0400E23AF3 /* MenuView.m in Sources */,
 				2BD70ABF1ED22F8C00E23AF3 /* PhotoQualityController.m in Sources */,
 				2BD708A01ED21E1600E23AF3 /* DocumentAttributeAnimated.m in Sources */,
@@ -4169,7 +4208,6 @@
 				2BD70A1E1ED22C0400E23AF3 /* ImageView.m in Sources */,
 				2BD70A1F1ED22C0400E23AF3 /* InlineVideoView.m in Sources */,
 				2BD70C151ED2383F00E23AF3 /* ModernGalleryModel.m in Sources */,
-				2BD70AB41ED22F8C00E23AF3 /* OverlayControllerWindow.m in Sources */,
 				2BD70B8E1ED2321B00E23AF3 /* SharpenTool.m in Sources */,
 				2BD70C061ED2383F00E23AF3 /* MediaAssetMoment.m in Sources */,
 				2BD708BE1ED21E1600E23AF3 /* MediaPickerGalleryVideoScrubber.m in Sources */,
@@ -4189,6 +4227,7 @@
 				A9AC74141E78231A00365029 /* BackupPhraseView.swift in Sources */,
 				2BD70C1A1ED2383F00E23AF3 /* StaticBackdropImageData.m in Sources */,
 				A9AC74081E77E37500365029 /* ActionButton.swift in Sources */,
+				2B8B6ED71ED2EB590075EC80 /* ViewController.mm in Sources */,
 				2BD70C161ED2383F00E23AF3 /* ModernGalleryVideoItem.m in Sources */,
 				2BD70B7E1ED2321B00E23AF3 /* PhotoHistogramGenerator.m in Sources */,
 				9FAACCB31E30E1EE00FB871D /* FavoritesNavigationController.swift in Sources */,
@@ -4219,7 +4258,6 @@
 				2BD708991ED21E1600E23AF3 /* CameraDeviceAngleSampler.m in Sources */,
 				9FC72A3A1E25145D00EF1141 /* CryptoTools.m in Sources */,
 				14E4D8D01E72CB6E00389DF9 /* DevelopmentTokenURLPaths.swift in Sources */,
-				2BD70AB31ED22F8C00E23AF3 /* OverlayController.m in Sources */,
 				2BD708CE1ED21E1600E23AF3 /* PhotoCaptionInputMixin.m in Sources */,
 				9FC72A3D1E251ACC00EF1141 /* ChatAPIClient.swift in Sources */,
 				2BD708911ED21E1600E23AF3 /* ASActor.m in Sources */,
@@ -4243,6 +4281,7 @@
 				2BD70ABA1ED22F8C00E23AF3 /* PhotoDummyController.m in Sources */,
 				A9BF33B71E76F918009A51AA /* CheckboxControl.swift in Sources */,
 				2BD70A391ED22C0400E23AF3 /* MenuSheetItemView.m in Sources */,
+				2B8B6EE91ED2FEA50075EC80 /* Freedom.mm in Sources */,
 				A9E65DCE1E76B4A600304123 /* NSLayoutConstraint+Additions.swift in Sources */,
 				2BD70AB11ED22F8C00E23AF3 /* MediaPickerController.m in Sources */,
 				9FE18B281E2D135F00940DC8 /* ContactCell.swift in Sources */,
@@ -4275,6 +4314,7 @@
 				9F40F3CC1E59FE97007A7DE7 /* MessageCellLayout.swift in Sources */,
 				2BD70C071ED2383F00E23AF3 /* MediaAssetMomentList.m in Sources */,
 				9FDB3B171E6D640900EE5FD7 /* ControlCell.swift in Sources */,
+				2B8B6ED31ED2EB160075EC80 /* OverlayController.m in Sources */,
 				2BD70C0B1ED2383F00E23AF3 /* MediaAttachment.m in Sources */,
 				9F844BD71E30D8DE001C5498 /* DateTimeFormatter.swift in Sources */,
 				2BD70A1C1ED22C0400E23AF3 /* HistogramView.m in Sources */,
@@ -4297,6 +4337,7 @@
 				2BD708BB1ED21E1600E23AF3 /* MediaAssetModernImageSignals.m in Sources */,
 				A9F8D1C81E72B4AA003F5749 /* Checkbox.swift in Sources */,
 				2BD70AAF1ED22F8C00E23AF3 /* MediaAssetsPickerController.m in Sources */,
+				2B8B6ED41ED2EB160075EC80 /* OverlayControllerWindow.m in Sources */,
 				9F40F3C21E59FE97007A7DE7 /* MessageCell.swift in Sources */,
 				2BD7089A1ED21E1600E23AF3 /* CameraInterfaceAssets.m in Sources */,
 				2BD70A211ED22C0400E23AF3 /* MediaAssetsMomentsCollectionLayout.m in Sources */,
@@ -4318,6 +4359,7 @@
 				2BD708AC1ED21E1600E23AF3 /* GPaintingData.m in Sources */,
 				2BD70A221ED22C0400E23AF3 /* MediaAssetsMomentsCollectionView.m in Sources */,
 				9F5D63A11E9231E100FED490 /* ImageMessageCell.swift in Sources */,
+				2B8B6EE31ED2F0100075EC80 /* TGActionSheet.m in Sources */,
 				2BD70A601ED22C0400E23AF3 /* PhotoEditorBlurTypeButton.m in Sources */,
 				2BD70BAD1ED2379D00E23AF3 /* MediaAssetsController.m in Sources */,
 				2BD708AD1ED21E1600E23AF3 /* GPUImageContext.m in Sources */,

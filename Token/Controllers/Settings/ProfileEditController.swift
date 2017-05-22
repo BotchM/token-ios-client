@@ -20,7 +20,7 @@ import Formulaic
 import ImagePicker
 
 /// Edit user profile info. It's sent to the ID server on saveAndDismiss. Updates local session as well.
-open class ProfileEditController: UIViewController {
+open class ProfileEditController: ViewController {
 
     lazy var dataSource: FormDataSource = {
         let dataSource = FormDataSource(delegate: nil)
@@ -132,7 +132,7 @@ open class ProfileEditController: UIViewController {
         
         let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
         carouselItem.condensed = false
-        carouselItem.parentController = self
+        //carouselItem.parentController = self
         carouselItem.allowCaptions = true
         carouselItem.inhibitDocumentCaptions = true
         carouselItem.suggestionContext = SuggestionContext()

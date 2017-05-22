@@ -1,5 +1,6 @@
 #import "MenuSheetItemView.h"
 #import "MediaAsset.h"
+#import "OverlayController.h"
 
 @class MediaSelectionContext;
 @class MediaEditingContext;
@@ -26,7 +27,7 @@ NS_SWIFT_NAME(proceed(with image:));
 
 @interface AttachmentCarouselItemView : MenuSheetItemView
 
-@property (nonatomic, weak) UIViewController *parentController;
+@property (nonatomic, weak) OverlayController *parentController;
 
 @property (nonatomic, readonly) MediaSelectionContext *selectionContext;
 @property (nonatomic, readonly) MediaEditingContext *editingContext;

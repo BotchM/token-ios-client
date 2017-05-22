@@ -1,25 +1,20 @@
 #import "ViewController.h"
 
-//#import "ToolbarButton.h"
+#import "Common.h"
 
 #import "StringUtils.h"
-//#import "Freedom.h"
-
-//#import "TGNavigationController.h"
+#import "Freedom.h"
 #import "OverlayControllerWindow.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 #import "Hacks.h"
-#import "Font.h"
 #import "ImageUtils.h"
-
-//#import "PopoverController.h"
+#import "Font.h"
 
 #import <set>
-#import "Common.h"
 
-//#import "TGAppDelegate.h"
+#import "AppDelegate.h"
 
 static __strong NSTimer *autorotationEnableTimer = nil;
 static bool autorotationDisabled = false;
@@ -126,7 +121,6 @@ static std::set<int> autorotationLockIds;
 {
     bool _hatTargetNavigationItem;
     
-    id<SDisposable> _sizeClassDisposable;
     NSTimeInterval _currentSizeChangeDuration;
 }
 
@@ -366,9 +360,9 @@ static std::set<int> autorotationLockIds;
 
 + (void)setUseExperimentalRTL:(bool)useExperimentalRTL
 {
-//    NSString *documentsDirectory = [TGAppDelegate documentsPath];
-//    uint8_t value = useExperimentalRTL ? 1 : 0;
-//    [[[NSData alloc] initWithBytes:&value length:1] writeToFile:[documentsDirectory stringByAppendingPathComponent:@"rtl.state"] atomically:false];
+    NSString *documentsDirectory = [AppDelegate documentsPath];
+    uint8_t value = useExperimentalRTL ? 1 : 0;
+    [[[NSData alloc] initWithBytes:&value length:1] writeToFile:[documentsDirectory stringByAppendingPathComponent:@"rtl.state"] atomically:false];
 }
 
 + (bool)useExperimentalRTL
@@ -406,24 +400,13 @@ static std::set<int> autorotationLockIds;
 
 - (void)_commonViewControllerInit
 {
-    self.wantsFullScreenLayout = true;
     self.automaticallyManageScrollViewInsets = true;
     self.autoManageStatusBarBackground = true;
     __block bool initializedSizeClass = false;
     _currentSizeClass = UIUserInterfaceSizeClassCompact;
     
     __weak ViewController *weakSelf = self;
-//    _sizeClassDisposable = [[TGAppDelegateInstance.rootController sizeClass] startWithNext:^(NSNumber *next) {
-//        __strong ViewController *strongSelf = weakSelf;
-//        if (strongSelf != nil) {
-//            if (strongSelf->_currentSizeClass != [next integerValue]) {
-//                strongSelf->_currentSizeClass = (UIUserInterfaceSizeClass)[next integerValue];
-//                if (initializedSizeClass) {
-//                    [strongSelf updateSizeClass];
-//                }
-//            }
-//        }
-//    }];
+
     initializedSizeClass = true;
     
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)])
@@ -436,13 +419,9 @@ static std::set<int> autorotationLockIds;
 
 - (void)dealloc
 {
-    [_sizeClassDisposable dispose];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    
-   // [_associatedPopoverController dismissPopoverAnimated:false];
 }
 
 - (NSMutableArray *)associatedWindowStack
@@ -452,23 +431,6 @@ static std::set<int> autorotationLockIds;
     
     return _associatedWindowStack;
 }
-
-//- (void)setAssociatedPopoverController:(PopoverController *)associatedPopoverController
-//{
-//    if (_associatedPopoverController != nil)
-//        [_associatedPopoverController dismissPopoverAnimated:false];
-    
-    //_associatedPopoverController = associatedPopoverController;
-   // _associatedPopoverController.delegate = self;
-//}
-
-//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-//{
-//    if (popoverController == _associatedPopoverController)
-//    {
-//        _associatedPopoverController = nil;
-//    }
-//}
 
 - (UINavigationController *)navigationController
 {
@@ -480,97 +442,32 @@ static std::set<int> autorotationLockIds;
 
 - (bool)shouldIgnoreStatusBar
 {
-//    if (_currentSizeClass != UIUserInterfaceSizeClassCompact) {
-//        if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//        {
-//            switch (((TGNavigationController *)self.navigationController).presentationStyle)
-//            {
-//                case TGNavigationControllerPresentationStyleRootInPopover:
-//                case TGNavigationControllerPresentationStyleChildInPopover:
-//                case TGNavigationControllerPresentationStyleInFormSheet:
-//                    return true;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
-    
     return false;
 }
 
 - (bool)shouldIgnoreNavigationBar
 {
-//    if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//    {
-//        switch (((TGNavigationController *)self.navigationController).presentationStyle)
-//        {
-//            case TGNavigationControllerPresentationStyleRootInPopover:
-//                return iosMajorVersion() < 8;
-//            default:
-//                break;
-//        }
-//    }
-    
     return false;
 }
 
 - (bool)inPopover
 {
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-//        return false;
-//    else
-//    {
-//        if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//        {
-//            switch (((TGNavigationController *)self.navigationController).presentationStyle)
-//            {
-//                case TGNavigationControllerPresentationStyleRootInPopover:
-//                case TGNavigationControllerPresentationStyleChildInPopover:
-//                    return true;
-//                default:
-//                    break;
-//            }
-//        }
     
-        return false;
-   // }
+    
+    return false;
+    
 }
 
 - (bool)inFormSheet
 {
-   // if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        return false;
-//    else
-//    {
-//        if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//        {
-//            switch (((TGNavigationController *)self.navigationController).presentationStyle)
-//            {
-//                case TGNavigationControllerPresentationStyleInFormSheet:
-//                    return true;
-//                default:
-//                    break;
-//            }
-//        }
-//        
-//        return self.modalPresentationStyle == UIModalPresentationFormSheet;
-//    }
+    
+    return self.modalPresentationStyle == UIModalPresentationFormSheet;
 }
 
 - (bool)willCaptureInputShortly
 {
     return false;
 }
-
-//- (UIPopoverController *)popoverController
-//{
-//    if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//    {
-//        return ((TGNavigationController *)self.navigationController).parentPopoverController;
-//    }
-    
-//    return nil;
-//}
 
 - (void)acquireRotationLock
 {
@@ -658,7 +555,6 @@ static std::set<int> autorotationLockIds;
 {
     _viewControllerIsAnimatingAppearanceTransition = true;
     _viewControllerIsAppearing = true;
-    //_viewControllerHasEverAppeared = true;
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && iosMajorVersion() < 7)
     {
@@ -666,8 +562,6 @@ static std::set<int> autorotationLockIds;
         self.contentSizeForViewInPopover = size;
     }
     
-//    if ([self.navigationController isKindOfClass:[TGNavigationController class]])
-//        [(TGNavigationController *)self.navigationController setupNavigationBarForController:self animated:animated];
     
     [self _updateControllerInsetForOrientation:self.interfaceOrientation force:false notify:true];
     
@@ -759,7 +653,6 @@ static std::set<int> autorotationLockIds;
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    //TGLog(@"Did rotate");
     _viewControllerIsChangingInterfaceOrientation = false;
     _currentSizeChangeDuration = 0.0;
     
@@ -927,10 +820,7 @@ static std::set<int> autorotationLockIds;
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    //if (!TGAppDelegateInstance.rootController.callStatusBarHidden)
-        return UIStatusBarStyleLightContent;
-    //else
-      //  return UIStatusBarStyleDefault;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)setNeedsStatusBarAppearanceUpdate
@@ -951,7 +841,7 @@ static std::set<int> autorotationLockIds;
         static SEL methodSelector = NULL;
         dispatch_once(&onceToken, ^
         {
-         //   methodImpl = (void (*)(id, SEL))freedomImpl([UIApplication sharedApplication], 0xa7a8dd8a, NULL);
+            methodImpl = (void (*)(id, SEL))freedomImpl([UIApplication sharedApplication], 0xa7a8dd8a, NULL);
         });
         
         if (methodImpl != NULL)
@@ -1347,12 +1237,7 @@ static std::set<int> autorotationLockIds;
     if (TGIsPad() && iosMajorVersion() >= 7)
         viewControllerToPresent.preferredContentSize = [self.navigationController preferredContentSize];
     
-//    if ([viewControllerToPresent isKindOfClass:[TGNavigationController class]])
-//    {
-//        TGNavigationController *navController = (TGNavigationController *)self.navigationController;
-//        if (navController.showCallStatusBar)
-//            [(TGNavigationController *)viewControllerToPresent setShowCallStatusBar:true];
-//    }
+    
     
     if (iosMajorVersion() >= 8 && self.presentedViewController != nil && [self.presentedViewController isKindOfClass:[UIAlertController class]])
     {
@@ -1368,20 +1253,7 @@ static std::set<int> autorotationLockIds;
 - (void)updateSizeClass {
     [self _updateControllerInset:true];
     
-//    if (_associatedPopoverController != nil) {
-//        [_associatedPopoverController dismissPopoverAnimated:false];
-    
-//        if ([_associatedPopoverController.contentViewController isKindOfClass:[TGNavigationController class]]) {
-//            TGNavigationController *contentViewController = (TGNavigationController *)_associatedPopoverController.contentViewController;
-//            if (contentViewController.detachFromPresentingControllerInCompactMode) {
-//                NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-//                [viewControllers addObjectsFromArray:contentViewController.viewControllers];
-//                [self.navigationController setViewControllers:viewControllers animated:false];
-//            }
-//        }
-        
-        _associatedPopoverController = nil;
-   // }
+   
 }
 
 - (void)layoutControllerForSize:(CGSize)__unused size duration:(NSTimeInterval)__unused duration {

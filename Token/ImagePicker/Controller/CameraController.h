@@ -26,16 +26,15 @@ typedef enum {
 @property (nonatomic, copy) void(^finishedWithPhoto)(UIImage *resultImage, NSString *caption, NSArray *stickers);
 @property (nonatomic, copy) void(^finishedWithVideo)(NSURL *videoURL, UIImage *previewImage, NSTimeInterval duration, CGSize dimensions, VideoEditAdjustments *adjustments, NSString *caption, NSArray *stickers);
 
-@property (nonatomic, copy) void(^beginTransitionOut)(void);
+@property (nonatomic, copy) CGRect(^beginTransitionOut)(void);
 @property (nonatomic, copy) void(^finishedTransitionOut)(void);
 
 @property (nonatomic, strong) SuggestionContext *suggestionContext;
 
-- (instancetype)initWithIntent:(CameraControllerIntent)intent
-NS_SWIFT_NAME(init(intent:));
+- (instancetype)initWithIntent:(CameraControllerIntent)intent;
+- (instancetype)initWithCamera:(Camera *)camera previewView:(CameraPreviewView *)previewView intent:(CameraControllerIntent)intent;
 
-- (instancetype)initWithCamera:(Camera *)camera previewView:(CameraPreviewView *)previewView intent:(CameraControllerIntent)intent
-NS_SWIFT_NAME(init(camera:previewView:intent:));
+- (void)beginTransitionInFromRect:(CGRect)rect;
 
 + (UIInterfaceOrientation)_interfaceOrientationForDeviceOrientation:(UIDeviceOrientation)orientation;
 

@@ -96,7 +96,7 @@
 #import "CameraController.h"
 #import "ImageUtils.h"
 #import "CameraPreviewView.h"
-#import "OverlayControllerWindow.h"
+#import "OverlayController.h"
 #import "VideoEditAdjustments.h"
 #import "PhotoEditorController.h"
 #import "MediaEditingContext.h"
