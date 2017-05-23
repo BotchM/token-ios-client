@@ -20,7 +20,7 @@ import MobileCoreServices
 import ImagePicker
 import AVFoundation
 
-class ChatController: MessagesCollectionViewController { // OverlayController (!)
+class ChatController: OverlayController {
     
     fileprivate var etherAPIClient: EthereumAPIClient {
         return EthereumAPIClient.shared
@@ -47,9 +47,6 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         let disposable = SMetaDisposable()
         return disposable
     }()
-    
-    let transition = PopAnimator()
-    var fromViewRect = CGRect.zero
     
     var textLayoutQueue = DispatchQueue(label: "com.tokenbrowser.token.layout", qos: DispatchQoS(qosClass: .default, relativePriority: 0))
     
@@ -129,25 +126,25 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         return view
     }()
     
-    deinit {
-        disposable.dispose()
-        processMediaDisposable.dispose()
-    }
-    
+//    deinit {
+//        disposable.dispose()
+//        processMediaDisposable.dispose()
+//    }
+
     // MARK: - Class overrides
     
-    override class func cellLayoutClass(forItemType type: String) -> AnyClass? {
-        if type == "Text" {
-            return MessageCellLayout.self
-        } else if type == "Actionable" {
-            return ActionableMessageCellLayout.self
-        } else if type == "Image" {
-            return ImageMessageCellLayout.self
-        } else {
-            return nil
-        }
-    }
-    
+//    override class func cellLayoutClass(forItemType type: String) -> AnyClass? {
+//        if type == "Text" {
+//            return MessageCellLayout.self
+//        } else if type == "Actionable" {
+//            return ActionableMessageCellLayout.self
+//        } else if type == "Image" {
+//            return ImageMessageCellLayout.self
+//        } else {
+//            return nil
+//        }
+//    }
+//    
     // MARK: - Init
     
     init(thread: TSThread) {
@@ -167,7 +164,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         
         self.registerNotifications()
         
-        self.additionalContentInsets.top = 48
+        //self.additionalContentInsets.top = 48
     }
     
     required init?(coder _: NSCoder) {
@@ -176,40 +173,47 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     
     // MARK: View life-cycle
     
+    func showMenu() {
+        self.inputTextPanelrequestSendAttachment(ChatInputTextPanel())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Theme.messageViewBackgroundColor
-        self.containerView?.backgroundColor = nil
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(showMenu))
+        self.view.addGestureRecognizer(tap)
         
-        self.view.addSubview(self.ethereumPromptView)
-        self.ethereumPromptView.heightAnchor.constraint(equalToConstant: ChatsFloatingHeaderView.height).isActive = true
-        self.ethereumPromptView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
-        self.ethereumPromptView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        self.ethereumPromptView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        
-        self.collectionView.keyboardDismissMode = .interactive
-        self.collectionView.backgroundColor = nil
-        
-        self.navigationItem.rightBarButtonItem = self.rateButton
-        
-        self.fetchAndUpdateBalance()
-        self.loadMessages()
-        
-        self.view.addSubview(self.textInputView)
-        
-        NSLayoutConstraint.activate([
-            self.textInputView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.textInputView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            textInputViewBottom,
-            textInputViewHeight,
-            ])
-        
-        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
-        
-        self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 51.0).isActive = true
-        self.view.setNeedsLayout()
-        self.collectionView.setNeedsLayout()
+//        self.view.backgroundColor = Theme.messageViewBackgroundColor
+//        self.containerView?.backgroundColor = nil
+//        
+//        self.view.addSubview(self.ethereumPromptView)
+//        self.ethereumPromptView.heightAnchor.constraint(equalToConstant: ChatsFloatingHeaderView.height).isActive = true
+//        self.ethereumPromptView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
+//        self.ethereumPromptView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+//        self.ethereumPromptView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+//        
+//        self.collectionView.keyboardDismissMode = .interactive
+//        self.collectionView.backgroundColor = nil
+//        
+//        self.navigationItem.rightBarButtonItem = self.rateButton
+//        
+//        self.fetchAndUpdateBalance()
+//        self.loadMessages()
+//        
+//        self.view.addSubview(self.textInputView)
+//        
+//        NSLayoutConstraint.activate([
+//            self.textInputView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+//            self.textInputView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+//            textInputViewBottom,
+//            textInputViewHeight,
+//            ])
+//        
+//        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
+//        
+//        self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 51.0).isActive = true
+//        self.view.setNeedsLayout()
+//        self.collectionView.setNeedsLayout()
     }
     
     func checkMicrophoneAccess() {
@@ -223,35 +227,35 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.reloadDraft()
-        self.view.layoutIfNeeded()
+//        self.reloadDraft()
+//        self.view.layoutIfNeeded()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.thread.markAllAsRead()
-        SignalNotificationManager.updateApplicationBadgeNumber()
-        self.title = self.thread.cachedContactIdentifier
+//        self.thread.markAllAsRead()
+//        SignalNotificationManager.updateApplicationBadgeNumber()
+//        self.title = self.thread.cachedContactIdentifier
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.saveDraft()
-        
-        self.thread.markAllAsRead()
-        SignalNotificationManager.updateApplicationBadgeNumber()
+//        self.saveDraft()
+//        
+//        self.thread.markAllAsRead()
+//        SignalNotificationManager.updateApplicationBadgeNumber()
     }
     
     func fetchAndUpdateBalance() {
-        self.ethereumAPIClient.getBalance(address: Cereal.shared.paymentAddress) { balance, error in
-            if let error = error {
-                let alertController = UIAlertController.errorAlert(error as NSError)
-                self.present(alertController, animated: true, completion: nil)
-            } else {
-                self.set(balance: balance)
-            }
-        }
+//        self.ethereumAPIClient.getBalance(address: Cereal.shared.paymentAddress) { balance, error in
+//            if let error = error {
+//                let alertController = UIAlertController.errorAlert(error as NSError)
+//                self.present(alertController, animated: true, completion: nil)
+//            } else {
+//                self.set(balance: balance)
+//            }
+//        }
     }
     
     func handleBalanceUpdate(notification: Notification) {
@@ -264,32 +268,32 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     }
     
     func saveDraft() {
-        let thread = self.thread
-        guard let text = self.textInputView.text else { return }
-        
-        self.editingDatabaseConnection.asyncReadWrite { transaction in
-            thread.setDraft(text, transaction: transaction)
-        }
+//        let thread = self.thread
+//        guard let text = self.textInputView.text else { return }
+//        
+//        self.editingDatabaseConnection.asyncReadWrite { transaction in
+//            thread.setDraft(text, transaction: transaction)
+//        }
     }
     
     func reloadDraft() {
-        let thread = self.thread
-        var placeholder: String?
-        
-        self.editingDatabaseConnection.asyncReadWrite({ transaction in
-            placeholder = thread.currentDraft(with: transaction)
-        }, completionBlock: {
-            DispatchQueue.main.async {
-                self.textInputView.text = placeholder
-            }
-        })
+//        let thread = self.thread
+//        var placeholder: String?
+//        
+//        self.editingDatabaseConnection.asyncReadWrite({ transaction in
+//            placeholder = thread.currentDraft(with: transaction)
+//        }, completionBlock: {
+//            DispatchQueue.main.async {
+//                self.textInputView.text = placeholder
+//            }
+//        })
     }
     
-    override func registerChatItemCells() {
-        self.collectionView.register(MessageCell.self, forCellWithReuseIdentifier: MessageCell.reuseIdentifier())
-        self.collectionView.register(ActionableMessageCell.self, forCellWithReuseIdentifier: ActionableMessageCell.reuseIdentifier())
-        self.collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: ImageMessageCell.reuseIdentifier())
-    }
+//    override func registerChatItemCells() {
+//        self.collectionView.register(MessageCell.self, forCellWithReuseIdentifier: MessageCell.reuseIdentifier())
+//        self.collectionView.register(ActionableMessageCell.self, forCellWithReuseIdentifier: ActionableMessageCell.reuseIdentifier())
+//        self.collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: ImageMessageCell.reuseIdentifier())
+//    }
     
     // MARK: Rate users
     func didTapRateUser() {
@@ -339,8 +343,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             DispatchQueue.main.async {
                 UIView.performWithoutAnimation {
                     self.messages = messages
-                    self.collectionView.reloadData()
-                    self.scrollToBottom(animated: false)
+//                    self.collectionView.reloadData()
+//                    self.scrollToBottom(animated: false)
                 }
             }
         }
@@ -437,7 +441,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             if interaction.hasAttachments() {
                 message.messageType = "Image"
             } else if let sofaMessage = sofaWrapper as? SofaMessage {
-                buttons = sofaMessage.buttons
+               // buttons = sofaMessage.buttons
             } else if let paymentRequest = sofaWrapper as? SofaPaymentRequest {
                 message.messageType = "Actionable"
                 message.title = "Payment request"
@@ -463,20 +467,20 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             DispatchQueue.main.async {
                 var layouts = [NOCChatItemCellLayout]()
                 
-                for message in messages {
-                    let layout = self.createLayout(with: message)!
-                    layouts.append(layout)
-                }
+//                for message in messages {
+//                    let layout = self.createLayout(with: message)!
+//                    layouts.append(layout)
+//                }
+//                
+//                if !layouts.isEmpty {
+//                    self.insertLayouts(layouts.reversed(), at: indexes, animated: true)
+//                }
+//                if scrollToBottom {
+//                    self.scrollToBottom(animated: true)
+//                    
+//                }
                 
-                if !layouts.isEmpty {
-                    self.insertLayouts(layouts.reversed(), at: indexes, animated: true)
-                }
-                if scrollToBottom {
-                    self.scrollToBottom(animated: true)
-                    
-                }
-                
-                self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
+           //     self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
             }
         }
     }
@@ -524,7 +528,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         // "UICollectionView performBatchUpdates can trigger a crash if the collection view is flagged for layout"
         // more: https://github.com/PSPDFKit-labs/radar.apple.com/tree/master/28167779%20-%20CollectionViewBatchingIssue
         // This was our #2 crash, and much exacerbated by the refactoring somewhere between 2.6.2.0-2.6.3.8
-        self.collectionView.layoutIfNeeded() // ENDHACK to work around radar #28167779
+       // self.collectionView.layoutIfNeeded() // ENDHACK to work around radar #28167779
         
         var messageRowChanges = NSArray()
         var sectionChanges = NSArray()
@@ -568,25 +572,25 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
                     guard let interaction = dbExtension.object(at: indexPath, with: self.mappings) as? TSMessage else { return }
                     
                     DispatchQueue.main.async {
-                        guard self.visibleMessages.count == self.layouts.count else {
-                            print("Called before colection view had a chance to insert message.")
-                            
-                            return
-                        }
-                        
-                        let message = self.message(at: indexPath)
-                        guard let visibleIndex = self.visibleMessages.index(of: message) else { return }
-                        let reversedIndex = self.reversedIndexPath(IndexPath(row: visibleIndex, section: 0)).row
-                        guard let layout = self.layouts[reversedIndex] as? MessageCellLayout else { return }
-                        
-                        // commented out until we can prevent it from triggering an update
-                        if let signalMessage = layout.message.signalMessage as? TSOutgoingMessage, let newSignalMessage = interaction as? TSOutgoingMessage {
-                            signalMessage.setState(newSignalMessage.messageState)
-                        }
-                        
-                        layout.calculate()
-                        
-                        self.updateLayout(at: UInt(reversedIndex), to: layout, animated: true)
+//                        guard self.visibleMessages.count == self.layouts.count else {
+//                            print("Called before colection view had a chance to insert message.")
+//                            
+//                            return
+//                        }
+//                        
+//                        let message = self.message(at: indexPath)
+//                        guard let visibleIndex = self.visibleMessages.index(of: message) else { return }
+//                        let reversedIndex = self.reversedIndexPath(IndexPath(row: visibleIndex, section: 0)).row
+//                        guard let layout = self.layouts[reversedIndex] as? MessageCellLayout else { return }
+//                        
+//                        // commented out until we can prevent it from triggering an update
+//                        if let signalMessage = layout.message.signalMessage as? TSOutgoingMessage, let newSignalMessage = interaction as? TSOutgoingMessage {
+//                            signalMessage.setState(newSignalMessage.messageState)
+//                        }
+//                        
+//                        layout.calculate()
+//                        
+//                        self.updateLayout(at: UInt(reversedIndex), to: layout, animated: true)
                     }
                 default:
                     break
@@ -610,102 +614,102 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     
     // MARK: - Collection view overrides
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
-        
-        if let cell = cell as? ActionableMessageCell {
-            cell.actionsDelegate = self
-        }
-        
-        return cell
-    }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+//        
+//        if let cell = cell as? ActionableMessageCell {
+//            cell.actionsDelegate = self
+//        }
+//        
+//        return cell
+//    }
     
     // MARK: - Control handling
     
-    override func didTapControlButton(_ button: SofaMessage.Button) {
-        guard button.value != nil else {
-            print("Implement handling actions. action: \(button.action ?? "nil")")
-            
-            return
-        }
-        
-        // clear the buttons
-        self.buttons = []
-        let command = SofaCommand(button: button)
-        self.controlsViewDelegateDatasource.controlsCollectionView?.isUserInteractionEnabled = false
-        self.sendMessage(sofaWrapper: command)
-    }
+//    override func didTapControlButton(_ button: SofaMessage.Button) {
+//        guard button.value != nil else {
+//            print("Implement handling actions. action: \(button.action ?? "nil")")
+//            
+//            return
+//        }
+//        
+//        // clear the buttons
+//        self.buttons = []
+//        let command = SofaCommand(button: button)
+//        self.controlsViewDelegateDatasource.controlsCollectionView?.isUserInteractionEnabled = false
+//        self.sendMessage(sofaWrapper: command)
+//    }
 }
 
 extension ChatController: ActionableCellDelegate {
     
     func didTapRejectButton(_ messageCell: ActionableMessageCell) {
-        guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
-        let visibleMessageIndexPath = reversedIndexPath(indexPath)
-        
-        let message = visibleMessage(at: visibleMessageIndexPath)
-        message.isActionable = false
-        
-        let layout = self.layouts[indexPath.item] as? MessageCellLayout
-        layout?.chatItem = message
-        layout?.calculate()
-        
-        let interaction = message.signalMessage
-        interaction.paymentState = .rejected
-        interaction.save()
+//        guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
+//        let visibleMessageIndexPath = reversedIndexPath(indexPath)
+//        
+//        let message = visibleMessage(at: visibleMessageIndexPath)
+//        message.isActionable = false
+//        
+//        let layout = self.layouts[indexPath.item] as? MessageCellLayout
+//        layout?.chatItem = message
+//        layout?.calculate()
+//        
+//        let interaction = message.signalMessage
+//        interaction.paymentState = .rejected
+//        interaction.save()
     }
     
     func didTapApproveButton(_ messageCell: ActionableMessageCell) {
-        guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
-        let visibleMessageIndexPath = reversedIndexPath(indexPath)
-        
-        let message = visibleMessage(at: visibleMessageIndexPath)
-        message.isActionable = false
-        
-        let layout = self.layouts[indexPath.item] as? MessageCellLayout
-        layout?.chatItem = message
-        layout?.calculate()
-        
-        let interaction = message.signalMessage
-        interaction.paymentState = .pendingConfirmation
-        interaction.save()
-        
-        guard let paymentRequest = message.sofaWrapper as? SofaPaymentRequest else { fatalError("Could not retrieve payment request for approval.") }
-        
-        let value = paymentRequest.value
-        guard let destination = paymentRequest.destinationAddress else { return }
-        
-        // TODO: prevent concurrent calls
-        // Also, extract this.
-        self.etherAPIClient.createUnsignedTransaction(to: destination, value: value) { transaction, error in
-            let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
-            
-            self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
-                if error != nil {
-                    guard let json = json?.dictionary else { fatalError("!") }
-                    
-                    let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
-                    self.present(alert, animated: true)
-                } else if let json = json?.dictionary {
-                    // update payment request message
-                    message.isActionable = false
-                    
-                    let interaction = message.signalMessage
-                    interaction.paymentState = .pendingConfirmation
-                    interaction.save()
-                    
-                    // send payment message
-                    guard let txHash = json["tx_hash"] as? String else { fatalError("Error recovering transaction hash.") }
-                    let payment = SofaPayment(txHash: txHash, valueHex: value.toHexString)
-                    
-                    self.sendMessage(sofaWrapper: payment)
-                }
-            }
-        }
+//        guard let indexPath = self.collectionView.indexPath(for: messageCell) else { return }
+//        let visibleMessageIndexPath = reversedIndexPath(indexPath)
+//        
+//        let message = visibleMessage(at: visibleMessageIndexPath)
+//        message.isActionable = false
+//        
+//        let layout = self.layouts[indexPath.item] as? MessageCellLayout
+//        layout?.chatItem = message
+//        layout?.calculate()
+//        
+//        let interaction = message.signalMessage
+//        interaction.paymentState = .pendingConfirmation
+//        interaction.save()
+//        
+//        guard let paymentRequest = message.sofaWrapper as? SofaPaymentRequest else { fatalError("Could not retrieve payment request for approval.") }
+//        
+//        let value = paymentRequest.value
+//        guard let destination = paymentRequest.destinationAddress else { return }
+//        
+//        // TODO: prevent concurrent calls
+//        // Also, extract this.
+//        self.etherAPIClient.createUnsignedTransaction(to: destination, value: value) { transaction, error in
+//            let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
+//            
+//            self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
+//                if error != nil {
+//                    guard let json = json?.dictionary else { fatalError("!") }
+//                    
+//                    let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
+//                    self.present(alert, animated: true)
+//                } else if let json = json?.dictionary {
+//                    // update payment request message
+//                    message.isActionable = false
+//                    
+//                    let interaction = message.signalMessage
+//                    interaction.paymentState = .pendingConfirmation
+//                    interaction.save()
+//                    
+//                    // send payment message
+//                    guard let txHash = json["tx_hash"] as? String else { fatalError("Error recovering transaction hash.") }
+//                    let payment = SofaPayment(txHash: txHash, valueHex: value.toHexString)
+//                    
+//                    self.sendMessage(sofaWrapper: payment)
+//                }
+//            }
+//        }
     }
-}
+//}
 
-extension ChatController: ChatInputTextPanelDelegate {
+//extension ChatController: ChatInputTextPanelDelegate {
     
     func inputTextPanel(_: ChatInputTextPanel, requestSendText text: String) {
         let wrapper = SofaMessage(content: ["body": text])
@@ -787,7 +791,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         
         let carouselItem = AttachmentCarouselItemView(camera:Camera.cameraAvailable(), selfPortrait:false, forProfilePhoto:false, assetType:MediaAssetAnyType)!
         carouselItem.condensed = false
-        //carouselItem.parentController = self // TO MERGE
+        carouselItem.parentController = self // TO MERGE
         carouselItem.allowCaptions = true
         carouselItem.inhibitDocumentCaptions = true
         carouselItem.suggestionContext = SuggestionContext()
@@ -798,10 +802,7 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         carouselItem.didSelectImage = { image, asset, fromView in
-            if let fromView = fromView as UIView? {
-                self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
-            }
-            
+           
             let editorController = PhotoEditorController(item:asset as! MediaEditableItem, intent:PhotoEditorControllerAvatarIntent, adjustments:nil, caption:nil, screenImage:image, availbaleTabs:PhotoEditorController.defaultTabsForAvatarIntent(), selectedTab:PhotoEditorCropTab)!
             
             editorController.requestOriginalFullSizeImage = { editableItem, position in
@@ -823,8 +824,6 @@ extension ChatController: ChatInputTextPanelDelegate {
             editorController.requestThumbnailImage = { editableItem in
                 return editableItem?.thumbnailImageSignal?()
             }
-            
-            editorController.transitioningDelegate = self
             
             self.present(editorController, animated: true, completion: nil)
         }
@@ -877,16 +876,13 @@ extension ChatController: ChatInputTextPanelDelegate {
         controller.shouldStoreCapturedAssets = true
         controller.allowCaptions = true
         
-       // let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
-        //controllerWindow.isHidden = false
-        
-       // controllerWindow.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
-        
-        var standalone = true
+        let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)!
+        controllerWindow.isHidden = false
+        controllerWindow.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+    
         var startFrame = CGRect(x: 0, y: screenSize.height, width: screenSize.width, height: screenSize.height)
         
         if let cameraView = cameraView as AttachmentCameraView?, let frame = cameraView.previewView().frame as CGRect? {
-            standalone = false
             startFrame = controller.view.convert(frame, from: cameraView)
         }
         
@@ -922,17 +918,6 @@ extension ChatController: ChatInputTextPanelDelegate {
             print("do what needed with recorded video")
             menu.dismiss(animated: false)
         }
-        
-        // TO MERGE
-        //
-        //
-        //  let controllerWindow = CameraControllerWindow(parentController: self, contentController: controller)
-        // controllerWindow?.isHidden = false
-        //
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            //  controllerWindow?.frame = CGRect(x: 0.0, y: 0.0, width: screenSize.width, height: screenSize.height)
-        }
     }
     
     func send(image: UIImage) {
@@ -951,7 +936,7 @@ extension ChatController: ChatInputTextPanelDelegate {
     }
     
     func inputTextPanelDidChangeHeight(_ height: CGFloat) {
-        self.textInputHeight = height
+       // self.textInputHeight = height
     }
     
     private func displayMediaPicker(forFile: Bool, fromFileMenu:Bool) {
@@ -1002,21 +987,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         showMediaPickerBlock(nil)
-    }
-}
-
-extension ChatController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.originFrame = self.fromViewRect //selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
-        transition.presenting = true
-        
-        return transition
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.presenting = false
-        return transition
     }
 }
 
