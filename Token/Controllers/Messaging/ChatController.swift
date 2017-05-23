@@ -208,7 +208,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
 
             self.textInputViewBottom,
             self.textInputViewHeight,
-            ])
+        ])
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.avatarImageView)
     }
@@ -1081,24 +1081,24 @@ extension ChatController: PaymentSendControllerDelegate {
 }
 
 extension ChatController: PaymentRequestControllerDelegate {
-    
+
     func paymentRequestControllerDidFinish(valueInWei: NSDecimalNumber?) {
         defer {
             self.dismiss(animated: true)
         }
-        
+
         guard let valueInWei = valueInWei else {
             return
         }
-        
+
         let request: [String: Any] = [
             "body": "Payment request: \(EthereumConverter.balanceAttributedString(forWei: valueInWei).string).",
             "value": valueInWei.toHexString,
             "destinationAddress": Cereal.shared.paymentAddress,
-            ]
-        
+        ]
+
         let paymentRequest = SofaPaymentRequest(content: request)
-        
+
         self.sendMessage(sofaWrapper: paymentRequest)
     }
 }

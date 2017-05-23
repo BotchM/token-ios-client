@@ -1033,6 +1033,9 @@
 		2BEE61BC1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61BA1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png */; };
 		3D2E697529A2D52254F37ED4 /* libPods-CocoaPods-Development.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFB40C6579F524BC3F63679 /* libPods-CocoaPods-Development.a */; };
 		443ABD0C3B790D679591152A /* libPods-CocoaPods-Distribution.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 769C834390540D551617A66F /* libPods-CocoaPods-Distribution.a */; };
+		84C1952C1ECF057E00B9512F /* SOFAWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C1952B1ECF057E00B9512F /* SOFAWebController.swift */; };
+		84C1952F1ECF05C100B9512F /* sofa-web3.js in Resources */ = {isa = PBXBuildFile; fileRef = 84C1952E1ECF05C100B9512F /* sofa-web3.js */; };
+		84C195301ECF05C100B9512F /* sofa-web3.js in Resources */ = {isa = PBXBuildFile; fileRef = 84C1952E1ECF05C100B9512F /* sofa-web3.js */; };
 		9F04A7231E38D1400043534A /* QRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F04A7221E38D1400043534A /* QRCodeController.swift */; };
 		9F086CB71EB10A7A00055DB3 /* TokenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B355BD91EAE356C0093FA8F /* TokenUser.swift */; };
 		9F21624C1E5EE08800292B14 /* ActionableMessageCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F21624B1E5EE08800292B14 /* ActionableMessageCellLayout.swift */; };
@@ -1043,6 +1046,7 @@
 		9F2433D41E5F46F6003D95A1 /* SignalNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2433D31E5F46F6003D95A1 /* SignalNotificationHandler.swift */; };
 		9F27525E1EB9CA7A00050C08 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F27525D1EB9CA7A00050C08 /* Settings.storyboard */; };
 		9F27525F1EB9CA7A00050C08 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F27525D1EB9CA7A00050C08 /* Settings.storyboard */; };
+		9F30A81E1ED2EDA9003E56A2 /* SOFAWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C1952B1ECF057E00B9512F /* SOFAWebController.swift */; };
 		9F3CFDE61E5F086200E8D632 /* EthereumConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CFDE51E5F086200E8D632 /* EthereumConverter.swift */; };
 		9F3FF8001EB36122002D0293 /* TSOutgoingMessage+Addtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3FF7FF1EB36122002D0293 /* TSOutgoingMessage+Addtions.m */; };
 		9F3FF8011EB36122002D0293 /* TSOutgoingMessage+Addtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3FF7FF1EB36122002D0293 /* TSOutgoingMessage+Addtions.m */; };
@@ -1199,6 +1203,8 @@
 		9FCDBAEA1E28FD5C00A70E07 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCDBAE91E28FD5C00A70E07 /* Theme.swift */; };
 		9FCF13281E52FC2A0078FF7F /* TSThread+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF13271E52FC2A0078FF7F /* TSThread+Additions.m */; };
 		9FCF132D1E531B4F0078FF7F /* PaymentRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF132C1E531B4E0078FF7F /* PaymentRequestController.swift */; };
+		9FD247831ED3037F00A38C40 /* String+isURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD247821ED3037F00A38C40 /* String+isURL.swift */; };
+		9FD247841ED3037F00A38C40 /* String+isURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD247821ED3037F00A38C40 /* String+isURL.swift */; };
 		9FD25D3C1E813C3F0011F164 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD25D3B1E813C3F0011F164 /* Navigator.swift */; };
 		9FD25D3D1E813C3F0011F164 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD25D3B1E813C3F0011F164 /* Navigator.swift */; };
 		9FDB3B171E6D640900EE5FD7 /* ControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB3B161E6D640900EE5FD7 /* ControlCell.swift */; };
@@ -2167,6 +2173,8 @@
 		626847A05B6B231F02E4B0A9 /* Pods-CocoaPods-Distribution.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPods-Distribution.release.xcconfig"; path = "Pods/Target Support Files/Pods-CocoaPods-Distribution/Pods-CocoaPods-Distribution.release.xcconfig"; sourceTree = "<group>"; };
 		769C834390540D551617A66F /* libPods-CocoaPods-Distribution.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CocoaPods-Distribution.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DFB40C6579F524BC3F63679 /* libPods-CocoaPods-Development.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CocoaPods-Development.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C1952B1ECF057E00B9512F /* SOFAWebController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOFAWebController.swift; sourceTree = "<group>"; };
+		84C1952E1ECF05C100B9512F /* sofa-web3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "sofa-web3.js"; sourceTree = "<group>"; };
 		9F04A7221E38D1400043534A /* QRCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeController.swift; sourceTree = "<group>"; };
 		9F21624B1E5EE08800292B14 /* ActionableMessageCellLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionableMessageCellLayout.swift; sourceTree = "<group>"; };
 		9F21625E1E5EF39B00292B14 /* EthereumNotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumNotificationHandler.swift; sourceTree = "<group>"; };
@@ -2286,6 +2294,7 @@
 		9FCF13261E52FB160078FF7F /* TSThread+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TSThread+Additions.h"; sourceTree = "<group>"; };
 		9FCF13271E52FC2A0078FF7F /* TSThread+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TSThread+Additions.m"; sourceTree = "<group>"; };
 		9FCF132C1E531B4E0078FF7F /* PaymentRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentRequestController.swift; sourceTree = "<group>"; };
+		9FD247821ED3037F00A38C40 /* String+isURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+isURL.swift"; sourceTree = "<group>"; };
 		9FD25D3B1E813C3F0011F164 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		9FDB3B161E6D640900EE5FD7 /* ControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlCell.swift; sourceTree = "<group>"; };
 		9FDB3B181E6D648000EE5FD7 /* ControlsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsCollectionView.swift; sourceTree = "<group>"; };
@@ -3402,6 +3411,15 @@
 				2BD70BFA1ED2383F00E23AF3 /* VideoMediaAttachment.m */,
 			);
 			name = Models;
+                        sourceTree = "<group>";
+		};
+		84C1952A1ECF056800B9512F /* SOFAWebview */ = {
+			isa = PBXGroup;
+			children = (
+				84C1952E1ECF05C100B9512F /* sofa-web3.js */,
+				84C1952B1ECF057E00B9512F /* SOFAWebController.swift */,
+			);
+			path = SOFAWebview;
 			sourceTree = "<group>";
 		};
 		9F232A971EC9E3A300270761 /* Profile */ = {
@@ -3502,6 +3520,7 @@
 		9F9238B31E24F1D2004BEEE0 /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				84C1952A1ECF056800B9512F /* SOFAWebview */,
 				9FAE4A6C1E4CBFCA00126217 /* Extensions */,
 				9FCDBAE81E28FD5600A70E07 /* Theme */,
 				9FC72A3B1E251ABE00EF1141 /* APIClients */,
@@ -3667,6 +3686,7 @@
 				9FDB3B151E6D63D900EE5FD7 /* Messages */,
 				9FEB8C891E6832120088D5A6 /* NSData+ows_StripToken.h */,
 				9FEB8C8A1E6832120088D5A6 /* NSData+ows_StripToken.m */,
+				9FD247821ED3037F00A38C40 /* String+isURL.swift */,
 				9FAE4A6A1E4CBFC400126217 /* NSDecimalNumber+Additions.swift */,
 				A9E65DCD1E76B4A600304123 /* NSLayoutConstraint+Additions.swift */,
 				A9AC740A1E77E62900365029 /* UIView+Additions.swift */,
@@ -3974,6 +3994,7 @@
 			files = (
 				2BE6CBCC1ED44ED6006590E8 /* PhotoEditorRotateIcon@2x.png in Resources */,
 				2BE6CBB71ED44EB4006590E8 /* PhotoEditorContrastTool@2x.png in Resources */,
+				84C195301ECF05C100B9512F /* sofa-web3.js in Resources */,
 				149F9AC51E72E29A00FB74AA /* SF-UI-Text-Semibold.otf in Resources */,
 				149F9AC61E72E29A00FB74AA /* SF-UI-Display-Black.otf in Resources */,
 				2BE6CBC11ED44ED6006590E8 /* PhotoEditorExposureTool@2x.png in Resources */,
@@ -4111,6 +4132,7 @@
 				2B2F851A1ECA40A300D6576D /* PhotoEditorBlurOff@3x.png in Resources */,
 				2B2F852C1ECA40A300D6576D /* PhotoEditorExposureTool@2x.png in Resources */,
 				2B2F85441ECA40A300D6576D /* PhotoEditorSharpenTool@3x.png in Resources */,
+				84C1952F1ECF05C100B9512F /* sofa-web3.js in Resources */,
 				9FAACD041E31120600FB871D /* SF-UI-Text-Semibold.otf in Resources */,
 				2B2F852F1ECA40A300D6576D /* PhotoEditorFilters@2x.png in Resources */,
 				2B2F85161ECA40A300D6576D /* PhotoEditorBlurLinear@2x.png in Resources */,
@@ -4401,6 +4423,7 @@
 				2BE6CA981ED44CC7006590E8 /* OverlayFormsheetController.m in Sources */,
 				2BE6CAE01ED44D69006590E8 /* MenuSheetDimView.m in Sources */,
 				2BE6CB5E1ED44E7E006590E8 /* matrix.m in Sources */,
+				9F30A81E1ED2EDA9003E56A2 /* SOFAWebController.swift in Sources */,
 				149F9A631E72E29A00FB74AA /* SignalNotificationHandler.swift in Sources */,
 				2BE6CA501ED44C9C006590E8 /* HighlightsTool.m in Sources */,
 				2BE6CAB61ED44D69006590E8 /* CameraFlipButton.m in Sources */,
@@ -4621,6 +4644,7 @@
 				2BE6CAF21ED44D69006590E8 /* ModernGalleryTransitionView.m in Sources */,
 				2BE6CB451ED44E7D006590E8 /* Common.m in Sources */,
 				2BE6CAB21ED44D69006590E8 /* AttachmentMenuCell.m in Sources */,
+				9FD247841ED3037F00A38C40 /* String+isURL.swift in Sources */,
 				9F5D63A61E92331800FED490 /* ImageMessageCellLayout.swift in Sources */,
 				2BE6CADF1ED44D69006590E8 /* MenuSheetCollectionView.m in Sources */,
 				9FF6AF991E83CA84001B5907 /* UICollectionViewRightAlignedLayout.m in Sources */,
@@ -4869,6 +4893,7 @@
 				2BD70B881ED2321B00E23AF3 /* PhotoToolComposer.m in Sources */,
 				9FE18B2B1E2D1FD300940DC8 /* ProfileEditController.swift in Sources */,
 				2BD70B5F1ED2321B00E23AF3 /* Painting.m in Sources */,
+				84C1952C1ECF057E00B9512F /* SOFAWebController.swift in Sources */,
 				9F2433D41E5F46F6003D95A1 /* SignalNotificationHandler.swift in Sources */,
 				9FAC46ED1E800C13005F76A9 /* UIColor+Additions.swift in Sources */,
 				2BD708F81ED21EB800E23AF3 /* mdb.c in Sources */,
@@ -5124,6 +5149,7 @@
 				2BD70A721ED22C0400E23AF3 /* PhotoPaintEntityView.m in Sources */,
 				2BD70A191ED22C0400E23AF3 /* DraggableCollectionView.m in Sources */,
 				2BD70C021ED2383F00E23AF3 /* MediaAsset+MediaEditableItem.m in Sources */,
+				9FD247831ED3037F00A38C40 /* String+isURL.swift in Sources */,
 				9F5D63A51E92331800FED490 /* ImageMessageCellLayout.swift in Sources */,
 				A9AC74141E78231A00365029 /* BackupPhraseView.swift in Sources */,
 				2BD70C1A1ED2383F00E23AF3 /* StaticBackdropImageData.m in Sources */,
