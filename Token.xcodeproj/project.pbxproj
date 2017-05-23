@@ -571,7 +571,454 @@
 		2BD70C1A1ED2383F00E23AF3 /* StaticBackdropImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF61ED2383F00E23AF3 /* StaticBackdropImageData.m */; };
 		2BD70C1B1ED2383F00E23AF3 /* VideoInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF81ED2383F00E23AF3 /* VideoInfo.mm */; };
 		2BD70C1C1ED2383F00E23AF3 /* VideoMediaAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BFA1ED2383F00E23AF3 /* VideoMediaAttachment.m */; };
-		2BD70C1E1ED2388200E23AF3 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70C1D1ED2388200E23AF3 /* TransitionAnimator.swift */; };
+		2BE6CA261ED44C17006590E8 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BB01ED2383F00E23AF3 /* AudioSessionManager.m */; };
+		2BE6CA271ED44C1A006590E8 /* AVURLAsset+MediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BB21ED2383F00E23AF3 /* AVURLAsset+MediaItem.m */; };
+		2BE6CA281ED44C41006590E8 /* DataResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BB41ED2383F00E23AF3 /* DataResource.m */; };
+		2BE6CA291ED44C41006590E8 /* ImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BB61ED2383F00E23AF3 /* ImageDataSource.m */; };
+		2BE6CA2A1ED44C41006590E8 /* ImageInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BB81ED2383F00E23AF3 /* ImageInfo.mm */; };
+		2BE6CA2B1ED44C41006590E8 /* ImageMediaAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BBA1ED2383F00E23AF3 /* ImageMediaAttachment.m */; };
+		2BE6CA2C1ED44C41006590E8 /* MediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BBC1ED2383F00E23AF3 /* MediaAsset.m */; };
+		2BE6CA2D1ED44C41006590E8 /* MediaAsset+MediaEditableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BBE1ED2383F00E23AF3 /* MediaAsset+MediaEditableItem.m */; };
+		2BE6CA2E1ED44C41006590E8 /* MediaAssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BC01ED2383F00E23AF3 /* MediaAssetFetchResult.m */; };
+		2BE6CA2F1ED44C41006590E8 /* MediaAssetFetchResultChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BC21ED2383F00E23AF3 /* MediaAssetFetchResultChange.m */; };
+		2BE6CA301ED44C41006590E8 /* MediaAssetGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BC41ED2383F00E23AF3 /* MediaAssetGroup.m */; };
+		2BE6CA311ED44C41006590E8 /* MediaAssetMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BC61ED2383F00E23AF3 /* MediaAssetMoment.m */; };
+		2BE6CA321ED44C41006590E8 /* MediaAssetMomentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BC81ED2383F00E23AF3 /* MediaAssetMomentList.m */; };
+		2BE6CA331ED44C41006590E8 /* MediaAssetsLegacyLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BCA1ED2383F00E23AF3 /* MediaAssetsLegacyLibrary.m */; };
+		2BE6CA341ED44C41006590E8 /* MediaAssetsLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BCC1ED2383F00E23AF3 /* MediaAssetsLibrary.m */; };
+		2BE6CA351ED44C41006590E8 /* MediaAssetsModernLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BCE1ED2383F00E23AF3 /* MediaAssetsModernLibrary.m */; };
+		2BE6CA361ED44C41006590E8 /* MediaAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BD01ED2383F00E23AF3 /* MediaAttachment.m */; };
+		2BE6CA371ED44C41006590E8 /* MediaPickerGalleryGifItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BD31ED2383F00E23AF3 /* MediaPickerGalleryGifItem.m */; };
+		2BE6CA381ED44C41006590E8 /* MediaPickerGalleryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BD51ED2383F00E23AF3 /* MediaPickerGalleryItem.m */; };
+		2BE6CA391ED44C41006590E8 /* MediaPickerGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BD71ED2383F00E23AF3 /* MediaPickerGalleryModel.m */; };
+		2BE6CA3A1ED44C41006590E8 /* MediaPickerGalleryPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BD91ED2383F00E23AF3 /* MediaPickerGalleryPhotoItem.m */; };
+		2BE6CA3B1ED44C41006590E8 /* MediaPickerGallerySelectedItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BDB1ED2383F00E23AF3 /* MediaPickerGallerySelectedItemsModel.m */; };
+		2BE6CA3C1ED44C41006590E8 /* MediaPickerGalleryVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BDD1ED2383F00E23AF3 /* MediaPickerGalleryVideoItem.m */; };
+		2BE6CA3D1ED44C41006590E8 /* ModernButtonViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BDF1ED2383F00E23AF3 /* ModernButtonViewModel.m */; };
+		2BE6CA3E1ED44C41006590E8 /* ModernClockProgressViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BE11ED2383F00E23AF3 /* ModernClockProgressViewModel.m */; };
+		2BE6CA3F1ED44C41006590E8 /* ModernGalleryImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BE41ED2383F00E23AF3 /* ModernGalleryImageItem.m */; };
+		2BE6CA401ED44C41006590E8 /* ModernGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BE71ED2383F00E23AF3 /* ModernGalleryModel.m */; };
+		2BE6CA411ED44C41006590E8 /* ModernGalleryVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BEA1ED2383F00E23AF3 /* ModernGalleryVideoItem.m */; };
+		2BE6CA421ED44C41006590E8 /* ModernGalleryVideoPlayerState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BEC1ED2383F00E23AF3 /* ModernGalleryVideoPlayerState.m */; };
+		2BE6CA431ED44C41006590E8 /* ModernViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF21ED2383F00E23AF3 /* ModernViewModel.m */; };
+		2BE6CA441ED44C41006590E8 /* StaticBackdropAreaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF41ED2383F00E23AF3 /* StaticBackdropAreaData.m */; };
+		2BE6CA451ED44C41006590E8 /* StaticBackdropImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF61ED2383F00E23AF3 /* StaticBackdropImageData.m */; };
+		2BE6CA461ED44C41006590E8 /* VideoInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BF81ED2383F00E23AF3 /* VideoInfo.mm */; };
+		2BE6CA471ED44C41006590E8 /* VideoMediaAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BFA1ED2383F00E23AF3 /* VideoMediaAttachment.m */; };
+		2BE6CA481ED44C9C006590E8 /* BlurEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC41ED2321B00E23AF3 /* BlurEffect.m */; };
+		2BE6CA491ED44C9C006590E8 /* BlurTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC61ED2321B00E23AF3 /* BlurTool.m */; };
+		2BE6CA4A1ED44C9C006590E8 /* ContrastTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AC81ED2321B00E23AF3 /* ContrastTool.m */; };
+		2BE6CA4B1ED44C9C006590E8 /* CurvesTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ACA1ED2321B00E23AF3 /* CurvesTool.m */; };
+		2BE6CA4C1ED44C9C006590E8 /* EnhanceTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ACC1ED2321B00E23AF3 /* EnhanceTool.m */; };
+		2BE6CA4D1ED44C9C006590E8 /* ExposureTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ACE1ED2321B00E23AF3 /* ExposureTool.m */; };
+		2BE6CA4E1ED44C9C006590E8 /* FadeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AD01ED2321B00E23AF3 /* FadeTool.m */; };
+		2BE6CA4F1ED44C9C006590E8 /* GrainTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AD21ED2321B00E23AF3 /* GrainTool.m */; };
+		2BE6CA501ED44C9C006590E8 /* HighlightsTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AD41ED2321B00E23AF3 /* HighlightsTool.m */; };
+		2BE6CA511ED44C9C006590E8 /* ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AD61ED2321B00E23AF3 /* ImageBlur.m */; };
+		2BE6CA521ED44C9C006590E8 /* PaintBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AD81ED2321B00E23AF3 /* PaintBrush.m */; };
+		2BE6CA531ED44C9C006590E8 /* PaintBrushPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ADA1ED2321B00E23AF3 /* PaintBrushPreview.m */; };
+		2BE6CA541ED44C9C006590E8 /* PaintBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ADC1ED2321B00E23AF3 /* PaintBuffers.m */; };
+		2BE6CA551ED44C9C006590E8 /* PaintCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70ADE1ED2321B00E23AF3 /* PaintCanvas.m */; };
+		2BE6CA561ED44C9C006590E8 /* PaintEllipticalBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AE01ED2321B00E23AF3 /* PaintEllipticalBrush.m */; };
+		2BE6CA571ED44C9C006590E8 /* PaintFaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AE21ED2321B00E23AF3 /* PaintFaceDetector.m */; };
+		2BE6CA581ED44C9C006590E8 /* Painting.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AE41ED2321B00E23AF3 /* Painting.m */; };
+		2BE6CA591ED44C9C006590E8 /* PaintInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AE71ED2321B00E23AF3 /* PaintInput.m */; };
+		2BE6CA5A1ED44C9C006590E8 /* PaintNeonBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AE91ED2321B00E23AF3 /* PaintNeonBrush.m */; };
+		2BE6CA5B1ED44C9C006590E8 /* PaintPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AEB1ED2321B00E23AF3 /* PaintPath.m */; };
+		2BE6CA5C1ED44C9C006590E8 /* PaintRadialBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AED1ED2321B00E23AF3 /* PaintRadialBrush.m */; };
+		2BE6CA5D1ED44C9C006590E8 /* PaintRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AEF1ED2321B00E23AF3 /* PaintRender.m */; };
+		2BE6CA5E1ED44C9C006590E8 /* PaintShader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AF11ED2321B00E23AF3 /* PaintShader.m */; };
+		2BE6CA5F1ED44C9C006590E8 /* PaintShaderSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AF31ED2321B00E23AF3 /* PaintShaderSet.m */; };
+		2BE6CA601ED44C9C006590E8 /* PaintSlice.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AF51ED2321B00E23AF3 /* PaintSlice.m */; };
+		2BE6CA611ED44C9C006590E8 /* PaintState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AF71ED2321B00E23AF3 /* PaintState.m */; };
+		2BE6CA621ED44C9C006590E8 /* PaintSwatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AF91ED2321B00E23AF3 /* PaintSwatch.m */; };
+		2BE6CA631ED44C9C006590E8 /* PaintTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AFB1ED2321B00E23AF3 /* PaintTexture.m */; };
+		2BE6CA641ED44C9C006590E8 /* PaintUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AFD1ED2321B00E23AF3 /* PaintUndoManager.m */; };
+		2BE6CA651ED44C9C006590E8 /* PaintUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AFF1ED2321B00E23AF3 /* PaintUtils.m */; };
+		2BE6CA661ED44C9C006590E8 /* PhotoBlurPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B011ED2321B00E23AF3 /* PhotoBlurPass.m */; };
+		2BE6CA671ED44C9C006590E8 /* PhotoCropControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B031ED2321B00E23AF3 /* PhotoCropControl.m */; };
+		2BE6CA681ED44C9C006590E8 /* PhotoCustomFilterPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B051ED2321B00E23AF3 /* PhotoCustomFilterPass.m */; };
+		2BE6CA691ED44C9C006590E8 /* PhotoEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B071ED2321B00E23AF3 /* PhotoEditor.m */; };
+		2BE6CA6A1ED44C9C006590E8 /* PhotoEditorAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B091ED2321B00E23AF3 /* PhotoEditorAnimation.m */; };
+		2BE6CA6B1ED44C9C006590E8 /* PhotoEditorInterfaceAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B0B1ED2321B00E23AF3 /* PhotoEditorInterfaceAssets.m */; };
+		2BE6CA6C1ED44C9C006590E8 /* PhotoEditorPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B0E1ED2321B00E23AF3 /* PhotoEditorPicture.m */; };
+		2BE6CA6D1ED44C9C006590E8 /* PhotoEditorUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B101ED2321B00E23AF3 /* PhotoEditorUtils.m */; };
+		2BE6CA6E1ED44C9C006590E8 /* PhotoEditorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B121ED2321B00E23AF3 /* PhotoEditorValues.m */; };
+		2BE6CA6F1ED44C9C006590E8 /* PhotoEnhanceColorConversionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B141ED2321B00E23AF3 /* PhotoEnhanceColorConversionFilter.m */; };
+		2BE6CA701ED44C9C006590E8 /* PhotoEnhanceInterpolationFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B161ED2321B00E23AF3 /* PhotoEnhanceInterpolationFilter.m */; };
+		2BE6CA711ED44C9C006590E8 /* PhotoEnhanceLUTGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B181ED2321B00E23AF3 /* PhotoEnhanceLUTGenerator.m */; };
+		2BE6CA721ED44C9C006590E8 /* PhotoEnhancePass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B1A1ED2321B00E23AF3 /* PhotoEnhancePass.m */; };
+		2BE6CA731ED44C9C006590E8 /* PhotoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B1C1ED2321B00E23AF3 /* PhotoFilter.m */; };
+		2BE6CA741ED44C9C006590E8 /* PhotoFilterDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B1E1ED2321B00E23AF3 /* PhotoFilterDefinition.m */; };
+		2BE6CA751ED44C9C006590E8 /* PhotoGaussianBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B201ED2321B00E23AF3 /* PhotoGaussianBlurFilter.m */; };
+		2BE6CA761ED44C9C006590E8 /* PhotoHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B221ED2321B00E23AF3 /* PhotoHistogram.m */; };
+		2BE6CA771ED44C9C006590E8 /* PhotoHistogramGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B241ED2321B00E23AF3 /* PhotoHistogramGenerator.m */; };
+		2BE6CA781ED44C9C006590E8 /* PhotoLookupFilterPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B261ED2321B00E23AF3 /* PhotoLookupFilterPass.m */; };
+		2BE6CA791ED44C9C006590E8 /* PhotoMaskPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B281ED2321B00E23AF3 /* PhotoMaskPosition.m */; };
+		2BE6CA7A1ED44C9C006590E8 /* PhotoPaintColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B2A1ED2321B00E23AF3 /* PhotoPaintColorPicker.m */; };
+		2BE6CA7B1ED44C9C006590E8 /* PhotoPaintEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B2C1ED2321B00E23AF3 /* PhotoPaintEntity.m */; };
+		2BE6CA7C1ED44C9C006590E8 /* PhotoPaintFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B2E1ED2321B00E23AF3 /* PhotoPaintFont.m */; };
+		2BE6CA7D1ED44C9C006590E8 /* PhotoPaintTextEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B301ED2321B00E23AF3 /* PhotoPaintTextEntity.m */; };
+		2BE6CA7E1ED44C9C006590E8 /* PhotoProcessPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B321ED2321B00E23AF3 /* PhotoProcessPass.m */; };
+		2BE6CA7F1ED44C9C006590E8 /* PhotoSharpenPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B341ED2321B00E23AF3 /* PhotoSharpenPass.m */; };
+		2BE6CA801ED44C9C006590E8 /* PhotoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B361ED2321B00E23AF3 /* PhotoTool.m */; };
+		2BE6CA811ED44C9C006590E8 /* PhotoToolComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B381ED2321B00E23AF3 /* PhotoToolComposer.m */; };
+		2BE6CA821ED44C9C006590E8 /* ProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B3A1ED2321B00E23AF3 /* ProgressWindow.m */; };
+		2BE6CA831ED44C9C006590E8 /* SaturationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B3E1ED2321B00E23AF3 /* SaturationTool.m */; };
+		2BE6CA841ED44C9C006590E8 /* ScaleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B401ED2321B00E23AF3 /* ScaleImage.m */; };
+		2BE6CA851ED44C9C006590E8 /* ShadowsTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B421ED2321B00E23AF3 /* ShadowsTool.m */; };
+		2BE6CA861ED44C9C006590E8 /* SharpenTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B441ED2321B00E23AF3 /* SharpenTool.m */; };
+		2BE6CA871ED44C9C006590E8 /* SpringAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B461ED2321B00E23AF3 /* SpringAnimation.m */; };
+		2BE6CA881ED44C9C006590E8 /* TintTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B481ED2321B00E23AF3 /* TintTool.m */; };
+		2BE6CA891ED44C9C006590E8 /* VideoEditAdjustments.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B4A1ED2321B00E23AF3 /* VideoEditAdjustments.m */; };
+		2BE6CA8A1ED44C9C006590E8 /* VignetteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B4C1ED2321B00E23AF3 /* VignetteTool.m */; };
+		2BE6CA8B1ED44C9C006590E8 /* WarmthTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B4E1ED2321B00E23AF3 /* WarmthTool.m */; };
+		2BE6CA8C1ED44CC7006590E8 /* MediaAssetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BAA1ED2379D00E23AF3 /* MediaAssetsController.m */; };
+		2BE6CA8D1ED44CC7006590E8 /* MenuSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BAC1ED2379D00E23AF3 /* MenuSheetController.m */; };
+		2BE6CA8E1ED44CC7006590E8 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED61ED2EB590075EC80 /* ViewController.mm */; };
+		2BE6CA8F1ED44CC7006590E8 /* OverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED01ED2EB160075EC80 /* OverlayController.m */; };
+		2BE6CA901ED44CC7006590E8 /* OverlayControllerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED21ED2EB160075EC80 /* OverlayControllerWindow.m */; };
+		2BE6CA911ED44CC7006590E8 /* CameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A821ED22F8C00E23AF3 /* CameraController.m */; };
+		2BE6CA921ED44CC7006590E8 /* CameraPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A841ED22F8C00E23AF3 /* CameraPhotoPreviewController.m */; };
+		2BE6CA931ED44CC7006590E8 /* MediaAssetsMomentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A861ED22F8C00E23AF3 /* MediaAssetsMomentsController.m */; };
+		2BE6CA941ED44CC7006590E8 /* MediaAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A881ED22F8C00E23AF3 /* MediaAssetsPickerController.m */; };
+		2BE6CA951ED44CC7006590E8 /* MediaGroupsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8A1ED22F8C00E23AF3 /* MediaGroupsController.m */; };
+		2BE6CA961ED44CC7006590E8 /* MediaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8C1ED22F8C00E23AF3 /* MediaPickerController.m */; };
+		2BE6CA971ED44CC7006590E8 /* ModernGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A8E1ED22F8C00E23AF3 /* ModernGalleryController.m */; };
+		2BE6CA981ED44CC7006590E8 /* OverlayFormsheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A931ED22F8C00E23AF3 /* OverlayFormsheetController.m */; };
+		2BE6CA991ED44CC7006590E8 /* OverlayFormsheetWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A951ED22F8C00E23AF3 /* OverlayFormsheetWindow.m */; };
+		2BE6CA9A1ED44CC7006590E8 /* PhotoAvatarCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A971ED22F8C00E23AF3 /* PhotoAvatarCropController.m */; };
+		2BE6CA9B1ED44CC7006590E8 /* PhotoCaptionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A991ED22F8C00E23AF3 /* PhotoCaptionController.m */; };
+		2BE6CA9C1ED44CC7006590E8 /* PhotoCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A9B1ED22F8C00E23AF3 /* PhotoCropController.m */; };
+		2BE6CA9D1ED44CC7006590E8 /* PhotoDummyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A9D1ED22F8C00E23AF3 /* PhotoDummyController.m */; };
+		2BE6CA9E1ED44CC7006590E8 /* PhotoEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A9F1ED22F8C00E23AF3 /* PhotoEditorController.m */; };
+		2BE6CA9F1ED44CC7006590E8 /* PhotoEditorItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA11ED22F8C00E23AF3 /* PhotoEditorItemController.m */; };
+		2BE6CAA01ED44CC7006590E8 /* PhotoEditorTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA31ED22F8C00E23AF3 /* PhotoEditorTabController.m */; };
+		2BE6CAA11ED44CC7006590E8 /* PhotoPaintController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA51ED22F8C00E23AF3 /* PhotoPaintController.m */; };
+		2BE6CAA21ED44CC7006590E8 /* PhotoQualityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA71ED22F8C00E23AF3 /* PhotoQualityController.m */; };
+		2BE6CAA31ED44CC7006590E8 /* TGMediaAvatarEditorTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6ED91ED2EF590075EC80 /* TGMediaAvatarEditorTransition.m */; };
+		2BE6CAA41ED44CC7006590E8 /* TGModernGalleryTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EDF1ED2EF7F0075EC80 /* TGModernGalleryTransitionView.m */; };
+		2BE6CAA51ED44CC7006590E8 /* TGMediaAvatarMenuMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EDB1ED2EF590075EC80 /* TGMediaAvatarMenuMixin.m */; };
+		2BE6CAA61ED44CC7006590E8 /* TGImagePickerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE51ED2F36F0075EC80 /* TGImagePickerController.mm */; };
+		2BE6CAA71ED44CC7006590E8 /* PhotoToolsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70AA91ED22F8C00E23AF3 /* PhotoToolsController.m */; };
+		2BE6CAA81ED44CC7006590E8 /* TGActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE21ED2F0100075EC80 /* TGActionSheet.m */; };
+		2BE6CAA91ED44D69006590E8 /* PaintPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B9A1ED2361500E23AF3 /* PaintPanGestureRecognizer.m */; };
+		2BE6CAAA1ED44D69006590E8 /* AcceleratedVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709031ED22C0300E23AF3 /* AcceleratedVideoView.m */; };
+		2BE6CAAB1ED44D69006590E8 /* CameraFlashControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B951ED235DE00E23AF3 /* CameraFlashControl.m */; };
+		2BE6CAAC1ED44D69006590E8 /* AttachmentAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709051ED22C0300E23AF3 /* AttachmentAssetCell.m */; };
+		2BE6CAAD1ED44D69006590E8 /* AttachmentCameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709071ED22C0300E23AF3 /* AttachmentCameraCell.m */; };
+		2BE6CAAE1ED44D69006590E8 /* AttachmentCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709091ED22C0300E23AF3 /* AttachmentCameraView.m */; };
+		2BE6CAAF1ED44D69006590E8 /* AttachmentCarouselItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7090B1ED22C0300E23AF3 /* AttachmentCarouselItemView.m */; };
+		2BE6CAB01ED44D69006590E8 /* AttachmentFileTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7090D1ED22C0300E23AF3 /* AttachmentFileTipView.m */; };
+		2BE6CAB11ED44D69006590E8 /* AttachmentGifCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7090F1ED22C0300E23AF3 /* AttachmentGifCell.m */; };
+		2BE6CAB21ED44D69006590E8 /* AttachmentMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709111ED22C0300E23AF3 /* AttachmentMenuCell.m */; };
+		2BE6CAB31ED44D69006590E8 /* AttachmentPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709131ED22C0300E23AF3 /* AttachmentPhotoCell.m */; };
+		2BE6CAB41ED44D69006590E8 /* AttachmentVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709151ED22C0300E23AF3 /* AttachmentVideoCell.m */; };
+		2BE6CAB51ED44D69006590E8 /* CameraFlashActiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709171ED22C0300E23AF3 /* CameraFlashActiveView.m */; };
+		2BE6CAB61ED44D69006590E8 /* CameraFlipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709191ED22C0300E23AF3 /* CameraFlipButton.m */; };
+		2BE6CAB71ED44D69006590E8 /* CameraFocusCrosshairsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7091B1ED22C0300E23AF3 /* CameraFocusCrosshairsControl.m */; };
+		2BE6CAB81ED44D69006590E8 /* CameraMainPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7091D1ED22C0300E23AF3 /* CameraMainPhoneView.m */; };
+		2BE6CAB91ED44D69006590E8 /* CameraMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7091F1ED22C0300E23AF3 /* CameraMainView.m */; };
+		2BE6CABA1ED44D69006590E8 /* CameraModeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709211ED22C0300E23AF3 /* CameraModeControl.m */; };
+		2BE6CABB1ED44D69006590E8 /* CameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709231ED22C0300E23AF3 /* CameraPreviewView.m */; };
+		2BE6CABC1ED44D69006590E8 /* CameraSegmentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709251ED22C0300E23AF3 /* CameraSegmentsView.m */; };
+		2BE6CABD1ED44D69006590E8 /* CameraShutterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709271ED22C0300E23AF3 /* CameraShutterButton.m */; };
+		2BE6CABE1ED44D69006590E8 /* CameraTimeCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709291ED22C0300E23AF3 /* CameraTimeCodeView.m */; };
+		2BE6CABF1ED44D69006590E8 /* CameraZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7092B1ED22C0300E23AF3 /* CameraZoomView.m */; };
+		2BE6CAC01ED44D69006590E8 /* CheckButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7092D1ED22C0300E23AF3 /* CheckButtonView.m */; };
+		2BE6CAC11ED44D69006590E8 /* DraggableCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7092F1ED22C0300E23AF3 /* DraggableCollectionView.m */; };
+		2BE6CAC21ED44D69006590E8 /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709311ED22C0300E23AF3 /* DraggableCollectionViewFlowLayout.m */; };
+		2BE6CAC31ED44D69006590E8 /* FullscreenContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709331ED22C0300E23AF3 /* FullscreenContainerView.m */; };
+		2BE6CAC41ED44D69006590E8 /* HistogramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709351ED22C0300E23AF3 /* HistogramView.m */; };
+		2BE6CAC51ED44D69006590E8 /* ImagePickerCellCheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709371ED22C0300E23AF3 /* ImagePickerCellCheckButton.m */; };
+		2BE6CAC61ED44D69006590E8 /* ImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709391ED22C0300E23AF3 /* ImageView.m */; };
+		2BE6CAC71ED44D69006590E8 /* InlineVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7093B1ED22C0300E23AF3 /* InlineVideoView.m */; };
+		2BE6CAC81ED44D69006590E8 /* MediaAssetsGifCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7093D1ED22C0300E23AF3 /* MediaAssetsGifCell.m */; };
+		2BE6CAC91ED44D69006590E8 /* MediaAssetsMomentsCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7093F1ED22C0300E23AF3 /* MediaAssetsMomentsCollectionLayout.m */; };
+		2BE6CACA1ED44D69006590E8 /* MediaAssetsMomentsCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709411ED22C0300E23AF3 /* MediaAssetsMomentsCollectionView.m */; };
+		2BE6CACB1ED44D69006590E8 /* MediaAssetsMomentsSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709431ED22C0300E23AF3 /* MediaAssetsMomentsSectionHeader.m */; };
+		2BE6CACC1ED44D69006590E8 /* MediaAssetsMomentsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709451ED22C0300E23AF3 /* MediaAssetsMomentsSectionHeaderView.m */; };
+		2BE6CACD1ED44D69006590E8 /* MediaAssetsPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709471ED22C0300E23AF3 /* MediaAssetsPhotoCell.m */; };
+		2BE6CACE1ED44D69006590E8 /* MediaAssetsTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709491ED22C0300E23AF3 /* MediaAssetsTipView.m */; };
+		2BE6CACF1ED44D69006590E8 /* MediaAssetsVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7094B1ED22C0300E23AF3 /* MediaAssetsVideoCell.m */; };
+		2BE6CAD01ED44D69006590E8 /* MediaGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7094D1ED22C0300E23AF3 /* MediaGroupCell.m */; };
+		2BE6CAD11ED44D69006590E8 /* MediaPickerCaptionInputPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7094F1ED22C0300E23AF3 /* MediaPickerCaptionInputPanel.m */; };
+		2BE6CAD21ED44D69006590E8 /* MediaPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709511ED22C0300E23AF3 /* MediaPickerCell.m */; };
+		2BE6CAD31ED44D69006590E8 /* MediaPickerGalleryGifItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709531ED22C0300E23AF3 /* MediaPickerGalleryGifItemView.m */; };
+		2BE6CAD41ED44D69006590E8 /* MediaPickerGalleryInterfaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709551ED22C0300E23AF3 /* MediaPickerGalleryInterfaceView.m */; };
+		2BE6CAD51ED44D69006590E8 /* MediaPickerGalleryPhotoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709571ED22C0300E23AF3 /* MediaPickerGalleryPhotoItemView.m */; };
+		2BE6CAD61ED44D69006590E8 /* MediaPickerGalleryVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709591ED22C0300E23AF3 /* MediaPickerGalleryVideoItemView.m */; };
+		2BE6CAD71ED44D69006590E8 /* MediaPickerGalleryVideoScrubberThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7095B1ED22C0300E23AF3 /* MediaPickerGalleryVideoScrubberThumbnailView.m */; };
+		2BE6CAD81ED44D69006590E8 /* MediaPickerGalleryVideoTrimView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7095D1ED22C0300E23AF3 /* MediaPickerGalleryVideoTrimView.m */; };
+		2BE6CAD91ED44D69006590E8 /* MediaPickerPhotoCounterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7095F1ED22C0300E23AF3 /* MediaPickerPhotoCounterButton.m */; };
+		2BE6CADA1ED44D69006590E8 /* MediaPickerPhotoStripCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709611ED22C0300E23AF3 /* MediaPickerPhotoStripCell.m */; };
+		2BE6CADB1ED44D69006590E8 /* MediaPickerPhotoStripView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709631ED22C0300E23AF3 /* MediaPickerPhotoStripView.m */; };
+		2BE6CADC1ED44D69006590E8 /* MediaPickerSelectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709651ED22C0300E23AF3 /* MediaPickerSelectionGestureRecognizer.m */; };
+		2BE6CADD1ED44D69006590E8 /* MediaPickerToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709671ED22C0300E23AF3 /* MediaPickerToolbarView.m */; };
+		2BE6CADE1ED44D69006590E8 /* MenuSheetButtonItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709691ED22C0300E23AF3 /* MenuSheetButtonItemView.m */; };
+		2BE6CADF1ED44D69006590E8 /* MenuSheetCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7096B1ED22C0300E23AF3 /* MenuSheetCollectionView.m */; };
+		2BE6CAE01ED44D69006590E8 /* MenuSheetDimView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7096D1ED22C0300E23AF3 /* MenuSheetDimView.m */; };
+		2BE6CAE11ED44D69006590E8 /* MenuSheetItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7096F1ED22C0300E23AF3 /* MenuSheetItemView.m */; };
+		2BE6CAE21ED44D69006590E8 /* MenuSheetTitleItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709711ED22C0300E23AF3 /* MenuSheetTitleItemView.m */; };
+		2BE6CAE31ED44D69006590E8 /* MenuSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709731ED22C0300E23AF3 /* MenuSheetView.m */; };
+		2BE6CAE41ED44D69006590E8 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709751ED22C0300E23AF3 /* MenuView.m */; };
+		2BE6CAE51ED44D69006590E8 /* MessageImageAdditionalDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709771ED22C0300E23AF3 /* MessageImageAdditionalDataView.m */; };
+		2BE6CAE61ED44D69006590E8 /* MessageImageViewOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709791ED22C0300E23AF3 /* MessageImageViewOverlayView.m */; };
+		2BE6CAE71ED44D69006590E8 /* MessageImageViewTimestampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7097B1ED22C0300E23AF3 /* MessageImageViewTimestampView.m */; };
+		2BE6CAE81ED44D69006590E8 /* ModernButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7097D1ED22C0300E23AF3 /* ModernButton.m */; };
+		2BE6CAE91ED44D69006590E8 /* ModernButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7097F1ED22C0300E23AF3 /* ModernButtonView.m */; };
+		2BE6CAEA1ED44D69006590E8 /* ModernClockProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709811ED22C0300E23AF3 /* ModernClockProgressView.m */; };
+		2BE6CAEB1ED44D69006590E8 /* ModernGalleryContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709831ED22C0300E23AF3 /* ModernGalleryContainerView.m */; };
+		2BE6CAEC1ED44D69006590E8 /* ModernGalleryDefaultInterfaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709881ED22C0300E23AF3 /* ModernGalleryDefaultInterfaceView.m */; };
+		2BE6CAED1ED44D69006590E8 /* ModernGalleryImageItemContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7098B1ED22C0300E23AF3 /* ModernGalleryImageItemContainerView.m */; };
+		2BE6CAEE1ED44D69006590E8 /* ModernGalleryImageItemImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7098D1ED22C0300E23AF3 /* ModernGalleryImageItemImageView.m */; };
+		2BE6CAEF1ED44D69006590E8 /* ModernGalleryImageItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7098F1ED22C0300E23AF3 /* ModernGalleryImageItemView.m */; };
+		2BE6CAF01ED44D69006590E8 /* ModernGalleryItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709921ED22C0300E23AF3 /* ModernGalleryItemView.m */; };
+		2BE6CAF11ED44D69006590E8 /* ModernGalleryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709941ED22C0300E23AF3 /* ModernGalleryScrollView.m */; };
+		2BE6CAF21ED44D69006590E8 /* ModernGalleryTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709961ED22C0300E23AF3 /* ModernGalleryTransitionView.m */; };
+		2BE6CAF31ED44D69006590E8 /* ModernGalleryVideoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709981ED22C0300E23AF3 /* ModernGalleryVideoContentView.m */; };
+		2BE6CAF41ED44D69006590E8 /* ModernGalleryVideoFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7099A1ED22C0300E23AF3 /* ModernGalleryVideoFooterView.m */; };
+		2BE6CAF51ED44D69006590E8 /* ModernGalleryVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7099C1ED22C0300E23AF3 /* ModernGalleryVideoItemView.m */; };
+		2BE6CAF61ED44D69006590E8 /* ModernGalleryVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7099E1ED22C0300E23AF3 /* ModernGalleryVideoPlayerView.m */; };
+		2BE6CAF71ED44D69006590E8 /* ModernGalleryVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709A01ED22C0300E23AF3 /* ModernGalleryVideoView.m */; };
+		2BE6CAF81ED44D69006590E8 /* ModernGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709A21ED22C0300E23AF3 /* ModernGalleryView.m */; };
+		2BE6CAF91ED44D69006590E8 /* ModernGalleryZoomableItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709A41ED22C0300E23AF3 /* ModernGalleryZoomableItemView.m */; };
+		2BE6CAFA1ED44D69006590E8 /* ModernGalleryZoomableScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709A61ED22C0300E23AF3 /* ModernGalleryZoomableScrollView.m */; };
+		2BE6CAFB1ED44D69006590E8 /* ModernGalleryZoomableScrollViewSwipeGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709A81ED22C0300E23AF3 /* ModernGalleryZoomableScrollViewSwipeGestureRecognizer.m */; };
+		2BE6CAFC1ED44D69006590E8 /* ModernMediaCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709AA1ED22C0300E23AF3 /* ModernMediaCollectionView.m */; };
+		2BE6CAFD1ED44D69006590E8 /* ModernToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709AC1ED22C0300E23AF3 /* ModernToolbarButton.m */; };
+		2BE6CAFE1ED44D69006590E8 /* PaintingWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709AE1ED22C0300E23AF3 /* PaintingWrapperView.m */; };
+		2BE6CAFF1ED44D69006590E8 /* PhotoAvatarCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709B01ED22C0300E23AF3 /* PhotoAvatarCropView.m */; };
+		2BE6CB001ED44D69006590E8 /* PhotoBrushSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709B21ED22C0300E23AF3 /* PhotoBrushSettingsView.m */; };
+		2BE6CB011ED44D69006590E8 /* PhotoCropAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709B41ED22C0300E23AF3 /* PhotoCropAreaView.m */; };
+		2BE6CB021ED44D69006590E8 /* PhotoCropGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709B61ED22C0300E23AF3 /* PhotoCropGridView.m */; };
+		2BE6CB031ED44D69006590E8 /* PhotoCropRotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709B81ED22C0300E23AF3 /* PhotoCropRotationView.m */; };
+		2BE6CB041ED44D69006590E8 /* PhotoCropScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709BA1ED22C0300E23AF3 /* PhotoCropScrollView.m */; };
+		2BE6CB051ED44D69006590E8 /* PhotoCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709BC1ED22C0300E23AF3 /* PhotoCropView.m */; };
+		2BE6CB061ED44D69006590E8 /* PhotoEditorBlurAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709BE1ED22C0300E23AF3 /* PhotoEditorBlurAreaView.m */; };
+		2BE6CB071ED44D69006590E8 /* PhotoEditorBlurToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709C01ED22C0300E23AF3 /* PhotoEditorBlurToolView.m */; };
+		2BE6CB081ED44D69006590E8 /* PhotoEditorBlurTypeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709C21ED22C0300E23AF3 /* PhotoEditorBlurTypeButton.m */; };
+		2BE6CB091ED44D69006590E8 /* PhotoEditorBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709C41ED22C0300E23AF3 /* PhotoEditorBlurView.m */; };
+		2BE6CB0A1ED44D69006590E8 /* PhotoEditorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709C61ED22C0300E23AF3 /* PhotoEditorButton.m */; };
+		2BE6CB0B1ED44D69006590E8 /* PhotoEditorCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709C81ED22C0300E23AF3 /* PhotoEditorCollectionView.m */; };
+		2BE6CB0C1ED44D69006590E8 /* PhotoEditorCurvesHistogramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709CA1ED22C0300E23AF3 /* PhotoEditorCurvesHistogramView.m */; };
+		2BE6CB0D1ED44D69006590E8 /* PhotoEditorCurvesToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709CC1ED22C0300E23AF3 /* PhotoEditorCurvesToolView.m */; };
+		2BE6CB0E1ED44D69006590E8 /* PhotoEditorGenericToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709CE1ED22C0300E23AF3 /* PhotoEditorGenericToolView.m */; };
+		2BE6CB0F1ED44D69006590E8 /* PhotoEditorLinearBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709D01ED22C0300E23AF3 /* PhotoEditorLinearBlurView.m */; };
+		2BE6CB101ED44D69006590E8 /* PhotoEditorPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709D21ED22C0300E23AF3 /* PhotoEditorPreviewView.m */; };
+		2BE6CB111ED44D69006590E8 /* PhotoEditorRadialBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709D41ED22C0300E23AF3 /* PhotoEditorRadialBlurView.m */; };
+		2BE6CB121ED44D69006590E8 /* PhotoEditorSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709D61ED22C0300E23AF3 /* PhotoEditorSliderView.m */; };
+		2BE6CB131ED44D69006590E8 /* PhotoEditorTintSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709D81ED22C0300E23AF3 /* PhotoEditorTintSwatchView.m */; };
+		2BE6CB141ED44D69006590E8 /* PhotoEditorTintToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709DA1ED22C0300E23AF3 /* PhotoEditorTintToolView.m */; };
+		2BE6CB151ED44D69006590E8 /* PhotoEditorToolButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709DC1ED22C0300E23AF3 /* PhotoEditorToolButtonsView.m */; };
+		2BE6CB161ED44D69006590E8 /* PhotoEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709DF1ED22C0300E23AF3 /* PhotoEditorView.m */; };
+		2BE6CB171ED44D69006590E8 /* PhotoEntitiesContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709E11ED22C0300E23AF3 /* PhotoEntitiesContainerView.m */; };
+		2BE6CB181ED44D69006590E8 /* PhotoFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709E31ED22C0300E23AF3 /* PhotoFilterCell.m */; };
+		2BE6CB191ED44D69006590E8 /* PhotoPaintActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709E51ED22C0300E23AF3 /* PhotoPaintActionsView.m */; };
+		2BE6CB1A1ED44D69006590E8 /* PhotoPaintEntityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709E71ED22C0300E23AF3 /* PhotoPaintEntityView.m */; };
+		2BE6CB1B1ED44D69006590E8 /* PhotoPaintSelectionContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709E91ED22C0300E23AF3 /* PhotoPaintSelectionContainerView.m */; };
+		2BE6CB1C1ED44D69006590E8 /* PhotoPaintSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709EB1ED22C0300E23AF3 /* PhotoPaintSettingsView.m */; };
+		2BE6CB1D1ED44D69006590E8 /* PhotoPaintSettingsWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709ED1ED22C0300E23AF3 /* PhotoPaintSettingsWrapperView.m */; };
+		2BE6CB1E1ED44D69006590E8 /* PhotoPaintSparseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709EF1ED22C0300E23AF3 /* PhotoPaintSparseView.m */; };
+		2BE6CB1F1ED44D69006590E8 /* PhotoTextEntityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709F11ED22C0300E23AF3 /* PhotoTextEntityView.m */; };
+		2BE6CB201ED44D69006590E8 /* PhotoTextSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709F31ED22C0300E23AF3 /* PhotoTextSettingsView.m */; };
+		2BE6CB211ED44D69006590E8 /* PhotoToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709F51ED22C0300E23AF3 /* PhotoToolbarView.m */; };
+		2BE6CB221ED44D69006590E8 /* PhotoToolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709F71ED22C0300E23AF3 /* PhotoToolCell.m */; };
+		2BE6CB231ED44D69006590E8 /* SharedMediaCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709FA1ED22C0300E23AF3 /* SharedMediaCollectionView.m */; };
+		2BE6CB241ED44D69006590E8 /* SharedMediaSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709FC1ED22C0300E23AF3 /* SharedMediaSectionHeader.m */; };
+		2BE6CB251ED44D69006590E8 /* SharedMediaSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD709FE1ED22C0300E23AF3 /* SharedMediaSectionHeaderView.m */; };
+		2BE6CB261ED44D69006590E8 /* VTAcceleratedVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A001ED22C0300E23AF3 /* VTAcceleratedVideoView.m */; };
+		2BE6CB271ED44D69006590E8 /* VTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70A021ED22C0300E23AF3 /* VTPlayerView.m */; };
+		2BE6CB281ED44E18006590E8 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708E91ED21EB800E23AF3 /* mdb.c */; };
+		2BE6CB291ED44E18006590E8 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708EA1ED21EB800E23AF3 /* midl.c */; };
+		2BE6CB2A1ED44E20006590E8 /* PSLMDBKeyValueCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708F11ED21EB800E23AF3 /* PSLMDBKeyValueCursor.m */; };
+		2BE6CB2B1ED44E20006590E8 /* PSLMDBKeyValueReaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708F31ED21EB800E23AF3 /* PSLMDBKeyValueReaderWriter.m */; };
+		2BE6CB2C1ED44E20006590E8 /* PSLMDBKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708F51ED21EB800E23AF3 /* PSLMDBKeyValueStore.m */; };
+		2BE6CB2D1ED44E20006590E8 /* PSLMDBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708F71ED21EB800E23AF3 /* PSLMDBTable.m */; };
+		2BE6CB2E1ED44E27006590E8 /* ItemDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1D21E01ED35DB9007D19B4 /* ItemDescriptor.m */; };
+		2BE6CB2F1ED44E27006590E8 /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70B9D1ED2368C00E23AF3 /* Camera.m */; };
+		2BE6CB301ED44E27006590E8 /* Freedom.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B6EE81ED2FEA50075EC80 /* Freedom.mm */; };
+		2BE6CB311ED44E27006590E8 /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BA01ED2371700E23AF3 /* FileUtils.m */; };
+		2BE6CB321ED44E27006590E8 /* Font.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BA21ED2371700E23AF3 /* Font.mm */; };
+		2BE6CB331ED44E27006590E8 /* ModernCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD70BA41ED2371700E23AF3 /* ModernCache.m */; };
+		2BE6CB341ED44E7D006590E8 /* AccessChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707DB1ED21E1600E23AF3 /* AccessChecker.m */; };
+		2BE6CB351ED44E7D006590E8 /* ActionStage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707DD1ED21E1600E23AF3 /* ActionStage.mm */; };
+		2BE6CB361ED44E7D006590E8 /* AnimationBlockDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707DF1ED21E1600E23AF3 /* AnimationBlockDelegate.m */; };
+		2BE6CB371ED44E7D006590E8 /* TGVideoEditAdjustments.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708FF1ED220BB00E23AF3 /* TGVideoEditAdjustments.m */; };
+		2BE6CB381ED44E7D006590E8 /* ASActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707E11ED21E1600E23AF3 /* ASActor.m */; };
+		2BE6CB391ED44E7D006590E8 /* ASCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707E31ED21E1600E23AF3 /* ASCommon.m */; };
+		2BE6CB3A1ED44E7D006590E8 /* ASHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707E51ED21E1600E23AF3 /* ASHandle.m */; };
+		2BE6CB3B1ED44E7D006590E8 /* ASQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707E71ED21E1600E23AF3 /* ASQueue.m */; };
+		2BE6CB3C1ED44E7D006590E8 /* ATQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707EA1ED21E1600E23AF3 /* ATQueue.m */; };
+		2BE6CB3D1ED44E7D006590E8 /* AudioWaveform.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707EC1ED21E1600E23AF3 /* AudioWaveform.m */; };
+		2BE6CB3E1ED44E7D006590E8 /* CameraCaptureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F01ED21E1600E23AF3 /* CameraCaptureSession.m */; };
+		2BE6CB3F1ED44E7D006590E8 /* CameraDeviceAngleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F21ED21E1600E23AF3 /* CameraDeviceAngleSampler.m */; };
+		2BE6CB401ED44E7D006590E8 /* CameraInterfaceAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F41ED21E1600E23AF3 /* CameraInterfaceAssets.m */; };
+		2BE6CB411ED44E7D006590E8 /* CameraMovieWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F61ED21E1600E23AF3 /* CameraMovieWriter.m */; };
+		2BE6CB421ED44E7D006590E8 /* CameraShotMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707F81ED21E1600E23AF3 /* CameraShotMetadata.m */; };
+		2BE6CB431ED44E7D006590E8 /* CameraVolumeButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707FA1ED21E1600E23AF3 /* CameraVolumeButtonHandler.m */; };
+		2BE6CB441ED44E7D006590E8 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707FC1ED21E1600E23AF3 /* Color.m */; };
+		2BE6CB451ED44E7D006590E8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD707FE1ED21E1600E23AF3 /* Common.m */; };
+		2BE6CB461ED44E7D006590E8 /* DocumentAttributeAnimated.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708001ED21E1600E23AF3 /* DocumentAttributeAnimated.m */; };
+		2BE6CB471ED44E7D006590E8 /* DocumentAttributeAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708021ED21E1600E23AF3 /* DocumentAttributeAudio.m */; };
+		2BE6CB481ED44E7D006590E8 /* DocumentAttributeFilename.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708041ED21E1600E23AF3 /* DocumentAttributeFilename.m */; };
+		2BE6CB491ED44E7D006590E8 /* DocumentAttributeImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708061ED21E1600E23AF3 /* DocumentAttributeImageSize.m */; };
+		2BE6CB4A1ED44E7D006590E8 /* DocumentAttributeVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708081ED21E1600E23AF3 /* DocumentAttributeVideo.m */; };
+		2BE6CB4B1ED44E7D006590E8 /* DocumentMediaAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7080A1ED21E1600E23AF3 /* DocumentMediaAttachment.m */; };
+		2BE6CB4C1ED44E7D006590E8 /* DoubleTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7080C1ED21E1600E23AF3 /* DoubleTapGestureRecognizer.m */; };
+		2BE6CB4D1ED44E7D006590E8 /* EMImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7080E1ED21E1600E23AF3 /* EMImage.m */; };
+		2BE6CB4E1ED44E7E006590E8 /* EMImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708101ED21E1600E23AF3 /* EMImageData.m */; };
+		2BE6CB4F1ED44E7E006590E8 /* EMInMemoryImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708121ED21E1600E23AF3 /* EMInMemoryImageCache.m */; };
+		2BE6CB501ED44E7E006590E8 /* GifConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708141ED21E1600E23AF3 /* GifConverter.m */; };
+		2BE6CB511ED44E7E006590E8 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708161ED21E1600E23AF3 /* GLProgram.m */; };
+		2BE6CB521ED44E7E006590E8 /* GPaintingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708171ED21E1600E23AF3 /* GPaintingData.m */; };
+		2BE6CB531ED44E7E006590E8 /* GPUImageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708191ED21E1600E23AF3 /* GPUImageContext.m */; };
+		2BE6CB541ED44E7E006590E8 /* GPUImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7081B1ED21E1600E23AF3 /* GPUImageFilter.m */; };
+		2BE6CB551ED44E7E006590E8 /* GPUImageFramebuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7081D1ED21E1600E23AF3 /* GPUImageFramebuffer.m */; };
+		2BE6CB561ED44E7E006590E8 /* GPUImageFramebufferCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7081F1ED21E1600E23AF3 /* GPUImageFramebufferCache.m */; };
+		2BE6CB571ED44E7E006590E8 /* GPUImageOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708211ED21E1600E23AF3 /* GPUImageOutput.m */; };
+		2BE6CB581ED44E7E006590E8 /* GPUImageTwoInputFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708231ED21E1600E23AF3 /* GPUImageTwoInputFilter.m */; };
+		2BE6CB591ED44E7E006590E8 /* Hacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708251ED21E1600E23AF3 /* Hacks.m */; };
+		2BE6CB5A1ED44E7E006590E8 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708271ED21E1600E23AF3 /* ImageManager.m */; };
+		2BE6CB5B1ED44E7E006590E8 /* ImageManagerTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708291ED21E1600E23AF3 /* ImageManagerTask.m */; };
+		2BE6CB5C1ED44E7E006590E8 /* ImageUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7082B1ED21E1600E23AF3 /* ImageUtils.mm */; };
+		2BE6CB5D1ED44E7E006590E8 /* JNWSpringAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7082D1ED21E1600E23AF3 /* JNWSpringAnimation.m */; };
+		2BE6CB5E1ED44E7E006590E8 /* matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7082F1ED21E1600E23AF3 /* matrix.m */; };
+		2BE6CB5F1ED44E7E006590E8 /* MediaAssetImageSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708311ED21E1600E23AF3 /* MediaAssetImageSignals.m */; };
+		2BE6CB601ED44E7E006590E8 /* MediaAssetLegacyImageSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708331ED21E1600E23AF3 /* MediaAssetLegacyImageSignals.m */; };
+		2BE6CB611ED44E7E006590E8 /* MediaAssetModernImageSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708351ED21E1600E23AF3 /* MediaAssetModernImageSignals.m */; };
+		2BE6CB621ED44E7E006590E8 /* MediaAssetsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708371ED21E1600E23AF3 /* MediaAssetsUtils.m */; };
+		2BE6CB631ED44E7E006590E8 /* MediaEditingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708391ED21E1600E23AF3 /* MediaEditingContext.m */; };
+		2BE6CB641ED44E7E006590E8 /* MediaPickerGalleryVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7083B1ED21E1600E23AF3 /* MediaPickerGalleryVideoScrubber.m */; };
+		2BE6CB651ED44E7E006590E8 /* MediaPickerLayoutMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7083D1ED21E1600E23AF3 /* MediaPickerLayoutMetrics.m */; };
+		2BE6CB661ED44E7E006590E8 /* MediaPickerModernGalleryMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7083F1ED21E1600E23AF3 /* MediaPickerModernGalleryMixin.m */; };
+		2BE6CB671ED44E7E006590E8 /* MediaSelectionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708411ED21E1600E23AF3 /* MediaSelectionContext.m */; };
+		2BE6CB681ED44E7E006590E8 /* MediaStoreContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708431ED21E1600E23AF3 /* MediaStoreContext.m */; };
+		2BE6CB691ED44E7E006590E8 /* MediaVideoConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708451ED21E1600E23AF3 /* MediaVideoConverter.m */; };
+		2BE6CB6A1ED44E7E006590E8 /* MemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708471ED21E1600E23AF3 /* MemoryCache.m */; };
+		2BE6CB6B1ED44E7E006590E8 /* MemoryImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708491ED21E1600E23AF3 /* MemoryImageCache.m */; };
+		2BE6CB6C1ED44E7E006590E8 /* ModernGalleryRotationGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7084B1ED21E1600E23AF3 /* ModernGalleryRotationGestureRecognizer.m */; };
+		2BE6CB6D1ED44E7E006590E8 /* ModernMediaListLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7084D1ED21E1600E23AF3 /* ModernMediaListLayout.m */; };
+		2BE6CB6E1ED44E7E006590E8 /* ModernViewStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7084F1ED21E1600E23AF3 /* ModernViewStorage.m */; };
+		2BE6CB6F1ED44E7E006590E8 /* NSObject+TGLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708511ED21E1600E23AF3 /* NSObject+TGLock.m */; };
+		2BE6CB701ED44E7E006590E8 /* NSValue+JNWAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708531ED21E1600E23AF3 /* NSValue+JNWAdditions.m */; };
+		2BE6CB711ED44E7E006590E8 /* ObserverProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708551ED21E1600E23AF3 /* ObserverProxy.m */; };
+		2BE6CB721ED44E7E006590E8 /* PGCameraMomentSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708581ED21E1600E23AF3 /* PGCameraMomentSegment.m */; };
+		2BE6CB731ED44E7E006590E8 /* PGCameraMomentSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7085A1ED21E1600E23AF3 /* PGCameraMomentSession.m */; };
+		2BE6CB741ED44E7E006590E8 /* PhotoCaptionInputMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7085C1ED21E1600E23AF3 /* PhotoCaptionInputMixin.m */; };
+		2BE6CB751ED44E7E006590E8 /* PhotoEditorRawDataInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7085E1ED21E1600E23AF3 /* PhotoEditorRawDataInput.m */; };
+		2BE6CB761ED44E7E006590E8 /* PhotoEditorRawDataOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708601ED21E1600E23AF3 /* PhotoEditorRawDataOutput.m */; };
+		2BE6CB771ED44E7E006590E8 /* PSKeyValueCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708631ED21E1600E23AF3 /* PSKeyValueCoder.m */; };
+		2BE6CB781ED44E7E006590E8 /* PSKeyValueDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708651ED21E1600E23AF3 /* PSKeyValueDecoder.m */; };
+		2BE6CB791ED44E7E006590E8 /* PSKeyValueEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708671ED21E1600E23AF3 /* PSKeyValueEncoder.m */; };
+		2BE6CB7A1ED44E7E006590E8 /* SGraphListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708691ED21E1600E23AF3 /* SGraphListNode.m */; };
+		2BE6CB7B1ED44E7E006590E8 /* SGraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7086B1ED21E1600E23AF3 /* SGraphNode.m */; };
+		2BE6CB7C1ED44E7E006590E8 /* SGraphObjectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7086D1ED21E1600E23AF3 /* SGraphObjectNode.m */; };
+		2BE6CB7D1ED44E7E006590E8 /* SharedMediaCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7086F1ED21E1600E23AF3 /* SharedMediaCollectionLayout.m */; };
+		2BE6CB7E1ED44E7E006590E8 /* SharedMediaUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708711ED21E1600E23AF3 /* SharedMediaUtils.m */; };
+		2BE6CB7F1ED44E7E006590E8 /* StringUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708731ED21E1600E23AF3 /* StringUtils.mm */; };
+		2BE6CB801ED44E7E006590E8 /* SuggestionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708751ED21E1600E23AF3 /* SuggestionContext.m */; };
+		2BE6CB811ED44E7E006590E8 /* TGTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7087B1ED21E1600E23AF3 /* TGTimer.m */; };
+		2BE6CB821ED44E7E006590E8 /* TimerTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7087D1ED21E1600E23AF3 /* TimerTarget.m */; };
+		2BE6CB831ED44E7E006590E8 /* TransitionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7087F1ED21E1600E23AF3 /* TransitionLayout.m */; };
+		2BE6CB841ED44E7E006590E8 /* UICollectionView+Transitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708811ED21E1600E23AF3 /* UICollectionView+Transitioning.m */; };
+		2BE6CB851ED44E7E006590E8 /* UICollectionView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708831ED21E1600E23AF3 /* UICollectionView+Utils.m */; };
+		2BE6CB861ED44E7E006590E8 /* UIControl+HitTestEdgeInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708851ED21E1600E23AF3 /* UIControl+HitTestEdgeInsets.m */; };
+		2BE6CB871ED44E7E006590E8 /* UIImage+MediaEditableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708871ED21E1600E23AF3 /* UIImage+MediaEditableItem.m */; };
+		2BE6CB881ED44E7E006590E8 /* UIImage+TG.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD708891ED21E1600E23AF3 /* UIImage+TG.m */; };
+		2BE6CB891ED44E7E006590E8 /* VTPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7088B1ED21E1600E23AF3 /* VTPlayer.m */; };
+		2BE6CB8A1ED44E7E006590E8 /* WeakReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD7088D1ED21E1600E23AF3 /* WeakReference.m */; };
+		2BE6CB8B1ED44EB4006590E8 /* Quality240@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */; };
+		2BE6CB8C1ED44EB4006590E8 /* Quality240@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */; };
+		2BE6CB8D1ED44EB4006590E8 /* Quality360@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */; };
+		2BE6CB8E1ED44EB4006590E8 /* Quality360@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619F1ECB9B0F00EAB62A /* Quality360@3x.png */; };
+		2BE6CB8F1ED44EB4006590E8 /* Quality480@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A01ECB9B0F00EAB62A /* Quality480@2x.png */; };
+		2BE6CB901ED44EB4006590E8 /* Quality480@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A11ECB9B0F00EAB62A /* Quality480@3x.png */; };
+		2BE6CB911ED44EB4006590E8 /* Quality720@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A21ECB9B0F00EAB62A /* Quality720@2x.png */; };
+		2BE6CB921ED44EB4006590E8 /* Quality720@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A31ECB9B0F00EAB62A /* Quality720@3x.png */; };
+		2BE6CB931ED44EB4006590E8 /* QualityHD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A41ECB9B0F00EAB62A /* QualityHD@2x.png */; };
+		2BE6CB941ED44EB4006590E8 /* QualityHD@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61A51ECB9B0F00EAB62A /* QualityHD@3x.png */; };
+		2BE6CB951ED44EB4006590E8 /* VolumeControlSliderButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61B91ECBA4BA00EAB62A /* VolumeControlSliderButton@2x.png */; };
+		2BE6CB961ED44EB4006590E8 /* VolumeControlVolumeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE61BA1ECBA4BA00EAB62A /* VolumeControlVolumeIcon@2x.png */; };
+		2BE6CB971ED44EB4006590E8 /* CameraAutoFocusCrosshairs.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B61ECA40A300D6576D /* CameraAutoFocusCrosshairs.png */; };
+		2BE6CB981ED44EB4006590E8 /* CameraAutoFocusCrosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B71ECA40A300D6576D /* CameraAutoFocusCrosshairs@2x.png */; };
+		2BE6CB991ED44EB4006590E8 /* CameraAutoFocusCrosshairs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B81ECA40A300D6576D /* CameraAutoFocusCrosshairs@3x.png */; };
+		2BE6CB9A1ED44EB4006590E8 /* CameraDeleteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84B91ECA40A300D6576D /* CameraDeleteIcon@2x.png */; };
+		2BE6CB9B1ED44EB4006590E8 /* CameraExposureIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BA1ECA40A300D6576D /* CameraExposureIcon@2x.png */; };
+		2BE6CB9C1ED44EB4006590E8 /* CameraFlashActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BB1ECA40A300D6576D /* CameraFlashActive@2x.png */; };
+		2BE6CB9D1ED44EB4006590E8 /* CameraFlashButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BC1ECA40A300D6576D /* CameraFlashButton@2x.png */; };
+		2BE6CB9E1ED44EB4006590E8 /* CameraFlashButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BD1ECA40A300D6576D /* CameraFlashButton@3x.png */; };
+		2BE6CB9F1ED44EB4006590E8 /* CameraFlipButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BE1ECA40A300D6576D /* CameraFlipButton.png */; };
+		2BE6CBA01ED44EB4006590E8 /* CameraFlipButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84BF1ECA40A300D6576D /* CameraFlipButton@2x.png */; };
+		2BE6CBA11ED44EB4006590E8 /* CameraFocusCrosshairs.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C01ECA40A300D6576D /* CameraFocusCrosshairs.png */; };
+		2BE6CBA21ED44EB4006590E8 /* CameraFocusCrosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C11ECA40A300D6576D /* CameraFocusCrosshairs@2x.png */; };
+		2BE6CBA31ED44EB4006590E8 /* CameraFocusCrosshairs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C21ECA40A300D6576D /* CameraFocusCrosshairs@3x.png */; };
+		2BE6CBA41ED44EB4006590E8 /* CameraLargeFlipButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C31ECA40A300D6576D /* CameraLargeFlipButton@3x.png */; };
+		2BE6CBA51ED44EB4006590E8 /* CameraSegmentsBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C41ECA40A300D6576D /* CameraSegmentsBack@2x.png */; };
+		2BE6CBA61ED44EB4006590E8 /* ImagePickerPhotoCounter_Close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C51ECA40A300D6576D /* ImagePickerPhotoCounter_Close@2x.png */; };
+		2BE6CBA71ED44EB4006590E8 /* ImagePickerPhotoCounter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C61ECA40A300D6576D /* ImagePickerPhotoCounter@2x.png */; };
+		2BE6CBA81ED44EB4006590E8 /* PhotoEditorAspectRatioIcon_Applied@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C71ECA40A300D6576D /* PhotoEditorAspectRatioIcon_Applied@2x.png */; };
+		2BE6CBA91ED44EB4006590E8 /* PhotoEditorAspectRatioIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C81ECA40A300D6576D /* PhotoEditorAspectRatioIcon@2x.png */; };
+		2BE6CBAA1ED44EB4006590E8 /* PhotoEditorBlurLinear.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84C91ECA40A300D6576D /* PhotoEditorBlurLinear.png */; };
+		2BE6CBAB1ED44EB4006590E8 /* PhotoEditorBlurLinear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CA1ECA40A300D6576D /* PhotoEditorBlurLinear@2x.png */; };
+		2BE6CBAC1ED44EB4006590E8 /* PhotoEditorBlurLinear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CB1ECA40A300D6576D /* PhotoEditorBlurLinear@3x.png */; };
+		2BE6CBAD1ED44EB4006590E8 /* PhotoEditorBlurOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CC1ECA40A300D6576D /* PhotoEditorBlurOff.png */; };
+		2BE6CBAE1ED44EB4006590E8 /* PhotoEditorBlurOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CD1ECA40A300D6576D /* PhotoEditorBlurOff@2x.png */; };
+		2BE6CBAF1ED44EB4006590E8 /* PhotoEditorBlurOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CE1ECA40A300D6576D /* PhotoEditorBlurOff@3x.png */; };
+		2BE6CBB01ED44EB4006590E8 /* PhotoEditorBlurRadial.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84CF1ECA40A300D6576D /* PhotoEditorBlurRadial.png */; };
+		2BE6CBB11ED44EB4006590E8 /* PhotoEditorBlurRadial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D01ECA40A300D6576D /* PhotoEditorBlurRadial@2x.png */; };
+		2BE6CBB21ED44EB4006590E8 /* PhotoEditorBlurRadial@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D11ECA40A300D6576D /* PhotoEditorBlurRadial@3x.png */; };
+		2BE6CBB31ED44EB4006590E8 /* PhotoEditorBlurTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D21ECA40A300D6576D /* PhotoEditorBlurTool.png */; };
+		2BE6CBB41ED44EB4006590E8 /* PhotoEditorBlurTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D31ECA40A300D6576D /* PhotoEditorBlurTool@2x.png */; };
+		2BE6CBB51ED44EB4006590E8 /* PhotoEditorBlurTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D41ECA40A300D6576D /* PhotoEditorBlurTool@3x.png */; };
+		2BE6CBB61ED44EB4006590E8 /* PhotoEditorContrastTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D51ECA40A300D6576D /* PhotoEditorContrastTool.png */; };
+		2BE6CBB71ED44EB4006590E8 /* PhotoEditorContrastTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D61ECA40A300D6576D /* PhotoEditorContrastTool@2x.png */; };
+		2BE6CBB81ED44EB4006590E8 /* PhotoEditorContrastTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D71ECA40A300D6576D /* PhotoEditorContrastTool@3x.png */; };
+		2BE6CBB91ED44EB4006590E8 /* PhotoEditorCrop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D81ECA40A300D6576D /* PhotoEditorCrop@2x.png */; };
+		2BE6CBBA1ED44EB4006590E8 /* PhotoEditorCrop@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84D91ECA40A300D6576D /* PhotoEditorCrop@3x.png */; };
+		2BE6CBBB1ED44EB4006590E8 /* PhotoEditorCropCorners@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DA1ECA40A300D6576D /* PhotoEditorCropCorners@2x.png */; };
+		2BE6CBBC1ED44EB4006590E8 /* PhotoEditorCurvesTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DB1ECA40A300D6576D /* PhotoEditorCurvesTool@2x.png */; };
+		2BE6CBBD1ED44ED6006590E8 /* PhotoEditorEnhanceTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DC1ECA40A300D6576D /* PhotoEditorEnhanceTool.png */; };
+		2BE6CBBE1ED44ED6006590E8 /* PhotoEditorEnhanceTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DD1ECA40A300D6576D /* PhotoEditorEnhanceTool@2x.png */; };
+		2BE6CBBF1ED44ED6006590E8 /* PhotoEditorEnhanceTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DE1ECA40A300D6576D /* PhotoEditorEnhanceTool@3x.png */; };
+		2BE6CBC01ED44ED6006590E8 /* PhotoEditorExposureTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84DF1ECA40A300D6576D /* PhotoEditorExposureTool.png */; };
+		2BE6CBC11ED44ED6006590E8 /* PhotoEditorExposureTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E01ECA40A300D6576D /* PhotoEditorExposureTool@2x.png */; };
+		2BE6CBC21ED44ED6006590E8 /* PhotoEditorExposureTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E11ECA40A300D6576D /* PhotoEditorExposureTool@3x.png */; };
+		2BE6CBC31ED44ED6006590E8 /* PhotoEditorFadeTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E21ECA40A300D6576D /* PhotoEditorFadeTool@2x.png */; };
+		2BE6CBC41ED44ED6006590E8 /* PhotoEditorFilters@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E31ECA40A300D6576D /* PhotoEditorFilters@2x.png */; };
+		2BE6CBC51ED44ED6006590E8 /* PhotoEditorGrainTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E41ECA40A300D6576D /* PhotoEditorGrainTool.png */; };
+		2BE6CBC61ED44ED6006590E8 /* PhotoEditorGrainTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E51ECA40A300D6576D /* PhotoEditorGrainTool@2x.png */; };
+		2BE6CBC71ED44ED6006590E8 /* PhotoEditorGrainTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E61ECA40A300D6576D /* PhotoEditorGrainTool@3x.png */; };
+		2BE6CBC81ED44ED6006590E8 /* PhotoEditorHighlightsTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E71ECA40A300D6576D /* PhotoEditorHighlightsTool.png */; };
+		2BE6CBC91ED44ED6006590E8 /* PhotoEditorHighlightsTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E81ECA40A300D6576D /* PhotoEditorHighlightsTool@2x.png */; };
+		2BE6CBCA1ED44ED6006590E8 /* PhotoEditorHighlightsTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84E91ECA40A300D6576D /* PhotoEditorHighlightsTool@3x.png */; };
+		2BE6CBCB1ED44ED6006590E8 /* PhotoEditorPaint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84EA1ECA40A300D6576D /* PhotoEditorPaint@2x.png */; };
+		2BE6CBCC1ED44ED6006590E8 /* PhotoEditorRotateIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84EB1ECA40A300D6576D /* PhotoEditorRotateIcon@2x.png */; };
+		2BE6CBCD1ED44ED6006590E8 /* PhotoEditorRotationNeedle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84EC1ECA40A300D6576D /* PhotoEditorRotationNeedle@2x.png */; };
+		2BE6CBCE1ED44ED6006590E8 /* PhotoEditorRotationWheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84ED1ECA40A300D6576D /* PhotoEditorRotationWheel@2x.png */; };
+		2BE6CBCF1ED44ED6006590E8 /* PhotoEditorRotationWheelLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84EE1ECA40A300D6576D /* PhotoEditorRotationWheelLeft@2x.png */; };
+		2BE6CBD01ED44ED6006590E8 /* PhotoEditorRotationWheelRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84EF1ECA40A300D6576D /* PhotoEditorRotationWheelRight@2x.png */; };
+		2BE6CBD11ED44ED6006590E8 /* PhotoEditorSaturationTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F01ECA40A300D6576D /* PhotoEditorSaturationTool.png */; };
+		2BE6CBD21ED44ED6006590E8 /* PhotoEditorSaturationTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F11ECA40A300D6576D /* PhotoEditorSaturationTool@2x.png */; };
+		2BE6CBD31ED44ED6006590E8 /* PhotoEditorSaturationTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F21ECA40A300D6576D /* PhotoEditorSaturationTool@3x.png */; };
+		2BE6CBD41ED44ED6006590E8 /* PhotoEditorShadowsTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F31ECA40A300D6576D /* PhotoEditorShadowsTool.png */; };
+		2BE6CBD51ED44ED6006590E8 /* PhotoEditorShadowsTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F41ECA40A300D6576D /* PhotoEditorShadowsTool@2x.png */; };
+		2BE6CBD61ED44ED6006590E8 /* PhotoEditorShadowsTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F51ECA40A300D6576D /* PhotoEditorShadowsTool@3x.png */; };
+		2BE6CBD71ED44ED6006590E8 /* PhotoEditorSharpenTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F61ECA40A300D6576D /* PhotoEditorSharpenTool.png */; };
+		2BE6CBD81ED44ED6006590E8 /* PhotoEditorSharpenTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F71ECA40A300D6576D /* PhotoEditorSharpenTool@2x.png */; };
+		2BE6CBD91ED44ED6006590E8 /* PhotoEditorSharpenTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F81ECA40A300D6576D /* PhotoEditorSharpenTool@3x.png */; };
+		2BE6CBDA1ED44ED6006590E8 /* PhotoEditorTintTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84F91ECA40A300D6576D /* PhotoEditorTintTool@2x.png */; };
+		2BE6CBDB1ED44ED6006590E8 /* PhotoEditorTools@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FA1ECA40A300D6576D /* PhotoEditorTools@2x.png */; };
+		2BE6CBDC1ED44ED6006590E8 /* PhotoEditorTools@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FB1ECA40A300D6576D /* PhotoEditorTools@3x.png */; };
+		2BE6CBDD1ED44ED6006590E8 /* PhotoEditorVignetteTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FC1ECA40A300D6576D /* PhotoEditorVignetteTool.png */; };
+		2BE6CBDE1ED44ED6006590E8 /* PhotoEditorVignetteTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FD1ECA40A300D6576D /* PhotoEditorVignetteTool@2x.png */; };
+		2BE6CBDF1ED44ED6006590E8 /* PhotoEditorVignetteTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FE1ECA40A300D6576D /* PhotoEditorVignetteTool@3x.png */; };
+		2BE6CBE01ED44ED6006590E8 /* PhotoEditorWarmthTool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F84FF1ECA40A300D6576D /* PhotoEditorWarmthTool.png */; };
+		2BE6CBE11ED44ED6006590E8 /* PhotoEditorWarmthTool@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F85001ECA40A300D6576D /* PhotoEditorWarmthTool@2x.png */; };
+		2BE6CBE21ED44ED6006590E8 /* PhotoEditorWarmthTool@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F85011ECA40A300D6576D /* PhotoEditorWarmthTool@3x.png */; };
+		2BE6CBE31ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F854E1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon.png */; };
+		2BE6CBE41ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F854F1ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@2x.png */; };
+		2BE6CBE51ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2F85501ECA414700D6576D /* AttachmentMenuInteractiveCameraIcon@3x.png */; };
 		2BEE61A61ECB9B0F00EAB62A /* Quality240@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */; };
 		2BEE61A71ECB9B0F00EAB62A /* Quality240@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */; };
 		2BEE61A81ECB9B0F00EAB62A /* Quality360@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */; };
@@ -1704,7 +2151,6 @@
 		2BD70BF81ED2383F00E23AF3 /* VideoInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VideoInfo.mm; path = Token/ImagePicker/Models/VideoInfo.mm; sourceTree = SOURCE_ROOT; };
 		2BD70BF91ED2383F00E23AF3 /* VideoMediaAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoMediaAttachment.h; path = Token/ImagePicker/Models/VideoMediaAttachment.h; sourceTree = SOURCE_ROOT; };
 		2BD70BFA1ED2383F00E23AF3 /* VideoMediaAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoMediaAttachment.m; path = Token/ImagePicker/Models/VideoMediaAttachment.m; sourceTree = SOURCE_ROOT; };
-		2BD70C1D1ED2388200E23AF3 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionAnimator.swift; path = Token/ImagePicker/Helpers/TransitionAnimator.swift; sourceTree = SOURCE_ROOT; };
 		2BEE619C1ECB9B0F00EAB62A /* Quality240@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@2x.png"; path = "Icons/Quality240@2x.png"; sourceTree = "<group>"; };
 		2BEE619D1ECB9B0F00EAB62A /* Quality240@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality240@3x.png"; path = "Icons/Quality240@3x.png"; sourceTree = "<group>"; };
 		2BEE619E1ECB9B0F00EAB62A /* Quality360@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Quality360@2x.png"; path = "Icons/Quality360@2x.png"; sourceTree = "<group>"; };
@@ -2182,7 +2628,6 @@
 			children = (
 				2B1D21DF1ED35DB9007D19B4 /* ItemDescriptor.h */,
 				2B1D21E01ED35DB9007D19B4 /* ItemDescriptor.m */,
-				2BD70C1D1ED2388200E23AF3 /* TransitionAnimator.swift */,
 				2BD70B9C1ED2368C00E23AF3 /* Camera.h */,
 				2BD70B9D1ED2368C00E23AF3 /* Camera.m */,
 				2B8B6EE71ED2FEA50075EC80 /* Freedom.h */,
@@ -2957,9 +3402,8 @@
 				2BD70BFA1ED2383F00E23AF3 /* VideoMediaAttachment.m */,
 			);
 			name = Models;
-                        sourceTree = "<group>";
+			sourceTree = "<group>";
 		};
-
 		9F232A971EC9E3A300270761 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -3528,42 +3972,133 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE6CBCC1ED44ED6006590E8 /* PhotoEditorRotateIcon@2x.png in Resources */,
+				2BE6CBB71ED44EB4006590E8 /* PhotoEditorContrastTool@2x.png in Resources */,
 				149F9AC51E72E29A00FB74AA /* SF-UI-Text-Semibold.otf in Resources */,
 				149F9AC61E72E29A00FB74AA /* SF-UI-Display-Black.otf in Resources */,
+				2BE6CBC11ED44ED6006590E8 /* PhotoEditorExposureTool@2x.png in Resources */,
+				2BE6CBCA1ED44ED6006590E8 /* PhotoEditorHighlightsTool@3x.png in Resources */,
+				2BE6CBAD1ED44EB4006590E8 /* PhotoEditorBlurOff.png in Resources */,
 				149F9AC71E72E29A00FB74AA /* SF-UI-Text-MediumItalic.otf in Resources */,
 				149F9AC91E72E29A00FB74AA /* SF-UI-Text-UltrathinItalic.otf in Resources */,
+				2BE6CBB41ED44EB4006590E8 /* PhotoEditorBlurTool@2x.png in Resources */,
+				2BE6CBAB1ED44EB4006590E8 /* PhotoEditorBlurLinear@2x.png in Resources */,
+				2BE6CB9C1ED44EB4006590E8 /* CameraFlashActive@2x.png in Resources */,
+				2BE6CBA81ED44EB4006590E8 /* PhotoEditorAspectRatioIcon_Applied@2x.png in Resources */,
+				2BE6CB9B1ED44EB4006590E8 /* CameraExposureIcon@2x.png in Resources */,
 				9FB36EAE1E7C27A300DB6F86 /* messageSent.m4a in Resources */,
+				2BE6CBBC1ED44EB4006590E8 /* PhotoEditorCurvesTool@2x.png in Resources */,
+				2BE6CBA21ED44EB4006590E8 /* CameraFocusCrosshairs@2x.png in Resources */,
+				2BE6CB961ED44EB4006590E8 /* VolumeControlVolumeIcon@2x.png in Resources */,
 				149F9ACB1E72E29A00FB74AA /* SF-UI-Display-Regular.otf in Resources */,
+				2BE6CBD11ED44ED6006590E8 /* PhotoEditorSaturationTool.png in Resources */,
+				2BE6CBB21ED44EB4006590E8 /* PhotoEditorBlurRadial@3x.png in Resources */,
+				2BE6CBC31ED44ED6006590E8 /* PhotoEditorFadeTool@2x.png in Resources */,
+				2BE6CBC21ED44ED6006590E8 /* PhotoEditorExposureTool@3x.png in Resources */,
 				149F9ACC1E72E29A00FB74AA /* SF-UI-Display-Light.otf in Resources */,
+				2BE6CBBA1ED44EB4006590E8 /* PhotoEditorCrop@3x.png in Resources */,
+				2BE6CB951ED44EB4006590E8 /* VolumeControlSliderButton@2x.png in Resources */,
+				2BE6CB971ED44EB4006590E8 /* CameraAutoFocusCrosshairs.png in Resources */,
 				149F9ACD1E72E29A00FB74AA /* SF-UI-Display-Ultralight.otf in Resources */,
+				2BE6CBA51ED44EB4006590E8 /* CameraSegmentsBack@2x.png in Resources */,
+				2BE6CBD31ED44ED6006590E8 /* PhotoEditorSaturationTool@3x.png in Resources */,
+				2BE6CBE11ED44ED6006590E8 /* PhotoEditorWarmthTool@2x.png in Resources */,
+				2BE6CBC91ED44ED6006590E8 /* PhotoEditorHighlightsTool@2x.png in Resources */,
 				149F9ACF1E72E29A00FB74AA /* SF-UI-Display-Thin.otf in Resources */,
+				2BE6CB8E1ED44EB4006590E8 /* Quality360@3x.png in Resources */,
+				2BE6CBD21ED44ED6006590E8 /* PhotoEditorSaturationTool@2x.png in Resources */,
+				2BE6CBA71ED44EB4006590E8 /* ImagePickerPhotoCounter@2x.png in Resources */,
+				2BE6CBA61ED44EB4006590E8 /* ImagePickerPhotoCounter_Close@2x.png in Resources */,
+				2BE6CB8D1ED44EB4006590E8 /* Quality360@2x.png in Resources */,
+				2BE6CBB91ED44EB4006590E8 /* PhotoEditorCrop@2x.png in Resources */,
+				2BE6CBCD1ED44ED6006590E8 /* PhotoEditorRotationNeedle@2x.png in Resources */,
+				2BE6CBA01ED44EB4006590E8 /* CameraFlipButton@2x.png in Resources */,
+				2BE6CB981ED44EB4006590E8 /* CameraAutoFocusCrosshairs@2x.png in Resources */,
+				2BE6CBB61ED44EB4006590E8 /* PhotoEditorContrastTool.png in Resources */,
 				9FB36EAC1E7C27A300DB6F86 /* requestPayment.m4a in Resources */,
+				2BE6CB991ED44EB4006590E8 /* CameraAutoFocusCrosshairs@3x.png in Resources */,
+				2BE6CBCB1ED44ED6006590E8 /* PhotoEditorPaint@2x.png in Resources */,
 				149F9AD01E72E29A00FB74AA /* SF-UI-Display-Medium.otf in Resources */,
 				149F9AD11E72E29A00FB74AA /* LaunchScreen.storyboard in Resources */,
 				9FB36EAB1E7C27A300DB6F86 /* scan.m4a in Resources */,
+				2BE6CBD91ED44ED6006590E8 /* PhotoEditorSharpenTool@3x.png in Resources */,
+				2BE6CBDC1ED44ED6006590E8 /* PhotoEditorTools@3x.png in Resources */,
 				9FB36EA81E7C27A300DB6F86 /* menuButton.m4a in Resources */,
+				2BE6CB8B1ED44EB4006590E8 /* Quality240@2x.png in Resources */,
 				149F9AD21E72E29A00FB74AA /* SF-UI-Text-Medium.otf in Resources */,
+				2BE6CB9F1ED44EB4006590E8 /* CameraFlipButton.png in Resources */,
+				2BE6CBE41ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon@2x.png in Resources */,
+				2BE6CBC51ED44ED6006590E8 /* PhotoEditorGrainTool.png in Resources */,
+				2BE6CBC41ED44ED6006590E8 /* PhotoEditorFilters@2x.png in Resources */,
+				2BE6CBAC1ED44EB4006590E8 /* PhotoEditorBlurLinear@3x.png in Resources */,
 				9F27525F1EB9CA7A00050C08 /* Settings.storyboard in Resources */,
+				2BE6CBCF1ED44ED6006590E8 /* PhotoEditorRotationWheelLeft@2x.png in Resources */,
+				2BE6CBBE1ED44ED6006590E8 /* PhotoEditorEnhanceTool@2x.png in Resources */,
+				2BE6CBAA1ED44EB4006590E8 /* PhotoEditorBlurLinear.png in Resources */,
 				149F9AD31E72E29A00FB74AA /* SF-UI-Text-Bold.otf in Resources */,
 				149F9AD41E72E29A00FB74AA /* Localizable.strings in Resources */,
+				2BE6CBB51ED44EB4006590E8 /* PhotoEditorBlurTool@3x.png in Resources */,
+				2BE6CBB11ED44EB4006590E8 /* PhotoEditorBlurRadial@2x.png in Resources */,
+				2BE6CBAE1ED44EB4006590E8 /* PhotoEditorBlurOff@2x.png in Resources */,
+				2BE6CBD81ED44ED6006590E8 /* PhotoEditorSharpenTool@2x.png in Resources */,
+				2BE6CBA31ED44EB4006590E8 /* CameraFocusCrosshairs@3x.png in Resources */,
 				149F9AD51E72E29A00FB74AA /* SF-UI-Display-Bold.otf in Resources */,
 				149F9AD61E72E29A00FB74AA /* SF-UI-Text-Heavy.otf in Resources */,
+				2BE6CBE01ED44ED6006590E8 /* PhotoEditorWarmthTool.png in Resources */,
+				2BE6CBE51ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon@3x.png in Resources */,
+				2BE6CBB01ED44EB4006590E8 /* PhotoEditorBlurRadial.png in Resources */,
+				2BE6CBC01ED44ED6006590E8 /* PhotoEditorExposureTool.png in Resources */,
+				2BE6CBAF1ED44EB4006590E8 /* PhotoEditorBlurOff@3x.png in Resources */,
+				2BE6CBB81ED44EB4006590E8 /* PhotoEditorContrastTool@3x.png in Resources */,
 				9FB36EAF1E7C27A300DB6F86 /* PN.m4a in Resources */,
+				2BE6CB8C1ED44EB4006590E8 /* Quality240@3x.png in Resources */,
 				9FB36EA91E7C27A300DB6F86 /* paymentSend.m4a in Resources */,
 				149F9AD71E72E29A00FB74AA /* SF-UI-Text-RegularItalic.otf in Resources */,
+				2BE6CBD51ED44ED6006590E8 /* PhotoEditorShadowsTool@2x.png in Resources */,
+				2BE6CBDD1ED44ED6006590E8 /* PhotoEditorVignetteTool.png in Resources */,
+				2BE6CBBF1ED44ED6006590E8 /* PhotoEditorEnhanceTool@3x.png in Resources */,
+				2BE6CB8F1ED44EB4006590E8 /* Quality480@2x.png in Resources */,
+				2BE6CBA41ED44EB4006590E8 /* CameraLargeFlipButton@3x.png in Resources */,
+				2BE6CBD01ED44ED6006590E8 /* PhotoEditorRotationWheelRight@2x.png in Resources */,
+				2BE6CBCE1ED44ED6006590E8 /* PhotoEditorRotationWheel@2x.png in Resources */,
+				2BE6CBDF1ED44ED6006590E8 /* PhotoEditorVignetteTool@3x.png in Resources */,
+				2BE6CB9D1ED44EB4006590E8 /* CameraFlashButton@2x.png in Resources */,
+				2BE6CBB31ED44EB4006590E8 /* PhotoEditorBlurTool.png in Resources */,
+				2BE6CB931ED44EB4006590E8 /* QualityHD@2x.png in Resources */,
+				2BE6CBDE1ED44ED6006590E8 /* PhotoEditorVignetteTool@2x.png in Resources */,
+				2BE6CBE21ED44ED6006590E8 /* PhotoEditorWarmthTool@3x.png in Resources */,
+				2BE6CBC81ED44ED6006590E8 /* PhotoEditorHighlightsTool.png in Resources */,
 				149F9AD81E72E29A00FB74AA /* SF-UI-Text-Regular.otf in Resources */,
+				2BE6CB921ED44EB4006590E8 /* Quality720@3x.png in Resources */,
+				2BE6CBDB1ED44ED6006590E8 /* PhotoEditorTools@2x.png in Resources */,
+				2BE6CBA11ED44EB4006590E8 /* CameraFocusCrosshairs.png in Resources */,
 				149F9ADA1E72E29A00FB74AA /* SF-UI-Text-SemiboldItalic.otf in Resources */,
 				149F9ADB1E72E29A00FB74AA /* SF-UI-Display-Heavy.otf in Resources */,
+				2BE6CB9E1ED44EB4006590E8 /* CameraFlashButton@3x.png in Resources */,
 				149F9ADC1E72E29A00FB74AA /* Assets.xcassets in Resources */,
+				2BE6CB911ED44EB4006590E8 /* Quality720@2x.png in Resources */,
+				2BE6CBD71ED44ED6006590E8 /* PhotoEditorSharpenTool.png in Resources */,
+				2BE6CB941ED44EB4006590E8 /* QualityHD@3x.png in Resources */,
+				2BE6CB9A1ED44EB4006590E8 /* CameraDeleteIcon@2x.png in Resources */,
+				2BE6CBE31ED44ED6006590E8 /* AttachmentMenuInteractiveCameraIcon.png in Resources */,
 				149F9ADD1E72E29A00FB74AA /* SF-UI-Text-HeavyItalic.otf in Resources */,
 				149F9ADE1E72E29A00FB74AA /* SF-UI-Text-BoldItalic.otf in Resources */,
+				2BE6CB901ED44EB4006590E8 /* Quality480@3x.png in Resources */,
+				2BE6CBBD1ED44ED6006590E8 /* PhotoEditorEnhanceTool.png in Resources */,
+				2BE6CBD61ED44ED6006590E8 /* PhotoEditorShadowsTool@3x.png in Resources */,
 				149F9AE01E72E29A00FB74AA /* SF-UI-Text-LightItalic.otf in Resources */,
 				149F9AE11E72E29A00FB74AA /* SF-UI-Text-Light.otf in Resources */,
+				2BE6CBC61ED44ED6006590E8 /* PhotoEditorGrainTool@2x.png in Resources */,
+				2BE6CBBB1ED44EB4006590E8 /* PhotoEditorCropCorners@2x.png in Resources */,
+				2BE6CBC71ED44ED6006590E8 /* PhotoEditorGrainTool@3x.png in Resources */,
 				9FB36EAA1E7C27A300DB6F86 /* addContactApp.m4a in Resources */,
 				9FB36EAD1E7C27A300DB6F86 /* messageReceived.m4a in Resources */,
 				149F9AE21E72E29A00FB74AA /* SF-UI-Display-Semibold.otf in Resources */,
+				2BE6CBA91ED44EB4006590E8 /* PhotoEditorAspectRatioIcon@2x.png in Resources */,
 				149F9AE51E72E29A00FB74AA /* SF-UI-Text-Ultrathin.otf in Resources */,
+				2BE6CBDA1ED44ED6006590E8 /* PhotoEditorTintTool@2x.png in Resources */,
 				9F8A803C1E9D07FF0017ED9C /* token.cer in Resources */,
+				2BE6CBD41ED44ED6006590E8 /* PhotoEditorShadowsTool.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3853,111 +4388,468 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE6CB301ED44E27006590E8 /* Freedom.mm in Sources */,
+				2BE6CA3D1ED44C41006590E8 /* ModernButtonViewModel.m in Sources */,
+				2BE6CA671ED44C9C006590E8 /* PhotoCropControl.m in Sources */,
+				2BE6CA701ED44C9C006590E8 /* PhotoEnhanceInterpolationFilter.m in Sources */,
+				2BE6CABE1ED44D69006590E8 /* CameraTimeCodeView.m in Sources */,
+				2BE6CB0B1ED44D69006590E8 /* PhotoEditorCollectionView.m in Sources */,
 				149F9A611E72E29A00FB74AA /* PaymentSendController.swift in Sources */,
+				2BE6CA811ED44C9C006590E8 /* PhotoToolComposer.m in Sources */,
 				149F9A621E72E29A00FB74AA /* ProfileEditController.swift in Sources */,
+				2BE6CB3B1ED44E7D006590E8 /* ASQueue.m in Sources */,
+				2BE6CA981ED44CC7006590E8 /* OverlayFormsheetController.m in Sources */,
+				2BE6CAE01ED44D69006590E8 /* MenuSheetDimView.m in Sources */,
+				2BE6CB5E1ED44E7E006590E8 /* matrix.m in Sources */,
 				149F9A631E72E29A00FB74AA /* SignalNotificationHandler.swift in Sources */,
+				2BE6CA501ED44C9C006590E8 /* HighlightsTool.m in Sources */,
+				2BE6CAB61ED44D69006590E8 /* CameraFlipButton.m in Sources */,
+				2BE6CAFF1ED44D69006590E8 /* PhotoAvatarCropView.m in Sources */,
+				2BE6CAD61ED44D69006590E8 /* MediaPickerGalleryVideoItemView.m in Sources */,
 				9FAC46EE1E800C13005F76A9 /* UIColor+Additions.swift in Sources */,
+				2BE6CA481ED44C9C006590E8 /* BlurEffect.m in Sources */,
 				149F9A641E72E29A00FB74AA /* BackgroundNotificationHandler.swift in Sources */,
 				9F54AB0E1ECC8D390008489F /* ScannerController.swift in Sources */,
+				2BE6CB561ED44E7E006590E8 /* GPUImageFramebufferCache.m in Sources */,
+				2BE6CAD81ED44D69006590E8 /* MediaPickerGalleryVideoTrimView.m in Sources */,
+				2BE6CB261ED44D69006590E8 /* VTAcceleratedVideoView.m in Sources */,
+				2BE6CA961ED44CC7006590E8 /* MediaPickerController.m in Sources */,
+				2BE6CB5D1ED44E7E006590E8 /* JNWSpringAnimation.m in Sources */,
+				2BE6CAEA1ED44D69006590E8 /* ModernClockProgressView.m in Sources */,
+				2BE6CAD51ED44D69006590E8 /* MediaPickerGalleryPhotoItemView.m in Sources */,
+				2BE6CA771ED44C9C006590E8 /* PhotoHistogramGenerator.m in Sources */,
+				2BE6CAC01ED44D69006590E8 /* CheckButtonView.m in Sources */,
+				2BE6CA761ED44C9C006590E8 /* PhotoHistogram.m in Sources */,
+				2BE6CB0C1ED44D69006590E8 /* PhotoEditorCurvesHistogramView.m in Sources */,
+				2BE6CAB41ED44D69006590E8 /* AttachmentVideoCell.m in Sources */,
+				2BE6CA521ED44C9C006590E8 /* PaintBrush.m in Sources */,
+				2BE6CB8A1ED44E7E006590E8 /* WeakReference.m in Sources */,
+				2BE6CA801ED44C9C006590E8 /* PhotoTool.m in Sources */,
 				149F9A661E72E29A00FB74AA /* MessageFetcherJob.swift in Sources */,
+				2BE6CAD71ED44D69006590E8 /* MediaPickerGalleryVideoScrubberThumbnailView.m in Sources */,
+				2BE6CAE61ED44D69006590E8 /* MessageImageViewOverlayView.m in Sources */,
+				2BE6CAA51ED44CC7006590E8 /* TGMediaAvatarMenuMixin.m in Sources */,
+				2BE6CA341ED44C41006590E8 /* MediaAssetsLibrary.m in Sources */,
+				2BE6CB761ED44E7E006590E8 /* PhotoEditorRawDataOutput.m in Sources */,
+				2BE6CADC1ED44D69006590E8 /* MediaPickerSelectionGestureRecognizer.m in Sources */,
+				2BE6CA841ED44C9C006590E8 /* ScaleImage.m in Sources */,
+				2BE6CAF11ED44D69006590E8 /* ModernGalleryScrollView.m in Sources */,
 				149F9A671E72E29A00FB74AA /* SettingsNavigationController.swift in Sources */,
+				2BE6CA5D1ED44C9C006590E8 /* PaintRender.m in Sources */,
 				149F9A681E72E29A00FB74AA /* BaseConverter.swift in Sources */,
+				2BE6CB2D1ED44E20006590E8 /* PSLMDBTable.m in Sources */,
+				2BE6CB0D1ED44D69006590E8 /* PhotoEditorCurvesToolView.m in Sources */,
+				2BE6CB0E1ED44D69006590E8 /* PhotoEditorGenericToolView.m in Sources */,
+				2BE6CAAC1ED44D69006590E8 /* AttachmentAssetCell.m in Sources */,
 				149F9A6A1E72E29A00FB74AA /* Message.swift in Sources */,
+				2BE6CAB01ED44D69006590E8 /* AttachmentFileTipView.m in Sources */,
+				2BE6CB481ED44E7D006590E8 /* DocumentAttributeFilename.m in Sources */,
+				2BE6CABD1ED44D69006590E8 /* CameraShutterButton.m in Sources */,
+				2BE6CB551ED44E7E006590E8 /* GPUImageFramebuffer.m in Sources */,
+				2BE6CA931ED44CC7006590E8 /* MediaAssetsMomentsController.m in Sources */,
+				2BE6CAF91ED44D69006590E8 /* ModernGalleryZoomableItemView.m in Sources */,
+				2BE6CB421ED44E7D006590E8 /* CameraShotMetadata.m in Sources */,
+				2BE6CA4F1ED44C9C006590E8 /* GrainTool.m in Sources */,
+				2BE6CA441ED44C41006590E8 /* StaticBackdropAreaData.m in Sources */,
+				2BE6CA911ED44CC7006590E8 /* CameraController.m in Sources */,
 				A98A29D51E92384C003BBE8E /* RateUsersControllerTransition.swift in Sources */,
+				2BE6CA2A1ED44C41006590E8 /* ImageInfo.mm in Sources */,
+				2BE6CA451ED44C41006590E8 /* StaticBackdropImageData.m in Sources */,
 				149F9A6B1E72E29A00FB74AA /* BrowseController.swift in Sources */,
 				149F9A6C1E72E29A00FB74AA /* TGBaseMessageCellLayout.swift in Sources */,
+				2BE6CA571ED44C9C006590E8 /* PaintFaceDetector.m in Sources */,
 				149F9A6E1E72E29A00FB74AA /* ReputationView.swift in Sources */,
+				2BE6CA8E1ED44CC7006590E8 /* ViewController.mm in Sources */,
+				2BE6CB4F1ED44E7E006590E8 /* EMInMemoryImageCache.m in Sources */,
 				149F9A6F1E72E29A00FB74AA /* Yap.swift in Sources */,
 				149F9A701E72E29A00FB74AA /* ContactController.swift in Sources */,
+				2BE6CB081ED44D69006590E8 /* PhotoEditorBlurTypeButton.m in Sources */,
+				2BE6CAB11ED44D69006590E8 /* AttachmentGifCell.m in Sources */,
+				2BE6CB5C1ED44E7E006590E8 /* ImageUtils.mm in Sources */,
 				149F9A711E72E29A00FB74AA /* idAPIClient.swift in Sources */,
 				149F9A721E72E29A00FB74AA /* PaymentRequestController.swift in Sources */,
+				2BE6CB7C1ED44E7E006590E8 /* SGraphObjectNode.m in Sources */,
+				2BE6CA331ED44C41006590E8 /* MediaAssetsLegacyLibrary.m in Sources */,
 				9F54A7211E951F0600FEB67B /* RateUserController.swift in Sources */,
 				9F48C1581E9CD911008BA637 /* CacheExpiry+Default.swift in Sources */,
 				9FF00E381EB20F3500A854A8 /* EmptyCallHandler.m in Sources */,
 				149F9A731E72E29A00FB74AA /* SignalNotificationManager.swift in Sources */,
+				2BE6CADB1ED44D69006590E8 /* MediaPickerPhotoStripView.m in Sources */,
+				2BE6CA391ED44C41006590E8 /* MediaPickerGalleryModel.m in Sources */,
+				2BE6CB101ED44D69006590E8 /* PhotoEditorPreviewView.m in Sources */,
+				2BE6CA311ED44C41006590E8 /* MediaAssetMoment.m in Sources */,
 				149F9A741E72E29A00FB74AA /* ControlsCollectionView.swift in Sources */,
+				2BE6CAE81ED44D69006590E8 /* ModernButton.m in Sources */,
+				2BE6CB071ED44D69006590E8 /* PhotoEditorBlurToolView.m in Sources */,
+				2BE6CA7F1ED44C9C006590E8 /* PhotoSharpenPass.m in Sources */,
+				2BE6CA401ED44C41006590E8 /* ModernGalleryModel.m in Sources */,
+				2BE6CA271ED44C1A006590E8 /* AVURLAsset+MediaItem.m in Sources */,
+				2BE6CB6E1ED44E7E006590E8 /* ModernViewStorage.m in Sources */,
+				2BE6CB0F1ED44D69006590E8 /* PhotoEditorLinearBlurView.m in Sources */,
+				2BE6CA781ED44C9C006590E8 /* PhotoLookupFilterPass.m in Sources */,
+				2BE6CA4D1ED44C9C006590E8 /* ExposureTool.m in Sources */,
 				A9ED6CD21E84014500160637 /* SignInController.swift in Sources */,
 				9FD25D3D1E813C3F0011F164 /* Navigator.swift in Sources */,
+				2BE6CAA41ED44CC7006590E8 /* TGModernGalleryTransitionView.m in Sources */,
+				2BE6CB891ED44E7E006590E8 /* VTPlayer.m in Sources */,
+				2BE6CA641ED44C9C006590E8 /* PaintUndoManager.m in Sources */,
+				2BE6CAE71ED44D69006590E8 /* MessageImageViewTimestampView.m in Sources */,
 				A9AC74181E78277700365029 /* BackupPhraseWordView.swift in Sources */,
+				2BE6CB7E1ED44E7E006590E8 /* SharedMediaUtils.m in Sources */,
+				2BE6CB661ED44E7E006590E8 /* MediaPickerModernGalleryMixin.m in Sources */,
+				2BE6CA8A1ED44C9C006590E8 /* VignetteTool.m in Sources */,
 				149F9A751E72E29A00FB74AA /* ChatsNavigationController.swift in Sources */,
+				2BE6CA891ED44C9C006590E8 /* VideoEditAdjustments.m in Sources */,
+				2BE6CAAD1ED44D69006590E8 /* AttachmentCameraCell.m in Sources */,
+				2BE6CAC61ED44D69006590E8 /* ImageView.m in Sources */,
 				A921D3641E7C145E00EE3221 /* Collection+Additions.swift in Sources */,
+				2BE6CB431ED44E7D006590E8 /* CameraVolumeButtonHandler.m in Sources */,
 				149F9A761E72E29A00FB74AA /* ContactsManager.m in Sources */,
+				2BE6CB491ED44E7D006590E8 /* DocumentAttributeImageSize.m in Sources */,
 				149F9A7A1E72E29A00FB74AA /* FavoritesController.swift in Sources */,
+				2BE6CB691ED44E7E006590E8 /* MediaVideoConverter.m in Sources */,
+				2BE6CB3F1ED44E7D006590E8 /* CameraDeviceAngleSampler.m in Sources */,
+				2BE6CB371ED44E7D006590E8 /* TGVideoEditAdjustments.m in Sources */,
 				149F9A7B1E72E29A00FB74AA /* ChatsController.swift in Sources */,
+				2BE6CB4A1ED44E7D006590E8 /* DocumentAttributeVideo.m in Sources */,
 				1437EC141E72F2CD00CE7A1F /* SettingsSectionHeader.swift in Sources */,
+				2BE6CB461ED44E7D006590E8 /* DocumentAttributeAnimated.m in Sources */,
+				2BE6CB7B1ED44E7E006590E8 /* SGraphNode.m in Sources */,
+				2BE6CAC91ED44D69006590E8 /* MediaAssetsMomentsCollectionLayout.m in Sources */,
+				2BE6CAA61ED44CC7006590E8 /* TGImagePickerController.mm in Sources */,
+				2BE6CA7A1ED44C9C006590E8 /* PhotoPaintColorPicker.m in Sources */,
 				9F54A7241E951F1500FEB67B /* RatingsClient.swift in Sources */,
 				9FF6AFA11E83E237001B5907 /* ConfirmationButton.swift in Sources */,
+				2BE6CB441ED44E7D006590E8 /* Color.m in Sources */,
+				2BE6CAAF1ED44D69006590E8 /* AttachmentCarouselItemView.m in Sources */,
+				2BE6CA281ED44C41006590E8 /* DataResource.m in Sources */,
 				149F9A7D1E72E29A00FB74AA /* SettingsController.swift in Sources */,
+				2BE6CA321ED44C41006590E8 /* MediaAssetMomentList.m in Sources */,
+				2BE6CA461ED44C41006590E8 /* VideoInfo.mm in Sources */,
+				2BE6CB361ED44E7D006590E8 /* AnimationBlockDelegate.m in Sources */,
+				2BE6CB611ED44E7E006590E8 /* MediaAssetModernImageSignals.m in Sources */,
+				2BE6CA661ED44C9C006590E8 /* PhotoBlurPass.m in Sources */,
+				2BE6CA711ED44C9C006590E8 /* PhotoEnhanceLUTGenerator.m in Sources */,
+				2BE6CB501ED44E7E006590E8 /* GifConverter.m in Sources */,
+				2BE6CB541ED44E7E006590E8 /* GPUImageFilter.m in Sources */,
+				2BE6CAF81ED44D69006590E8 /* ModernGalleryView.m in Sources */,
+				2BE6CB801ED44E7E006590E8 /* SuggestionContext.m in Sources */,
 				149F9A7E1E72E29A00FB74AA /* NSData+ows_StripToken.m in Sources */,
 				A9AC74091E77E37500365029 /* ActionButton.swift in Sources */,
+				2BE6CB721ED44E7E006590E8 /* PGCameraMomentSegment.m in Sources */,
+				2BE6CA681ED44C9C006590E8 /* PhotoCustomFilterPass.m in Sources */,
 				149F9A7F1E72E29A00FB74AA /* ProfileController.swift in Sources */,
+				2BE6CB331ED44E27006590E8 /* ModernCache.m in Sources */,
+				2BE6CAF01ED44D69006590E8 /* ModernGalleryItemView.m in Sources */,
 				A9BF33B41E76F8D0009A51AA /* BackupPhraseCopyController.swift in Sources */,
+				2BE6CB841ED44E7E006590E8 /* UICollectionView+Transitioning.m in Sources */,
+				2BE6CA951ED44CC7006590E8 /* MediaGroupsController.m in Sources */,
 				149F9A801E72E29A00FB74AA /* ProfileItemCell.swift in Sources */,
+				2BE6CA591ED44C9C006590E8 /* PaintInput.m in Sources */,
+				2BE6CB1E1ED44D69006590E8 /* PhotoPaintSparseView.m in Sources */,
+				2BE6CB641ED44E7E006590E8 /* MediaPickerGalleryVideoScrubber.m in Sources */,
+				2BE6CA871ED44C9C006590E8 /* SpringAnimation.m in Sources */,
+				2BE6CA651ED44C9C006590E8 /* PaintUtils.m in Sources */,
+				2BE6CA351ED44C41006590E8 /* MediaAssetsModernLibrary.m in Sources */,
+				2BE6CAC71ED44D69006590E8 /* InlineVideoView.m in Sources */,
+				2BE6CAB51ED44D69006590E8 /* CameraFlashActiveView.m in Sources */,
 				149F9A811E72E29A00FB74AA /* FingerprintViewController.swift in Sources */,
+				2BE6CA601ED44C9C006590E8 /* PaintSlice.m in Sources */,
+				2BE6CAB81ED44D69006590E8 /* CameraMainPhoneView.m in Sources */,
+				2BE6CAF61ED44D69006590E8 /* ModernGalleryVideoPlayerView.m in Sources */,
 				149F9A821E72E29A00FB74AA /* ChatInputTextPanel.swift in Sources */,
+				2BE6CABB1ED44D69006590E8 /* CameraPreviewView.m in Sources */,
+				2BE6CB001ED44D69006590E8 /* PhotoBrushSettingsView.m in Sources */,
+				2BE6CA721ED44C9C006590E8 /* PhotoEnhancePass.m in Sources */,
+				2BE6CB391ED44E7D006590E8 /* ASCommon.m in Sources */,
+				2BE6CA971ED44CC7006590E8 /* ModernGalleryController.m in Sources */,
+				2BE6CAE41ED44D69006590E8 /* MenuView.m in Sources */,
+				2BE6CB741ED44E7E006590E8 /* PhotoCaptionInputMixin.m in Sources */,
 				A9AC740F1E78051F00365029 /* TitleLabel.swift in Sources */,
+				2BE6CA471ED44C41006590E8 /* VideoMediaAttachment.m in Sources */,
+				2BE6CA291ED44C41006590E8 /* ImageDataSource.m in Sources */,
+				2BE6CB4D1ED44E7D006590E8 /* EMImage.m in Sources */,
 				149F9A831E72E29A00FB74AA /* ChatsFloatingHeaderView.swift in Sources */,
+				2BE6CB7F1ED44E7E006590E8 /* StringUtils.mm in Sources */,
+				2BE6CB701ED44E7E006590E8 /* NSValue+JNWAdditions.m in Sources */,
 				149F9A851E72E29A00FB74AA /* ChatCell.swift in Sources */,
+				2BE6CB311ED44E27006590E8 /* FileUtils.m in Sources */,
+				2BE6CB011ED44D69006590E8 /* PhotoCropAreaView.m in Sources */,
+				2BE6CB051ED44D69006590E8 /* PhotoCropView.m in Sources */,
+				2BE6CB631ED44E7E006590E8 /* MediaEditingContext.m in Sources */,
+				2BE6CB781ED44E7E006590E8 /* PSKeyValueDecoder.m in Sources */,
+				2BE6CB571ED44E7E006590E8 /* GPUImageOutput.m in Sources */,
+				2BE6CB4B1ED44E7D006590E8 /* DocumentMediaAttachment.m in Sources */,
+				2BE6CB6F1ED44E7E006590E8 /* NSObject+TGLock.m in Sources */,
+				2BE6CB151ED44D69006590E8 /* PhotoEditorToolButtonsView.m in Sources */,
+				2BE6CA9B1ED44CC7006590E8 /* PhotoCaptionController.m in Sources */,
+				2BE6CAAB1ED44D69006590E8 /* CameraFlashControl.m in Sources */,
+				2BE6CA991ED44CC7006590E8 /* OverlayFormsheetWindow.m in Sources */,
+				2BE6CAFD1ED44D69006590E8 /* ModernToolbarButton.m in Sources */,
 				A9BF33B51E76F8D0009A51AA /* BackupPhraseVerifyController.swift in Sources */,
 				149F9A861E72E29A00FB74AA /* EthereumConverter.swift in Sources */,
+				2BE6CA631ED44C9C006590E8 /* PaintTexture.m in Sources */,
+				2BE6CAC81ED44D69006590E8 /* MediaAssetsGifCell.m in Sources */,
 				149F9A871E72E29A00FB74AA /* TSInteraction+Additions.swift in Sources */,
+				2BE6CB831ED44E7E006590E8 /* TransitionLayout.m in Sources */,
+				2BE6CB251ED44D69006590E8 /* SharedMediaSectionHeaderView.m in Sources */,
+				2BE6CB4C1ED44E7D006590E8 /* DoubleTapGestureRecognizer.m in Sources */,
 				149F9A881E72E29A00FB74AA /* SearchResultCell.swift in Sources */,
+				2BE6CA5E1ED44C9C006590E8 /* PaintShader.m in Sources */,
+				2BE6CA3A1ED44C41006590E8 /* MediaPickerGalleryPhotoItem.m in Sources */,
+				2BE6CB351ED44E7D006590E8 /* ActionStage.mm in Sources */,
+				2BE6CA861ED44C9C006590E8 /* SharpenTool.m in Sources */,
+				2BE6CAEE1ED44D69006590E8 /* ModernGalleryImageItemImageView.m in Sources */,
+				2BE6CA2D1ED44C41006590E8 /* MediaAsset+MediaEditableItem.m in Sources */,
+				2BE6CAEB1ED44D69006590E8 /* ModernGalleryContainerView.m in Sources */,
+				2BE6CAF71ED44D69006590E8 /* ModernGalleryVideoView.m in Sources */,
+				2BE6CA941ED44CC7006590E8 /* MediaAssetsPickerController.m in Sources */,
 				A9AC74151E78231A00365029 /* BackupPhraseView.swift in Sources */,
+				2BE6CA3E1ED44C41006590E8 /* ModernClockProgressViewModel.m in Sources */,
 				149F9A891E72E29A00FB74AA /* SoundPlayer.swift in Sources */,
+				2BE6CA821ED44C9C006590E8 /* ProgressWindow.m in Sources */,
 				149F9A8A1E72E29A00FB74AA /* ControlsCollectionViewDelegateDatasource.swift in Sources */,
 				9F66BBBA1E7FCE2C00C4148A /* HomeButton.swift in Sources */,
+				2BE6CA9C1ED44CC7006590E8 /* PhotoCropController.m in Sources */,
+				2BE6CB6C1ED44E7E006590E8 /* ModernGalleryRotationGestureRecognizer.m in Sources */,
+				2BE6CB231ED44D69006590E8 /* SharedMediaCollectionView.m in Sources */,
+				2BE6CB161ED44D69006590E8 /* PhotoEditorView.m in Sources */,
+				2BE6CB821ED44E7E006590E8 /* TimerTarget.m in Sources */,
+				2BE6CB041ED44D69006590E8 /* PhotoCropScrollView.m in Sources */,
 				A9ED6CD31E84014800160637 /* SignInNavigationController.swift in Sources */,
+				2BE6CB221ED44D69006590E8 /* PhotoToolCell.m in Sources */,
+				2BE6CAF21ED44D69006590E8 /* ModernGalleryTransitionView.m in Sources */,
+				2BE6CB451ED44E7D006590E8 /* Common.m in Sources */,
+				2BE6CAB21ED44D69006590E8 /* AttachmentMenuCell.m in Sources */,
 				9F5D63A61E92331800FED490 /* ImageMessageCellLayout.swift in Sources */,
+				2BE6CADF1ED44D69006590E8 /* MenuSheetCollectionView.m in Sources */,
 				9FF6AF991E83CA84001B5907 /* UICollectionViewRightAlignedLayout.m in Sources */,
+				2BE6CAFB1ED44D69006590E8 /* ModernGalleryZoomableScrollViewSwipeGestureRecognizer.m in Sources */,
+				2BE6CAE31ED44D69006590E8 /* MenuSheetView.m in Sources */,
+				2BE6CAA31ED44CC7006590E8 /* TGMediaAvatarEditorTransition.m in Sources */,
+				2BE6CA791ED44C9C006590E8 /* PhotoMaskPosition.m in Sources */,
 				149F9A8B1E72E29A00FB74AA /* SearchResultsView.swift in Sources */,
+				2BE6CB031ED44D69006590E8 /* PhotoCropRotationView.m in Sources */,
 				149F9A8C1E72E29A00FB74AA /* FavoritesNavigationController.swift in Sources */,
+				2BE6CA9A1ED44CC7006590E8 /* PhotoAvatarCropController.m in Sources */,
+				2BE6CA531ED44C9C006590E8 /* PaintBrushPreview.m in Sources */,
+				2BE6CA9E1ED44CC7006590E8 /* PhotoEditorController.m in Sources */,
+				2BE6CA2E1ED44C41006590E8 /* MediaAssetFetchResult.m in Sources */,
+				2BE6CAF41ED44D69006590E8 /* ModernGalleryVideoFooterView.m in Sources */,
+				2BE6CB271ED44D69006590E8 /* VTPlayerView.m in Sources */,
+				2BE6CAA01ED44CC7006590E8 /* PhotoEditorTabController.m in Sources */,
+				2BE6CB2C1ED44E20006590E8 /* PSLMDBKeyValueStore.m in Sources */,
 				A9BF33B31E76F8D0009A51AA /* BackupPhraseEnableController.swift in Sources */,
 				9F5B9BA21EBB530B006448F0 /* RatingView.swift in Sources */,
+				2BE6CA4A1ED44C9C006590E8 /* ContrastTool.m in Sources */,
+				2BE6CAD01ED44D69006590E8 /* MediaGroupCell.m in Sources */,
+				2BE6CB681ED44E7E006590E8 /* MediaStoreContext.m in Sources */,
+				2BE6CA4E1ED44C9C006590E8 /* FadeTool.m in Sources */,
+				2BE6CABA1ED44D69006590E8 /* CameraModeControl.m in Sources */,
+				2BE6CA851ED44C9C006590E8 /* ShadowsTool.m in Sources */,
+				2BE6CA2B1ED44C41006590E8 /* ImageMediaAttachment.m in Sources */,
+				2BE6CB141ED44D69006590E8 /* PhotoEditorTintToolView.m in Sources */,
 				149F9A8D1E72E29A00FB74AA /* Theme.swift in Sources */,
+				2BE6CA361ED44C41006590E8 /* MediaAttachment.m in Sources */,
+				2BE6CA3C1ED44C41006590E8 /* MediaPickerGalleryVideoItem.m in Sources */,
 				A9ED6CD11E83CD8400160637 /* Footnote.swift in Sources */,
+				2BE6CB321ED44E27006590E8 /* Font.mm in Sources */,
+				2BE6CA3F1ED44C41006590E8 /* ModernGalleryImageItem.m in Sources */,
+				2BE6CAC11ED44D69006590E8 /* DraggableCollectionView.m in Sources */,
 				9F5D639E1E9231BE00FED490 /* ActionableMessageCell.swift in Sources */,
+				2BE6CB471ED44E7D006590E8 /* DocumentAttributeAudio.m in Sources */,
+				2BE6CA751ED44C9C006590E8 /* PhotoGaussianBlurFilter.m in Sources */,
 				9FF6AFA01E83DE04001B5907 /* AvatarImageView.swift in Sources */,
+				2BE6CB1D1ED44D69006590E8 /* PhotoPaintSettingsWrapperView.m in Sources */,
+				2BE6CAD31ED44D69006590E8 /* MediaPickerGalleryGifItemView.m in Sources */,
+				2BE6CA431ED44C41006590E8 /* ModernViewModel.m in Sources */,
+				2BE6CAC21ED44D69006590E8 /* DraggableCollectionViewFlowLayout.m in Sources */,
+				2BE6CA8B1ED44C9C006590E8 /* WarmthTool.m in Sources */,
+				2BE6CA6C1ED44C9C006590E8 /* PhotoEditorPicture.m in Sources */,
+				2BE6CACD1ED44D69006590E8 /* MediaAssetsPhotoCell.m in Sources */,
+				2BE6CA6A1ED44C9C006590E8 /* PhotoEditorAnimation.m in Sources */,
 				14A769E11E72EC70007B4C1A /* DistributionTokenURLPaths.swift in Sources */,
 				149F9A8E1E72E29A00FB74AA /* BrowseNavigationController.swift in Sources */,
+				2BE6CB861ED44E7E006590E8 /* UIControl+HitTestEdgeInsets.m in Sources */,
+				2BE6CA741ED44C9C006590E8 /* PhotoFilterDefinition.m in Sources */,
+				2BE6CAED1ED44D69006590E8 /* ModernGalleryImageItemContainerView.m in Sources */,
 				149F9A8F1E72E29A00FB74AA /* TGDeliveryStatusView.swift in Sources */,
 				149F9A901E72E29A00FB74AA /* CryptoTools.m in Sources */,
+				2BE6CA6B1ED44C9C006590E8 /* PhotoEditorInterfaceAssets.m in Sources */,
+				2BE6CA611ED44C9C006590E8 /* PaintState.m in Sources */,
+				2BE6CAB31ED44D69006590E8 /* AttachmentPhotoCell.m in Sources */,
+				2BE6CA901ED44CC7006590E8 /* OverlayControllerWindow.m in Sources */,
+				2BE6CB111ED44D69006590E8 /* PhotoEditorRadialBlurView.m in Sources */,
+				2BE6CB811ED44E7E006590E8 /* TGTimer.m in Sources */,
+				2BE6CA8C1ED44CC7006590E8 /* MediaAssetsController.m in Sources */,
+				2BE6CB181ED44D69006590E8 /* PhotoFilterCell.m in Sources */,
 				149F9A921E72E29A00FB74AA /* ChatAPIClient.swift in Sources */,
 				149F9A931E72E29A00FB74AA /* Cereal.swift in Sources */,
 				149F9A941E72E29A00FB74AA /* EthereumAPIClient.swift in Sources */,
+				2BE6CA381ED44C41006590E8 /* MediaPickerGalleryItem.m in Sources */,
 				149F9A951E72E29A00FB74AA /* ContactCell.swift in Sources */,
 				A98A29D41E92384A003BBE8E /* RateUsersPresentationController.swift in Sources */,
 				9FDCE4831E8D5923003A996F /* KeyboardInfo.swift in Sources */,
+				2BE6CA8D1ED44CC7006590E8 /* MenuSheetController.m in Sources */,
 				149F9A961E72E29A00FB74AA /* ChatController.swift in Sources */,
+				2BE6CADE1ED44D69006590E8 /* MenuSheetButtonItemView.m in Sources */,
+				2BE6CAE21ED44D69006590E8 /* MenuSheetTitleItemView.m in Sources */,
+				2BE6CB1B1ED44D69006590E8 /* PhotoPaintSelectionContainerView.m in Sources */,
 				149F9A971E72E29A00FB74AA /* MessagesCollectionViewController.swift in Sources */,
+				2BE6CB731ED44E7E006590E8 /* PGCameraMomentSession.m in Sources */,
+				2BE6CB3E1ED44E7D006590E8 /* CameraCaptureSession.m in Sources */,
+				2BE6CABF1ED44D69006590E8 /* CameraZoomView.m in Sources */,
 				149F9A981E72E29A00FB74AA /* TGClockProgressView.swift in Sources */,
+				2BE6CAEC1ED44D69006590E8 /* ModernGalleryDefaultInterfaceView.m in Sources */,
+				2BE6CA7C1ED44C9C006590E8 /* PhotoPaintFont.m in Sources */,
 				149F9A991E72E29A00FB74AA /* UserBootstrapParameters.swift in Sources */,
+				2BE6CB131ED44D69006590E8 /* PhotoEditorTintSwatchView.m in Sources */,
+				2BE6CB1F1ED44D69006590E8 /* PhotoTextEntityView.m in Sources */,
 				149F9A9B1E72E29A00FB74AA /* AppDelegate.m in Sources */,
+				2BE6CB2A1ED44E20006590E8 /* PSLMDBKeyValueCursor.m in Sources */,
 				A9BF33B81E76F918009A51AA /* CheckboxControl.swift in Sources */,
+				2BE6CA5B1ED44C9C006590E8 /* PaintPath.m in Sources */,
+				2BE6CA541ED44C9C006590E8 /* PaintBuffers.m in Sources */,
+				2BE6CACB1ED44D69006590E8 /* MediaAssetsMomentsSectionHeader.m in Sources */,
+				2BE6CA881ED44C9C006590E8 /* TintTool.m in Sources */,
+				2BE6CB671ED44E7E006590E8 /* MediaSelectionContext.m in Sources */,
 				149F9A9C1E72E29A00FB74AA /* MessageCellLayout.swift in Sources */,
+				2BE6CAD91ED44D69006590E8 /* MediaPickerPhotoCounterButton.m in Sources */,
+				2BE6CAA91ED44D69006590E8 /* PaintPanGestureRecognizer.m in Sources */,
+				2BE6CADD1ED44D69006590E8 /* MediaPickerToolbarView.m in Sources */,
 				149F9A9D1E72E29A00FB74AA /* ControlCell.swift in Sources */,
+				2BE6CAFE1ED44D69006590E8 /* PaintingWrapperView.m in Sources */,
+				2BE6CA301ED44C41006590E8 /* MediaAssetGroup.m in Sources */,
+				2BE6CB4E1ED44E7E006590E8 /* EMImageData.m in Sources */,
+				2BE6CA581ED44C9C006590E8 /* Painting.m in Sources */,
+				2BE6CA5C1ED44C9C006590E8 /* PaintRadialBrush.m in Sources */,
 				9FB36EA51E7C272400DB6F86 /* NSLayoutConstraint+Additions.swift in Sources */,
+				2BE6CA621ED44C9C006590E8 /* PaintSwatch.m in Sources */,
+				2BE6CB531ED44E7E006590E8 /* GPUImageContext.m in Sources */,
+				2BE6CB5F1ED44E7E006590E8 /* MediaAssetImageSignals.m in Sources */,
+				2BE6CB401ED44E7D006590E8 /* CameraInterfaceAssets.m in Sources */,
+				2BE6CA261ED44C17006590E8 /* AudioSessionManager.m in Sources */,
+				2BE6CA691ED44C9C006590E8 /* PhotoEditor.m in Sources */,
+				2BE6CAE11ED44D69006590E8 /* MenuSheetItemView.m in Sources */,
+				2BE6CB1A1ED44D69006590E8 /* PhotoPaintEntityView.m in Sources */,
+				2BE6CAA71ED44CC7006590E8 /* PhotoToolsController.m in Sources */,
+				2BE6CA9D1ED44CC7006590E8 /* PhotoDummyController.m in Sources */,
+				2BE6CB211ED44D69006590E8 /* PhotoToolbarView.m in Sources */,
+				2BE6CB591ED44E7E006590E8 /* Hacks.m in Sources */,
+				2BE6CAAE1ED44D69006590E8 /* AttachmentCameraView.m in Sources */,
+				2BE6CB651ED44E7E006590E8 /* MediaPickerLayoutMetrics.m in Sources */,
 				149F9A9F1E72E29A00FB74AA /* DateTimeFormatter.swift in Sources */,
+				2BE6CB2E1ED44E27006590E8 /* ItemDescriptor.m in Sources */,
+				2BE6CA2F1ED44C41006590E8 /* MediaAssetFetchResultChange.m in Sources */,
+				2BE6CB6B1ED44E7E006590E8 /* MemoryImageCache.m in Sources */,
+				2BE6CAC31ED44D69006590E8 /* FullscreenContainerView.m in Sources */,
+				2BE6CAB71ED44D69006590E8 /* CameraFocusCrosshairsControl.m in Sources */,
+				2BE6CB771ED44E7E006590E8 /* PSKeyValueCoder.m in Sources */,
+				2BE6CA491ED44C9C006590E8 /* BlurTool.m in Sources */,
+				2BE6CAA21ED44CC7006590E8 /* PhotoQualityController.m in Sources */,
+				2BE6CB201ED44D69006590E8 /* PhotoTextSettingsView.m in Sources */,
 				9F3FF8011EB36122002D0293 /* TSOutgoingMessage+Addtions.m in Sources */,
+				2BE6CB5B1ED44E7E006590E8 /* ImageManagerTask.m in Sources */,
+				2BE6CA7D1ED44C9C006590E8 /* PhotoPaintTextEntity.m in Sources */,
+				2BE6CB191ED44D69006590E8 /* PhotoPaintActionsView.m in Sources */,
+				2BE6CACA1ED44D69006590E8 /* MediaAssetsMomentsCollectionView.m in Sources */,
+				2BE6CAA81ED44CC7006590E8 /* TGActionSheet.m in Sources */,
+				2BE6CA561ED44C9C006590E8 /* PaintEllipticalBrush.m in Sources */,
 				149F9AA01E72E29A00FB74AA /* SofaWrapper.swift in Sources */,
+				2BE6CB061ED44D69006590E8 /* PhotoEditorBlurAreaView.m in Sources */,
 				14EE6B4D1E72E54A000B07DA /* Checkbox.swift in Sources */,
 				149F9AA11E72E29A00FB74AA /* MessageCell.swift in Sources */,
 				A9AC740C1E77E62900365029 /* UIView+Additions.swift in Sources */,
+				2BE6CAD21ED44D69006590E8 /* MediaPickerCell.m in Sources */,
+				2BE6CA3B1ED44C41006590E8 /* MediaPickerGallerySelectedItemsModel.m in Sources */,
 				149F9AA21E72E29A00FB74AA /* TSThread+Additions.m in Sources */,
+				2BE6CABC1ED44D69006590E8 /* CameraSegmentsView.m in Sources */,
+				2BE6CB1C1ED44D69006590E8 /* PhotoPaintSettingsView.m in Sources */,
 				9F5D63A21E9231E100FED490 /* ImageMessageCell.swift in Sources */,
+				2BE6CB3C1ED44E7D006590E8 /* ATQueue.m in Sources */,
 				149F9AA31E72E29A00FB74AA /* main.m in Sources */,
+				2BE6CB881ED44E7E006590E8 /* UIImage+TG.m in Sources */,
+				2BE6CB171ED44D69006590E8 /* PhotoEntitiesContainerView.m in Sources */,
+				2BE6CB601ED44E7E006590E8 /* MediaAssetLegacyImageSignals.m in Sources */,
+				2BE6CB5A1ED44E7E006590E8 /* ImageManager.m in Sources */,
+				2BE6CB621ED44E7E006590E8 /* MediaAssetsUtils.m in Sources */,
 				149F9AA41E72E29A00FB74AA /* EthereumNotificationHandler.swift in Sources */,
+				2BE6CACF1ED44D69006590E8 /* MediaAssetsVideoCell.m in Sources */,
+				2BE6CAA11ED44CC7006590E8 /* PhotoPaintController.m in Sources */,
+				2BE6CAE51ED44D69006590E8 /* MessageImageAdditionalDataView.m in Sources */,
+				2BE6CACE1ED44D69006590E8 /* MediaAssetsTipView.m in Sources */,
+				2BE6CB871ED44E7E006590E8 /* UIImage+MediaEditableItem.m in Sources */,
+				2BE6CB6D1ED44E7E006590E8 /* ModernMediaListLayout.m in Sources */,
+				2BE6CADA1ED44D69006590E8 /* MediaPickerPhotoStripCell.m in Sources */,
+				2BE6CAE91ED44D69006590E8 /* ModernButtonView.m in Sources */,
+				2BE6CA421ED44C41006590E8 /* ModernGalleryVideoPlayerState.m in Sources */,
+				2BE6CB511ED44E7E006590E8 /* GLProgram.m in Sources */,
+				2BE6CB791ED44E7E006590E8 /* PSKeyValueEncoder.m in Sources */,
+				2BE6CAF51ED44D69006590E8 /* ModernGalleryVideoItemView.m in Sources */,
+				2BE6CA6E1ED44C9C006590E8 /* PhotoEditorValues.m in Sources */,
+				2BE6CB241ED44D69006590E8 /* SharedMediaSectionHeader.m in Sources */,
+				2BE6CB2F1ED44E27006590E8 /* Camera.m in Sources */,
+				2BE6CB121ED44D69006590E8 /* PhotoEditorSliderView.m in Sources */,
 				149F9AA51E72E29A00FB74AA /* TabBarController.swift in Sources */,
+				2BE6CB341ED44E7D006590E8 /* AccessChecker.m in Sources */,
+				2BE6CA921ED44CC7006590E8 /* CameraPhotoPreviewController.m in Sources */,
+				2BE6CACC1ED44D69006590E8 /* MediaAssetsMomentsSectionHeaderView.m in Sources */,
+				2BE6CA7B1ED44C9C006590E8 /* PhotoPaintEntity.m in Sources */,
+				2BE6CA551ED44C9C006590E8 /* PaintCanvas.m in Sources */,
+				2BE6CB411ED44E7D006590E8 /* CameraMovieWriter.m in Sources */,
+				2BE6CA731ED44C9C006590E8 /* PhotoFilter.m in Sources */,
+				2BE6CB3A1ED44E7D006590E8 /* ASHandle.m in Sources */,
 				A9ED6CCE1E82B57E00160637 /* InputField.swift in Sources */,
+				2BE6CA411ED44C41006590E8 /* ModernGalleryVideoItem.m in Sources */,
+				2BE6CA831ED44C9C006590E8 /* SaturationTool.m in Sources */,
+				2BE6CB7A1ED44E7E006590E8 /* SGraphListNode.m in Sources */,
 				149F9AA71E72E29A00FB74AA /* NSDecimalNumber+Additions.swift in Sources */,
 				149F9AA81E72E29A00FB74AA /* TGBaseMessageCell.swift in Sources */,
+				2BE6CB021ED44D69006590E8 /* PhotoCropGridView.m in Sources */,
+				2BE6CAFC1ED44D69006590E8 /* ModernMediaCollectionView.m in Sources */,
+				2BE6CB521ED44E7E006590E8 /* GPaintingData.m in Sources */,
+				2BE6CB381ED44E7D006590E8 /* ASActor.m in Sources */,
+				2BE6CA4B1ED44C9C006590E8 /* CurvesTool.m in Sources */,
+				2BE6CB3D1ED44E7D006590E8 /* AudioWaveform.m in Sources */,
+				2BE6CB281ED44E18006590E8 /* mdb.c in Sources */,
+				2BE6CA5A1ED44C9C006590E8 /* PaintNeonBrush.m in Sources */,
+				2BE6CB751ED44E7E006590E8 /* PhotoEditorRawDataInput.m in Sources */,
+				2BE6CAC41ED44D69006590E8 /* HistogramView.m in Sources */,
+				2BE6CA2C1ED44C41006590E8 /* MediaAsset.m in Sources */,
+				2BE6CB581ED44E7E006590E8 /* GPUImageTwoInputFilter.m in Sources */,
 				A9AC74121E78064500365029 /* TextLabel.swift in Sources */,
+				2BE6CA371ED44C41006590E8 /* MediaPickerGalleryGifItem.m in Sources */,
+				2BE6CA5F1ED44C9C006590E8 /* PaintShaderSet.m in Sources */,
+				2BE6CA4C1ED44C9C006590E8 /* EnhanceTool.m in Sources */,
+				2BE6CA6D1ED44C9C006590E8 /* PhotoEditorUtils.m in Sources */,
 				149F9AA91E72E29A00FB74AA /* AppCell.swift in Sources */,
+				2BE6CAAA1ED44D69006590E8 /* AcceleratedVideoView.m in Sources */,
 				149F9AAC1E72E29A00FB74AA /* AppsAPIClient.swift in Sources */,
+				2BE6CA9F1ED44CC7006590E8 /* PhotoEditorItemController.m in Sources */,
+				2BE6CAEF1ED44D69006590E8 /* ModernGalleryImageItemView.m in Sources */,
 				149F9AAD1E72E29A00FB74AA /* QRCodeController.swift in Sources */,
+				2BE6CAF31ED44D69006590E8 /* ModernGalleryVideoContentView.m in Sources */,
+				2BE6CB091ED44D69006590E8 /* PhotoEditorBlurView.m in Sources */,
+				2BE6CB6A1ED44E7E006590E8 /* MemoryCache.m in Sources */,
+				2BE6CAC51ED44D69006590E8 /* ImagePickerCellCheckButton.m in Sources */,
+				2BE6CA511ED44C9C006590E8 /* ImageBlur.m in Sources */,
+				2BE6CAD11ED44D69006590E8 /* MediaPickerCaptionInputPanel.m in Sources */,
 				149F9AAE1E72E29A00FB74AA /* PaymentController.swift in Sources */,
+				2BE6CB711ED44E7E006590E8 /* ObserverProxy.m in Sources */,
+				2BE6CA8F1ED44CC7006590E8 /* OverlayController.m in Sources */,
+				2BE6CB291ED44E18006590E8 /* midl.c in Sources */,
+				2BE6CB7D1ED44E7E006590E8 /* SharedMediaCollectionLayout.m in Sources */,
+				2BE6CB0A1ED44D69006590E8 /* PhotoEditorButton.m in Sources */,
+				2BE6CAFA1ED44D69006590E8 /* ModernGalleryZoomableScrollView.m in Sources */,
 				9F086CB71EB10A7A00055DB3 /* TokenUser.swift in Sources */,
+				2BE6CB2B1ED44E20006590E8 /* PSLMDBKeyValueReaderWriter.m in Sources */,
+				2BE6CB851ED44E7E006590E8 /* UICollectionView+Utils.m in Sources */,
+				2BE6CAD41ED44D69006590E8 /* MediaPickerGalleryInterfaceView.m in Sources */,
 				149F9AAF1E72E29A00FB74AA /* ActionableMessageCellLayout.swift in Sources */,
+				2BE6CAB91ED44D69006590E8 /* CameraMainView.m in Sources */,
+				2BE6CA6F1ED44C9C006590E8 /* PhotoEnhanceColorConversionFilter.m in Sources */,
 				9F9B25561ECB1BC0007B435A /* ContactActionView.swift in Sources */,
+				2BE6CA7E1ED44C9C006590E8 /* PhotoProcessPass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4393,7 +5285,6 @@
 				146D564C1E4A77F200FE7944 /* AppCell.swift in Sources */,
 				2BD70B781ED2321B00E23AF3 /* PhotoEnhanceLUTGenerator.m in Sources */,
 				2BD70A6A1ED22C0400E23AF3 /* PhotoEditorSliderView.m in Sources */,
-				2BD70C1E1ED2388200E23AF3 /* TransitionAnimator.swift in Sources */,
 				2BD70A411ED22C0400E23AF3 /* ModernButtonView.m in Sources */,
 				2BD708B71ED21E1600E23AF3 /* JNWSpringAnimation.m in Sources */,
 				2BD70A0F1ED22C0400E23AF3 /* CameraFocusCrosshairsControl.m in Sources */,
