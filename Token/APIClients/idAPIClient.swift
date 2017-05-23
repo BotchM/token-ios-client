@@ -50,7 +50,7 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
     /// once all the contacts have been processed.
     func updateContacts() {
         self.contactUpdateQueue.async {
-            guard let contactsData = Yap.sharedInstance.retrieveObjects(in: TokenUser.collectionKey) as? [Data] else { fatalError() }
+            guard let contactsData = Yap.sharedInstance.retrieveObjects(in: TokenUser.favoritesCollectionKey) as? [Data] else { fatalError() }
             let semaphore = DispatchSemaphore(value: 0)
 
             for contactData in contactsData {
@@ -276,17 +276,8 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
 
                     success(contact, self.cacheExpiry)
                 case .failure(_, let response, let error):
-                    if response.statusCode == 404 {
-                        // contact was deleted from the server. If we don't have it locally, delete the signal thread.
-                        if !Yap.sharedInstance.containsObject(for: name, in: TokenUser.collectionKey) {
-                            TSStorageManager.shared().dbConnection.readWrite { transaction in
-                                let thread = TSContactThread.getOrCreateThread(withContactId: name, transaction: transaction)
-                                thread.archiveThread(with: transaction)
-                            }
-                        }
-                    }
                     print(error.localizedDescription)
-
+                    
                     failure(error as NSError)
                 }
             }
@@ -335,6 +326,31 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
             let json = RequestParameter(payload)
 
             self.teapot.post(path, parameters: json, headerFields: fields) { result in
+                switch result {
+                case .success(_, let response):
+                    guard response.statusCode == 204 else { fatalError() }
+
+                    completion?(true, "")
+                case .failure(let json, _, _):
+                    let errors = json?.dictionary?["errors"] as? [[String: Any]]
+                    let message = errors?.first?["message"] as? String
+
+                    completion?(false, message ?? "")
+                }
+            }
+        }
+    }
+
+    public func login(login_token: String, completion: ((_ success: Bool, _ message: String) -> Void)? = nil) {
+        self.fetchTimestamp { timestamp in
+            let cereal = Cereal.shared
+            let path = "/v1/login/\(login_token)"
+
+            let signature = "0x\(cereal.signWithID(message: "GET\n\(path)\n\(timestamp)\n"))"
+
+            let fields: [String: String] = ["Token-ID-Address": cereal.address, "Token-Signature": signature, "Token-Timestamp": String(timestamp)]
+
+            self.teapot.get(path, headerFields: fields) { result in
                 switch result {
                 case .success(_, let response):
                     guard response.statusCode == 204 else { fatalError() }

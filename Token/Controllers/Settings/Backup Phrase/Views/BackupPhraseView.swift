@@ -60,12 +60,12 @@ class BackupPhraseView: UIView {
 
     var verificationStatus: VerificationStatus = .unverified {
         didSet {
-            NotificationCenter.default.post(name: SettingsController.verificationStatusChanged, object: self.verificationStatus)
-
             if self.verificationStatus == .incorrect {
                 DispatchQueue.main.asyncAfter(seconds: 0.5) {
                     self.shake()
                 }
+            } else {
+                TokenUser.current!.verified = self.verificationStatus == .correct
             }
         }
     }
@@ -107,7 +107,7 @@ class BackupPhraseView: UIView {
             self.currentPhrase.append(contentsOf: self.originalPhrase)
             self.activateNewLayout()
         case .verification:
-            self.backgroundColor = Theme.backupPhraseBackgroundColor
+            self.backgroundColor = Theme.settingsBackgroundColor
             self.layer.cornerRadius = 4
             self.clipsToBounds = true
             self.activateNewLayout()

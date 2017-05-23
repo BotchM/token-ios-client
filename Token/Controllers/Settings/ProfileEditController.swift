@@ -40,18 +40,6 @@ open class ProfileEditController: ViewController {
         return IDAPIClient.shared
     }
 
-    private lazy var navbar: UINavigationBar = {
-        let view = UINavigationBar(withAutoLayout: true)
-
-        let item = UINavigationItem(title: "Edit profile")
-        item.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelAndDismiss))
-        item.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.saveAndDismiss))
-
-        view.items = [item]
-
-        return view
-    }()
-
     fileprivate lazy var avatarImageView: AvatarImageView = {
         let view = AvatarImageView(withAutoLayout: true)
 
@@ -96,21 +84,19 @@ open class ProfileEditController: ViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapView))
         self.view.addGestureRecognizer(tapGesture)
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelAndDismiss))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.saveAndDismiss))
     }
 
     func addSubviewsAndConstraints() {
-        self.view.addSubview(self.navbar)
         self.view.addSubview(self.avatarImageView)
         self.view.addSubview(self.changeAvatarButton)
         self.view.addSubview(self.tableView)
 
-        self.navbar.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
-        self.navbar.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        self.navbar.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-
         self.avatarImageView.set(height: 80)
         self.avatarImageView.set(width: 80)
-        self.avatarImageView.topAnchor.constraint(equalTo: self.navbar.bottomAnchor, constant: 24).isActive = true
+        self.avatarImageView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 24).isActive = true
         self.avatarImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
 
         self.changeAvatarButton.set(height: 38)
@@ -194,7 +180,7 @@ open class ProfileEditController: ViewController {
     }
 
     func cancelAndDismiss() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     func saveAndDismiss() {
@@ -230,7 +216,7 @@ open class ProfileEditController: ViewController {
                 let alert = UIAlertController.dismissableAlert(title: "Error", message: message)
                 self.present(alert, animated: true)
             } else {
-                self.dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }
@@ -252,9 +238,9 @@ extension ProfileEditController: ImagePickerDelegate {
         guard let image = images.first else { return }
 
         let scaledImage = image.resized(toHeight: 320)
-        self.avatarImageView.image = scaledImage
 
         self.idAPIClient.updateAvatar(scaledImage) { _ in
+            self.avatarImageView.image = scaledImage
         }
     }
 

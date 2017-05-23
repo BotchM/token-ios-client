@@ -15,18 +15,13 @@
 
 import Foundation
 import SweetSwift
-import KeychainSwift
-
-public protocol JSONDataSerialization {
-    var JSONData: Data { get }
-}
 
 extension Notification.Name {
     public static let CurrentUserDidUpdateAvatarNotification = Notification.Name(rawValue: "CurrentUserDidUpdateAvatarNotification")
     public static let TokenContactDidUpdateAvatarNotification = Notification.Name(rawValue: "TokenContactDidUpdateAvatarNotification")
 }
 
-public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
+public class TokenUser: NSObject, NSCoding {
 
     struct Constants {
         static let name = "name"
@@ -38,19 +33,26 @@ public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
         static let avatar = "avatar"
         static let avatarDataHex = "avatarDataHex"
         static let isApp = "is_app"
+        static let verified = "verified"
     }
 
     static let didUpdateContactInfoNotification = Notification.Name(rawValue: "DidUpdateContactInfo")
     static let viewExtensionName = "TokenContactsDatabaseViewExtensionName"
-    static let collectionKey: String = "TokenContacts"
+    static let favoritesCollectionKey: String = "TokenContacts"
 
     private static let storedUserKey = "StoredUser"
 
-    private static let storedContactKey = "storedContactKey"
+    public static let storedContactKey = "storedContactKey"
 
     var category = ""
 
     var balance = NSDecimalNumber.zero
+
+    var verified: Bool = false {
+        didSet {
+            self.saveIfNeeded()
+        }
+    }
 
     private(set) var name = ""
 
@@ -91,8 +93,6 @@ public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
             newValue?.update()
 
             if let user = newValue {
-                let keychain = KeychainSwift()
-                keychain.set(user.paymentAddress, forKey: "CurrentUserPaymentAddress")
                 user.saveIfNeeded()
             }
 
@@ -130,6 +130,7 @@ public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
             Constants.avatar: self.avatarPath,
             Constants.avatarDataHex: imageDataString,
             Constants.isApp: self.isApp,
+            Constants.verified: self.verified,
         ]
     }
 
@@ -187,7 +188,7 @@ public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
         if self.isCurrentUser {
             Yap.sharedInstance.insert(object: self.JSONData, for: TokenUser.storedUserKey)
         } else {
-            Yap.sharedInstance.insert(object: self.JSONData, for: TokenUser.storedContactKey)
+            Yap.sharedInstance.insert(object: self.JSONData, for: self.address, in: TokenUser.storedContactKey)
         }
     }
 
@@ -207,20 +208,23 @@ public class TokenUser: NSObject, JSONDataSerialization, NSCoding {
         self.location = json[Constants.location] as? String ?? self.location
         self.about = json[Constants.about] as? String ?? self.about
         self.avatarPath = json[Constants.avatar] as? String ?? self.avatarPath
+        self.isApp = json[Constants.isApp] as? Bool ?? self.isApp
+
+        self.verified = json[Constants.verified] as? Bool ?? self.verified
 
         if updateAvatar {
-            if let avatarDataHex = (json[Constants.avatarDataHex] as? String), avatarDataHex.length > 0, let hexData = avatarDataHex.hexadecimalData {
+            if let avatarDataHex = (json[Constants.avatarDataHex] as? String), !avatarDataHex.isEmpty, let hexData = avatarDataHex.hexadecimalData {
                 let image = UIImage(data: hexData)
                 self.avatar = image
             }
 
-            if self.avatarPath.length > 0 {
+            if !self.avatarPath.isEmpty {
                 if self.isApp {
                     AppsAPIClient.shared.downloadImage(for: self) { image in
                         self.avatar = image
                     }
                 } else {
-                    IDAPIClient.shared.downloadAvatar(path: self.avatarPath, fromCache: false) { image in
+                    IDAPIClient.shared.downloadAvatar(path: self.avatarPath, fromCache: !self.isCurrentUser) { image in
                         self.avatar = image
                     }
                 }

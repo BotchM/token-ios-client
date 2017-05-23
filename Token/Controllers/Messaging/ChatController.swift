@@ -47,19 +47,21 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         let disposable = SMetaDisposable()
         return disposable
     }()
-    
-    let transition = PopAnimator()
-    var fromViewRect = CGRect.zero
-    
-    var textLayoutQueue = DispatchQueue(label: "com.tokenbrowser.token.layout", qos: DispatchQoS(qosClass: .default, relativePriority: 0))
-    
-    lazy var rateButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(title: "Rate", style: .plain, target: self, action: #selector(didTapRateUser))
-        
-        return view
+
+    fileprivate var textLayoutQueue = DispatchQueue(label: "com.tokenbrowser.token.layout", qos: DispatchQoS(qosClass: .default, relativePriority: 0))
+
+    fileprivate lazy var avatarImageView: AvatarImageView = {
+        let avatar = AvatarImageView(image: UIImage())
+        avatar.bounds.size = CGSize(width: 34, height: 34)
+        avatar.isUserInteractionEnabled = true
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.showContactProfile))
+        avatar.addGestureRecognizer(tap)
+
+        return avatar
     }()
-    
-    var messages = [Message]() {
+
+    fileprivate var messages = [Message]() {
         didSet {
             let current = Set(self.messages)
             let previous = Set(oldValue)
@@ -84,45 +86,49 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             self.addMessages(displayables, scrollToBottom: true)
         }
     }
-    
-    var visibleMessages: [Message] {
+
+    fileprivate var visibleMessages: [Message] {
         return self.messages.filter { (message) -> Bool in
             message.isDisplayable
         }
     }
-    
-    lazy var mappings: YapDatabaseViewMappings = {
+
+    fileprivate var contact: TokenUser {
+        return self.contactsManager.tokenContact(forAddress: self.thread.contactIdentifier())!
+    }
+
+    fileprivate lazy var mappings: YapDatabaseViewMappings = {
         let mappings = YapDatabaseViewMappings(groups: [self.thread.uniqueId], view: TSMessageDatabaseViewExtensionName)
         mappings.setIsReversed(true, forGroup: TSInboxGroup)
         
         return mappings
     }()
-    
-    lazy var uiDatabaseConnection: YapDatabaseConnection = {
+
+    fileprivate lazy var uiDatabaseConnection: YapDatabaseConnection = {
         let database = TSStorageManager.shared().database()!
         let dbConnection = database.newConnection()
         dbConnection.beginLongLivedReadTransaction()
         
         return dbConnection
     }()
-    
-    lazy var editingDatabaseConnection: YapDatabaseConnection = {
+
+    fileprivate lazy var editingDatabaseConnection: YapDatabaseConnection = {
         self.storageManager.newDatabaseConnection()
     }()
     
     fileprivate var menuSheetController: MenuSheetController?
     
     var thread: TSThread
-    
-    var messageSender: MessageSender
-    
-    var contactsManager: ContactsManager
-    
-    var contactsUpdater: ContactsUpdater
-    
-    var storageManager: TSStorageManager
-    
-    lazy var ethereumPromptView: ChatsFloatingHeaderView = {
+
+    fileprivate var messageSender: MessageSender
+
+    fileprivate var contactsManager: ContactsManager
+
+    fileprivate var contactsUpdater: ContactsUpdater
+
+    fileprivate var storageManager: TSStorageManager
+
+    fileprivate lazy var ethereumPromptView: ChatsFloatingHeaderView = {
         let view = ChatsFloatingHeaderView(withAutoLayout: true)
         view.delegate = self
         
@@ -190,9 +196,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         
         self.collectionView.keyboardDismissMode = .interactive
         self.collectionView.backgroundColor = nil
-        
-        self.navigationItem.rightBarButtonItem = self.rateButton
-        
+
         self.fetchAndUpdateBalance()
         self.loadMessages()
         
@@ -201,15 +205,12 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         NSLayoutConstraint.activate([
             self.textInputView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.textInputView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            textInputViewBottom,
-            textInputViewHeight,
+
+            self.textInputViewBottom,
+            self.textInputViewHeight,
             ])
-        
-        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 51.0, right: 0.0)
-        
-        self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 51.0).isActive = true
-        self.view.setNeedsLayout()
-        self.collectionView.setNeedsLayout()
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.avatarImageView)
     }
     
     func checkMicrophoneAccess() {
@@ -225,6 +226,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         super.viewWillAppear(animated)
         self.reloadDraft()
         self.view.layoutIfNeeded()
+
+        self.avatarImageView.image = self.thread.image()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -233,6 +236,13 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         self.thread.markAllAsRead()
         SignalNotificationManager.updateApplicationBadgeNumber()
         self.title = self.thread.cachedContactIdentifier
+
+        if self.contact.isApp && self.messages.isEmpty {
+            // If contact is an app, and there are no messages between current user and contact
+            // we send the app an empty regular sofa message. This ensures that Signal won't display it,
+            // but at the same time, most bots will reply with a greeting.
+            self.sendMessage(sofaWrapper: SofaMessage(body: ""))
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -242,8 +252,9 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         self.thread.markAllAsRead()
         SignalNotificationManager.updateApplicationBadgeNumber()
     }
-    
-    func fetchAndUpdateBalance() {
+
+    fileprivate func fetchAndUpdateBalance() {
+
         self.ethereumAPIClient.getBalance(address: Cereal.shared.paymentAddress) { balance, error in
             if let error = error {
                 let alertController = UIAlertController.errorAlert(error as NSError)
@@ -253,17 +264,19 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             }
         }
     }
-    
-    func handleBalanceUpdate(notification: Notification) {
+
+    @objc
+    fileprivate func handleBalanceUpdate(notification: Notification) {
         guard notification.name == .ethereumBalanceUpdateNotification, let balance = notification.object as? NSDecimalNumber else { return }
         self.set(balance: balance)
     }
-    
-    func set(balance: NSDecimalNumber) {
+
+    fileprivate func set(balance: NSDecimalNumber) {
         self.ethereumPromptView.balance = balance
     }
-    
-    func saveDraft() {
+
+    fileprivate func saveDraft() {
+
         let thread = self.thread
         guard let text = self.textInputView.text else { return }
         
@@ -271,8 +284,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             thread.setDraft(text, transaction: transaction)
         }
     }
-    
-    func reloadDraft() {
+
+    fileprivate func reloadDraft() {
         let thread = self.thread
         var placeholder: String?
         
@@ -290,32 +303,10 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         self.collectionView.register(ActionableMessageCell.self, forCellWithReuseIdentifier: ActionableMessageCell.reuseIdentifier())
         self.collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: ImageMessageCell.reuseIdentifier())
     }
-    
-    // MARK: Rate users
-    func didTapRateUser() {
-        let contactId = self.thread.contactIdentifier()!
-        let contact = self.contactsManager.tokenContact(forAddress: contactId)
-        
-        if let contact = contact {
-            self.presentUserRatingPrompt(contact: contact)
-        } else {
-            self.idAPIClient.findContact(name: contactId) { contact in
-                guard let contact = contact else { return }
-                self.presentUserRatingPrompt(contact: contact)
-            }
-        }
-    }
-    
-    func presentUserRatingPrompt(contact: TokenUser) {
-        let rateUserController = RateUserController(user: contact)
-        rateUserController.delegate = self
-        
-        self.present(rateUserController, animated: true)
-    }
-    
+
     // MARK: Load initial messages
-    
-    func loadMessages() {
+
+    fileprivate func loadMessages() {
         self.uiDatabaseConnection.asyncRead { transaction in
             self.mappings.update(with: transaction)
             
@@ -347,8 +338,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     }
     
     // Mark: Handle new messages
-    
-    func showFingerprint(with _: Data, signalId _: String) {
+
+    fileprivate func showFingerprint(with _: Data, signalId _: String) {
         // Postpone this for now
         print("Should display fingerprint comparison UI.")
         //        let builder = OWSFingerprintBuilder(storageManager: self.storageManager, contactsManager: self.contactsManager)
@@ -357,8 +348,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         //        let fingerprintController = FingerprintViewController(fingerprint: fingerprint)
         //        self.present(fingerprintController, animated: true)
     }
-    
-    func handleInvalidKeyError(_ errorMessage: TSInvalidIdentityKeyErrorMessage) {
+
+    fileprivate func handleInvalidKeyError(_ errorMessage: TSInvalidIdentityKeyErrorMessage) {
         let keyOwner = self.contactsManager.displayName(forPhoneIdentifier: errorMessage.theirSignalId())
         let titleText = "Your safety number with \(keyOwner) has changed. You may wish to verify it."
         
@@ -385,8 +376,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
             }
         }
         actionSheetController.addAction(acceptSafetyNumberAction)
-        
-        present(actionSheetController, animated: true, completion: nil)
+
+        self.present(actionSheetController, animated: true, completion: nil)
     }
     
     /// Handle incoming interactions or previous messages when restoring a conversation.
@@ -395,7 +386,7 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     ///   - interaction: the interaction to handle. Incoming/outgoing messages, wrapping SOFA structures.
     ///   - shouldProcessCommands: If true, will process a sofa wrapper. This means replying to requests, displaying payment UI etc.
     ///
-    func handleInteraction(_ interaction: TSInteraction, shouldProcessCommands: Bool = false) -> Message {
+    fileprivate func handleInteraction(_ interaction: TSInteraction, shouldProcessCommands: Bool = false) -> Message {
         if let interaction = interaction as? TSInvalidIdentityKeySendingErrorMessage {
             DispatchQueue.main.async {
                 self.handleInvalidKeyError(interaction)
@@ -482,29 +473,29 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     }
     
     // MARK: - Helper methods
-    
-    func visibleMessage(at indexPath: IndexPath) -> Message {
+
+    fileprivate func visibleMessage(at indexPath: IndexPath) -> Message {
         return self.visibleMessages[indexPath.row]
     }
-    
-    func message(at indexPath: IndexPath) -> Message {
+
+    fileprivate func message(at indexPath: IndexPath) -> Message {
         return self.messages[indexPath.row]
     }
-    
-    func registerNotifications() {
+
+    fileprivate func registerNotifications() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(yapDatabaseDidChange(notification:)), name: .YapDatabaseModified, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.handleBalanceUpdate(notification:)), name: .ethereumBalanceUpdateNotification, object: nil)
     }
-    
-    func reversedIndexPath(_ indexPath: IndexPath) -> IndexPath {
+
+    fileprivate func reversedIndexPath(_ indexPath: IndexPath) -> IndexPath {
         let row = (self.visibleMessages.count - 1) - indexPath.item
         return IndexPath(row: row, section: indexPath.section)
     }
     
     // MARK: Handle database changes
-    
-    func yapDatabaseDidChange(notification _: NSNotification) {
+    @objc
+    fileprivate func yapDatabaseDidChange(notification _: NSNotification) {
         let notifications = self.uiDatabaseConnection.beginLongLivedReadTransaction()
         
         // If changes do not affect current view, update and return without updating collection view
@@ -596,8 +587,8 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
     }
     
     // MARK: Send messages
-    
-    func sendMessage(sofaWrapper: SofaWrapper, date: Date = Date()) {
+
+    fileprivate func sendMessage(sofaWrapper: SofaWrapper, date: Date = Date()) {
         let timestamp = NSDate.ows_millisecondsSince1970(for: date)
         let outgoingMessage = TSOutgoingMessage(timestamp: timestamp, in: self.thread, messageBody: sofaWrapper.content)
         
@@ -634,6 +625,14 @@ class ChatController: MessagesCollectionViewController { // OverlayController (!
         let command = SofaCommand(button: button)
         self.controlsViewDelegateDatasource.controlsCollectionView?.isUserInteractionEnabled = false
         self.sendMessage(sofaWrapper: command)
+    }
+
+    @objc
+    fileprivate func showContactProfile(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            let contactController = ContactController(contact: self.contact)
+            self.navigationController?.pushViewController(contactController, animated: true)
+        }
     }
 }
 
@@ -798,9 +797,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         carouselItem.didSelectImage = { image, asset, fromView in
-            if let fromView = fromView as UIView? {
-                self.fromViewRect = self.view.convert(fromView.frame, from: fromView.superview)
-            }
             
             let editorController = PhotoEditorController(item:asset as! MediaEditableItem, intent:PhotoEditorControllerAvatarIntent, adjustments:nil, caption:nil, screenImage:image, availbaleTabs:PhotoEditorController.defaultTabsForAvatarIntent(), selectedTab:PhotoEditorCropTab)!
             
@@ -823,8 +819,6 @@ extension ChatController: ChatInputTextPanelDelegate {
             editorController.requestThumbnailImage = { editableItem in
                 return editableItem?.thumbnailImageSignal?()
             }
-            
-            editorController.transitioningDelegate = self
             
             self.present(editorController, animated: true, completion: nil)
         }
@@ -891,8 +885,6 @@ extension ChatController: ChatInputTextPanelDelegate {
         }
         
         cameraView?.detachPreviewView()
-        controller.beginTransitionIn(from: startFrame)
-        
         
         controller.beginTransitionOut = {
             
@@ -1005,30 +997,6 @@ extension ChatController: ChatInputTextPanelDelegate {
     }
 }
 
-extension ChatController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.originFrame = self.fromViewRect //selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
-        transition.presenting = true
-        
-        return transition
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.presenting = false
-        return transition
-    }
-}
-
-extension ChatController: RateUserControllerDelegate {
-    func didRate(_ user: TokenUser, rating: Int, review: String) {
-        self.dismiss(animated: true) {
-            let ratingsClient = RatingsClient.shared
-            ratingsClient.submit(userId: user.address, rating: rating, review: review)
-        }
-    }
-}
-
 extension ChatController: ImagePickerDelegate {
     func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
         self.dismiss(animated: true)
@@ -1061,15 +1029,14 @@ extension ChatController: ChatsFloatingHeaderViewDelegate {
     func messagesFloatingView(_: ChatsFloatingHeaderView, didPressRequestButton _: UIButton) {
         let paymentRequestController = PaymentRequestController()
         paymentRequestController.delegate = self
-        
-        present(paymentRequestController, animated: true)
+        self.present(paymentRequestController, animated: true)
     }
     
     func messagesFloatingView(_: ChatsFloatingHeaderView, didPressPayButton _: UIButton) {
         let paymentSendController = PaymentSendController()
         paymentSendController.delegate = self
-        
-        present(paymentSendController, animated: true)
+
+        self.present(paymentSendController, animated: true)
     }
 }
 
@@ -1091,21 +1058,21 @@ extension ChatController: PaymentSendControllerDelegate {
         }
         
         self.idAPIClient.retrieveContact(username: tokenId) { user in
-            if let user = user {
-                self.etherAPIClient.createUnsignedTransaction(to: user.paymentAddress, value: value) { transaction, error in
-                    let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
-                    
-                    self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
-                        if error != nil {
-                            guard let json = json?.dictionary else { fatalError("!") }
-                            
-                            let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
-                            self.present(alert, animated: true)
-                        } else if let json = json?.dictionary {
-                            guard let txHash = json["tx_hash"] as? String else { fatalError("Error recovering transaction hash.") }
-                            let payment = SofaPayment(txHash: txHash, valueHex: value.toHexString)
-                            self.sendMessage(sofaWrapper: payment)
-                        }
+            guard let user = user else { return }
+
+            self.etherAPIClient.createUnsignedTransaction(to: user.paymentAddress, value: value) { transaction, error in
+                let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
+
+                self.etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
+                    if error != nil {
+                        guard let json = json?.dictionary else { fatalError("!") }
+
+                        let alert = UIAlertController.dismissableAlert(title: "Error completing transaction", message: json["message"] as? String)
+                        self.present(alert, animated: true)
+                    } else if let json = json?.dictionary {
+                        guard let txHash = json["tx_hash"] as? String else { fatalError("Error recovering transaction hash.") }
+                        let payment = SofaPayment(txHash: txHash, valueHex: value.toHexString)
+                        self.sendMessage(sofaWrapper: payment)
                     }
                 }
             }
@@ -1132,6 +1099,6 @@ extension ChatController: PaymentRequestControllerDelegate {
         
         let paymentRequest = SofaPaymentRequest(content: request)
         
-        sendMessage(sofaWrapper: paymentRequest)
+        self.sendMessage(sofaWrapper: paymentRequest)
     }
 }

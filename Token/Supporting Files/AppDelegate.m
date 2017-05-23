@@ -123,9 +123,12 @@
 - (void)userDidSignOut {
     [TSAccountManager unregisterTextSecureWithSuccess:^{
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+        [[EthereumAPIClient shared] deregisterForNotificationsWithDeviceToken:self.token];
         [[TSStorageManager sharedManager] resetSignalStorage];
         [[Yap sharedInstance] wipeStorage];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"RequiresSignIn"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         exit(0);
     } failure:^(NSError *error) {
         // alert user
@@ -262,8 +265,7 @@
         window.userInteractionEnabled = NO;
         window.windowLevel = CGFLOAT_MAX;
 
-        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-        effectView.alpha = 0.9;
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
 
         [window addSubview:effectView];
 

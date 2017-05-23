@@ -46,7 +46,7 @@ open class ChatsController: SweetTableController {
     public init() {
         super.init()
 
-        self.title = "Recents"
+        self.title = "Recent"
 
         self.uiDatabaseConnection.asyncRead { transaction in
             self.mappings.update(with: transaction)
@@ -133,7 +133,7 @@ open class ChatsController: SweetTableController {
         let address = thread.contactIdentifier()!
         print("Updating contact infor for address: \(address).")
 
-        self.idAPIClient.findContact(name: address) { contact in
+        self.idAPIClient.retrieveContact(username: address) { contact in
             if let contact = contact {
                 print("Updated contact info for \(contact.username)")
             }

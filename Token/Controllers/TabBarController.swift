@@ -40,7 +40,7 @@ open class TabBarController: UITabBarController {
     }
 
     internal lazy var scannerController: ScannerViewController = {
-        let controller = ScannerViewController(instructions: "Scan a user profile QR code", types: [.qrCode])
+        let controller = ScannerController(instructions: "Scan QR code", types: [.qrCode])
         controller.delegate = self
 
         return controller
@@ -109,12 +109,17 @@ open class TabBarController: UITabBarController {
         case .messaging:
             self.selectedIndex = 1
         case .scanner:
-            self.selectedIndex = 2
+            self.presentScanner()
         case .favorites:
             self.selectedIndex = 3
         case .me:
             self.selectedIndex = 4
         }
+    }
+
+    fileprivate func presentScanner() {
+        SoundPlayer.playSound(type: .menuButton)
+        self.present(self.scannerController, animated: true)
     }
 }
 
@@ -122,8 +127,7 @@ extension TabBarController: UITabBarControllerDelegate {
 
     public func tabBarController(_: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController == self.placeholderScannerController {
-            SoundPlayer.playSound(type: .menuButton)
-            self.present(self.scannerController, animated: true)
+            self.presentScanner()
 
             return false
         }
@@ -149,22 +153,29 @@ extension TabBarController: ScannerViewControllerDelegate {
     }
 
     public func scannerViewController(_ controller: ScannerViewController, didScanResult result: String) {
-        let username = result.replacingOccurrences(of: QRCodeController.addUsernameBasePath, with: "")
-        let contactName = TokenUser.name(from: username)
+        if result.hasPrefix("web-signin:") {
+            let login_token = result.substring(from: result.index(result.startIndex, offsetBy: 11))
+            self.idAPIClient.login(login_token: login_token) { success, error in
+                self.dismiss(animated: true)
+            }
+        } else {
+            let username = result.replacingOccurrences(of: QRCodeController.addUsernameBasePath, with: "")
+            let contactName = TokenUser.name(from: username)
 
-        self.idAPIClient.findContact(name: contactName) { contact in
+        self.idAPIClient.retrieveContact(username: contactName) { contact in
             guard let contact = contact else {
                 controller.startScanning()
 
-                return
-            }
+                    return
+                }
 
-            SoundPlayer.playSound(type: .scanned)
+                SoundPlayer.playSound(type: .scanned)
 
-            self.dismiss(animated: true) {
-                self.switch(to: .favorites)
-                let contactController = ContactController(contact: contact)
-                self.favoritesController.pushViewController(contactController, animated: true)
+                self.dismiss(animated: true) {
+                    self.switch(to: .favorites)
+                    let contactController = ContactController(contact: contact)
+                    self.favoritesController.pushViewController(contactController, animated: true)
+                }
             }
         }
     }

@@ -17,9 +17,9 @@ import UIKit
 import Teapot
 import SweetFoundation
 
-struct RatingScore {
-    struct StarsCount {
-        static var zero: StarsCount {
+public struct RatingScore {
+    public struct StarsCount {
+        public static var zero: StarsCount {
             return StarsCount(one: 0, two: 0, three: 0, four: 0, five: 0)
         }
 
@@ -102,7 +102,7 @@ class RatingsClient: NSObject {
         }
     }
 
-    public func submit(userId: String, rating: Int, review: String) {
+    public func submit(userId: String, rating: Int, review: String, completion: ((Void) -> Void)? = nil) {
         self.fetchTimestamp { timestamp in
             let cereal = Cereal.shared
             let path = "/v1/review/submit"
@@ -127,6 +127,7 @@ class RatingsClient: NSObject {
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
 
                     UIApplication.shared.delegate!.window!?.rootViewController!.present(alert, animated: true)
+                    completion?()
                 case .failure(let json, _, _):
                     guard let json = json?.dictionary, let errors = json["errors"] as? [Any], let error = errors.first as? [String: Any], let message = error["message"] as? String else { return }
 
@@ -134,6 +135,7 @@ class RatingsClient: NSObject {
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
 
                     UIApplication.shared.delegate!.window!?.rootViewController!.present(alert, animated: true)
+                    completion?()
                 }
             }
         }

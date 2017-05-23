@@ -49,6 +49,7 @@ class BackupPhraseVerifyController: UIViewController {
         let view = BackupPhraseView(with: Cereal().mnemonic.words, for: .verification)
         view.removeDelegate = self
         view.verificationDelegate = self
+        view.backgroundColor = Theme.passphraseVerificationContainerColor
 
         return view
     }()
@@ -73,8 +74,6 @@ class BackupPhraseVerifyController: UIViewController {
         self.view.backgroundColor = Theme.settingsBackgroundColor
 
         self.addSubviewsAndConstraints()
-
-        NotificationCenter.default.post(name: SettingsController.verificationStatusChanged, object: self.verifyPhraseView.verificationStatus)
     }
 
     func addSubviewsAndConstraints() {
