@@ -25,6 +25,7 @@ public class Cereal: NSObject {
     let entropyByteCount = 16
 
     var idCereal: EtherealCereal
+    var deprecatedIdCereal: EtherealCereal
 
     var walletCereal: EtherealCereal
 
@@ -34,6 +35,10 @@ public class Cereal: NSObject {
 
     public var address: String {
         return self.idCereal.address
+    }
+    
+    public var deprecatedAddress: String {
+        return self.deprecatedIdCereal.address
     }
 
     public var paymentAddress: String {
@@ -48,7 +53,12 @@ public class Cereal: NSObject {
         Yap.sharedInstance.insert(object: self.mnemonic.words.joined(separator: " "), for: Cereal.privateKeyStorageKey)
 
         // ID path 0H/1/0
-        let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 1).derivedKeychain(at: 0)
+        let deprecatedIdKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 1).derivedKeychain(at: 0)
+        let deprecatedIdPrivateKey = deprecatedIdKeychain.key.privateKey.hexadecimalString()
+        self.deprecatedIdCereal = EtherealCereal(privateKey: deprecatedIdPrivateKey)
+        
+        // ID path 44H/60H/0H/0
+        let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 44, hardened: true).derivedKeychain(at: 60, hardened: true).derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0)
         let idPrivateKey = idKeychain.key.privateKey.hexadecimalString()
         self.idCereal = EtherealCereal(privateKey: idPrivateKey)
 
@@ -77,7 +87,12 @@ public class Cereal: NSObject {
         }
 
         // ID path 0H/1/0
-        let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 1).derivedKeychain(at: 0)
+        let depIdKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 1).derivedKeychain(at: 0)
+        let depIdPrivateKey = depIdKeychain.key.privateKey.hexadecimalString()
+        self.deprecatedIdCereal = EtherealCereal(privateKey: depIdPrivateKey)
+
+        // ID path 44H/60H/0H/0
+        let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 44, hardened: true).derivedKeychain(at: 60, hardened: true).derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0)
         let idPrivateKey = idKeychain.key.privateKey.hexadecimalString()
         self.idCereal = EtherealCereal(privateKey: idPrivateKey)
 
@@ -88,7 +103,15 @@ public class Cereal: NSObject {
     }
 
     // MARK: - Sign with id
-
+    
+    public func signWithDeprecatedID(message: String) -> String {
+        return self.deprecatedIdCereal.sign(message: message)
+    }
+    
+    public func deprecatedSha3WithID(string: String) -> String {
+        return self.deprecatedIdCereal.sha3(string: string)
+    }
+    
     public func signWithID(message: String) -> String {
         return self.idCereal.sign(message: message)
     }
