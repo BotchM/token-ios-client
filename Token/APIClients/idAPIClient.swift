@@ -76,7 +76,7 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
     func fetchTimestamp(_ completion: @escaping ((Int) -> Void)) {
         self.teapot.get("/v1/timestamp") { (result: NetworkResult) in
             switch result {
-            case .success(let json, let response):
+            case .success(let json, let _):
                 guard let json = json?.dictionary else { fatalError() }
                 guard let timestamp = json["timestamp"] as? Int else { fatalError("Timestamp should be an integer") }
 
@@ -96,34 +96,43 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
                 return
             }
 
-            self.fetchTimestamp { timestamp in
-                let cereal = Cereal.shared
-                let path = "/v1/user"
-                let parameters = [
-                    "payment_address": cereal.paymentAddress,
-                ]
-                let parametersString = String(data: try! JSONSerialization.data(withJSONObject: parameters, options: []), encoding: .utf8)!
-                let hashedParameters = cereal.sha3WithID(string: parametersString)
-                let signature = "0x\(cereal.signWithID(message: "POST\n\(path)\n\(timestamp)\n\(hashedParameters)"))"
-
-                let fields: [String: String] = ["Token-ID-Address": cereal.address, "Token-Signature": signature, "Token-Timestamp": String(timestamp)]
-
-                let json = RequestParameter(parameters)
-                self.teapot.post(path, parameters: json, headerFields: fields) { result in
-                    switch result {
-                    case .success(let json, let response):
-                        guard response.statusCode == 200 else { return }
-                        guard let json = json?.dictionary else { return }
-
-                        TokenUser.current = TokenUser(json: json)
-                        print("Registered user with address: \(cereal.address)")
-
-                        success()
-                    case .failure(let json, let response, let error):
-                        print(response)
-                        print(error)
-                        print(json ?? "")
-                    }
+            let parameters = ["payment_address": Cereal.shared.address]
+            self.createUser(parameters, success: success)
+        }
+    }
+    
+    private func migrateUser(with migrationKey: String) {
+        let parameters = ["payment_address": Cereal.shared.address,
+                          "migration_key": migrationKey]
+        self.createUser(parameters, success: {})
+    }
+    
+    private func createUser(_ parameters: [String: Any], success: @escaping (() -> Void)) {
+        self.fetchTimestamp { timestamp in
+            let cereal = Cereal.shared
+            let path = "/v1/user"
+            
+            let parametersString = String(data: try! JSONSerialization.data(withJSONObject: parameters, options: []), encoding: .utf8)!
+            let hashedParameters = cereal.sha3WithID(string: parametersString)
+            let signature = "0x\(cereal.signWithID(message: "POST\n\(path)\n\(timestamp)\n\(hashedParameters)"))"
+            
+            let fields: [String: String] = ["Token-ID-Address": cereal.address, "Token-Signature": signature, "Token-Timestamp": String(timestamp)]
+            
+            let json = RequestParameter(parameters)
+            self.teapot.post(path, parameters: json, headerFields: fields) { result in
+                switch result {
+                case .success(let json, let response):
+                    guard response.statusCode == 200 else { return }
+                    guard let json = json?.dictionary else { return }
+                    
+                    TokenUser.current = TokenUser(json: json)
+                    print("Registered user with address: \(cereal.address)")
+                    
+                    success()
+                case .failure(let json, let response, let error):
+                    print(response)
+                    print(error)
+                    print(json ?? "")
                 }
             }
         }
@@ -176,9 +185,43 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
                 case .success(let json, let response):
                     guard response.statusCode == 200 else { fatalError() }
                     guard let json = json?.dictionary else { fatalError() }
-
+                    
                     TokenUser.current?.update(json: json, updateAvatar: false, shouldSave: true)
+                    
+                    completion(true, nil)
+                case .failure(let json, _, _):
+                    let errors = json?.dictionary?["errors"] as? [[String: Any]]
+                    let message = errors?.first?["message"] as? String
+                    completion(false, message)
+                }
+            }
+        }
+    }
+    
 
+    public func migrateUser(_ user: TokenUser, completion: @escaping ((_ success: Bool, _ message: String?) -> Void)) {
+        self.fetchTimestamp { timestamp in
+            let cereal = Cereal.shared
+            let path = "/v1/user"
+            let payload = user.JSONData
+            let payloadString = String(data: payload, encoding: .utf8)!
+
+            let hashedPayload = cereal.deprecatedSha3WithID(string: payloadString)
+            let signature = "0x\(cereal.signWithDeprecatedID(message: "PUT\n\(path)\n\(timestamp)\n\(hashedPayload)"))"
+
+            let fields: [String: String] = ["Token-ID-Address": cereal.deprecatedAddress, "Token-Signature": signature, "Token-Timestamp": String(timestamp)]
+            let json = RequestParameter(user.asDict)
+            
+            self.teapot.put("/v1/user", parameters: json, headerFields: fields) { result in
+                switch result {
+                case .success(let json, let response):
+                    guard response.statusCode == 200 else { fatalError() }
+                    guard let json = json?.dictionary else { fatalError() }
+                    
+                    if let migrationKey = json["migration_key"] as? String {
+                        self.migrateUser(with: migrationKey)
+                    }
+                    
                     completion(true, nil)
                 case .failure(let json, _, _):
                     let errors = json?.dictionary?["errors"] as? [[String: Any]]
@@ -275,7 +318,7 @@ public class IDAPIClient: NSObject, CacheExpiryDefault {
                     NotificationCenter.default.post(name: IDAPIClient.didFetchContactInfoNotification, object: contact)
 
                     success(contact, self.cacheExpiry)
-                case .failure(_, let response, let error):
+                case .failure(_, let _, let error):
                     print(error.localizedDescription)
 
                     failure(error as NSError)
