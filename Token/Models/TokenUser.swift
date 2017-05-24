@@ -86,7 +86,7 @@ public class TokenUser: NSObject, NSCoding {
             return self._current
         }
         set {
-            guard let newPaymentAddress = newValue?.paymentAddress, Cereal.shared.paymentAddress == newPaymentAddress else {
+            guard let newPaymentAddress = newValue?.paymentAddress, Cereal.shared.address == newPaymentAddress else {
                 fatalError("Tried to set contact as current user.")
             }
 
@@ -151,9 +151,18 @@ public class TokenUser: NSObject, NSCoding {
 
     public init(json: [String: Any], shouldSave: Bool = true) {
         super.init()
-
+        
         self.update(json: json, updateAvatar: true, shouldSave: shouldSave)
-
+        
+        let currentUserID = self.address
+        let deprecatedAddress = Cereal.shared.deprecatedAddress
+        let validAddress = Cereal.shared.address
+        
+        if currentUserID == deprecatedAddress {
+            self.address = validAddress
+            IDAPIClient.shared.migrateUser(self, completion: { (bolean, stringian) in })
+        }
+        
         self.setupNotifications()
     }
 
