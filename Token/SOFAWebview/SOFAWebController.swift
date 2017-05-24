@@ -9,6 +9,10 @@ class SOFAWebController: UIViewController {
         case signTransaction
         case approveTransaction
     }
+    
+    fileprivate var etherAPIClient: EthereumAPIClient {
+        return EthereumAPIClient.shared
+    }
 
     fileprivate let rcpUrl = "https://propsten.infura.io/"
 
@@ -161,10 +165,34 @@ extension SOFAWebController: WKScriptMessageHandler {
 
             break
         case .signTransaction:
-            // alert noop
+            
+            if let messageBody = message.body as? [String: Any], let tx = messageBody["tx"] as? [String: Any] {
+                
+                if let from = tx["from"] as? String, let to = tx["to"] as? String, let value = tx["value"] as? String, let data = tx["data"] as? String, let gas = tx["gas"] as? String, let gasPrice = tx["gasPrice"] as? String {
+                    
+                    let parameters: [String: Any] = [
+                        "from": from,
+                        "to": to,
+                        "value": value,
+                        "gas": gas,
+                        "gasPrice": gasPrice,
+                        "data": data
+                    ]
+                    
+                    self.etherAPIClient.createUnsignedTransaction(parameters: parameters) { transaction, error in
+                        let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
+                        
+                        let payload = "{\\\"error\\\": null, \\\"result\\\": [\\\"" + signedTransaction + "\\\"]}"
+                        self.jsCallback(callbackId: callbackId, payload: payload)
+                    }
+                }
+             }
+            
             break
         case .approveTransaction:
-            // alert noop
+            let payload = "{\\\"error\\\": null, \\\"result\\\": true}"
+            jsCallback(callbackId: callbackId, payload: payload)
+            
             break
         }
     }
