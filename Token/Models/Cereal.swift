@@ -27,8 +27,6 @@ public class Cereal: NSObject {
     var idCereal: EtherealCereal
     var deprecatedIdCereal: EtherealCereal
 
-    var walletCereal: EtherealCereal
-
     var mnemonic: BTCMnemonic
 
     static let privateKeyStorageKey = "cerealPrivateKey"
@@ -39,10 +37,6 @@ public class Cereal: NSObject {
     
     public var deprecatedAddress: String {
         return self.deprecatedIdCereal.address
-    }
-
-    public var paymentAddress: String {
-        return self.walletCereal.address
     }
 
     // restore from words
@@ -61,11 +55,6 @@ public class Cereal: NSObject {
         let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 44, hardened: true).derivedKeychain(at: 60, hardened: true).derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0)
         let idPrivateKey = idKeychain.key.privateKey.hexadecimalString()
         self.idCereal = EtherealCereal(privateKey: idPrivateKey)
-
-        // wallet path: 0H/0/0
-        let walletKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0).derivedKeychain(at: 0)
-        let walletPrivateKey = walletKeychain.key.privateKey.hexadecimalString()
-        self.walletCereal = EtherealCereal(privateKey: walletPrivateKey)
     }
 
     // restore from local user or create new
@@ -95,11 +84,6 @@ public class Cereal: NSObject {
         let idKeychain = self.mnemonic.keychain.derivedKeychain(at: 44, hardened: true).derivedKeychain(at: 60, hardened: true).derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0)
         let idPrivateKey = idKeychain.key.privateKey.hexadecimalString()
         self.idCereal = EtherealCereal(privateKey: idPrivateKey)
-
-        // wallet path: 0H/0/0
-        let walletKeychain = self.mnemonic.keychain.derivedKeychain(at: 0, hardened: true).derivedKeychain(at: 0).derivedKeychain(at: 0)
-        let walletPrivateKey = walletKeychain.key.privateKey.hexadecimalString()
-        self.walletCereal = EtherealCereal(privateKey: walletPrivateKey)
     }
 
     // MARK: - Sign with id
@@ -126,19 +110,5 @@ public class Cereal: NSObject {
 
     public func sha3WithID(data: Data) -> String {
         return self.idCereal.sha3(data: data)
-    }
-
-    // MARK: - Sign with wallet
-
-    public func signWithWallet(message: String) -> String {
-        return self.walletCereal.sign(message: message)
-    }
-
-    public func signWithWallet(hex: String) -> String {
-        return self.walletCereal.sign(hex: hex)
-    }
-
-    public func sha3WithWallet(string: String) -> String {
-        return self.walletCereal.sha3(string: string)
     }
 }

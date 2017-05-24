@@ -448,7 +448,7 @@ extension ContactController: PaymentSendControllerDelegate {
         let etherAPIClient = EthereumAPIClient.shared
 
         etherAPIClient.createUnsignedTransaction(to: self.contact.paymentAddress, value: value) { transaction, error in
-            let signedTransaction = "0x\(Cereal.shared.signWithWallet(hex: transaction!))"
+            let signedTransaction = "0x\(Cereal.shared.signWithID(hex: transaction!))"
 
             etherAPIClient.sendSignedTransaction(originalTransaction: transaction!, transactionSignature: signedTransaction) { json, error in
                 if error != nil {
